@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manicure Bot · Elyor</title>
+<meta name="description" content="Telegram-бот записи для бьюти-салонов: выбор услуги, мастера, слота, напоминания, админ-панель внутри бота.">
+<meta property="og:title" content="Manicure Bot — кейс / Элёр">
+<meta property="og:description" content="Telegram-бот записи для бьюти-салонов: выбор услуги, мастера, слота, напоминания, админ-панель внутри бота.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="../og/manicure-bot.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="../og/manicure-bot.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../apple-touch-icon.svg">
+<link rel="stylesheet" href="../styles/base.css">
+<link rel="stylesheet" href="../styles/components.css">
+</head>
+<body data-theme="dark">
+
+<nav class="nav-pill" aria-label="Primary">
+  <a href="../index.html" class="brand">
+    <span class="logo-mark"><svg width="24" height="24" viewBox="0 0 128 128" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><polyline points="24,34 16,34 16,94 24,94"/><polyline points="42,42 59,64 42,86"/><polyline points="86,42 69,64 86,86"/><polyline points="104,34 112,34 112,94 104,94"/></svg></span>
+    <span>Elyor</span>
+  </a>
+  <div class="links">
+    <a href="../index.html#work" class="current"><span data-lang="ru">Работы</span><span data-lang="en">Works</span></a>
+    <a href="../services.html"><span data-lang="ru">Услуги</span><span data-lang="en">Services</span></a>
+    <a href="../index.html#principles"><span data-lang="ru">Принципы</span><span data-lang="en">Principles</span></a>
+      </div>
+  <div class="tools">
+    <button type="button" class="icon-btn" data-lang-cycle aria-label="Cycle language">
+      <span data-lang-label>RU</span>
+    </button>
+    <button type="button" class="icon-btn" data-theme-btn aria-label="Toggle theme"></button>
+  </div>
+  <a href="https://t.me/plssog" class="btn primary cta">
+    Get in touch
+    <span class="arrow">↗</span>
+  </a>
+</nav>
+
+<div class="shell" data-screen-label="case-manicure-bot">
+
+  <section class="page-head">
+    <div class="breadcrumb">
+      <a href="../index.html"><span data-lang="ru">Главная</span><span data-lang="en">Home</span></a>
+      <span class="sep">/</span>
+      <a href="../index.html#work"><span data-lang="ru">Работы</span><span data-lang="en">Works</span></a>
+      <span class="sep">/</span>
+      <span>Manicure Bot</span>
+    </div>
+    <div class="case-meta-row">
+      <span class="dot">●</span>
+      <span>Live · Beauty</span>
+      <span class="sep">·</span>
+      <span>2025 – 2026</span>
+    </div>
+    <h1 class="reveal">
+      <span data-lang="ru">Manicure Bot —<br><span class="accent-gradient">онлайн-запись</span> в салон через Telegram.</span>
+      <span data-lang="en">Manicure Bot —<br><span class="accent-gradient">salon booking</span> via Telegram.</span>
+    </h1>
+    <p class="lede reveal d1">
+      <span data-lang="ru">Коммерческий бот записи для бьюти-салонов. Клиент выбирает услугу, мастера и слот за 30 секунд. Админ управляет расписанием прямо из бота. Per-salon деплой, лицензирование Ed25519, 86+ тестов.</span>
+      <span data-lang="en">Commercial booking bot for beauty salons. A client picks a service, master, and time slot in 30 seconds. Admins manage schedules right inside the bot. Per-salon deploy, Ed25519 licensing, 86+ tests.</span>
+    </p>
+  </section>
+
+  <section style="padding: 56px 0 24px;">
+    <div class="case-hero-row">
+      <div class="code-card reveal">
+        <div class="head">
+          <span class="path">Telegram · @manicure_bot</span>
+          <span class="tag">live</span>
+        </div>
+<pre class="body"><span class="prompt">user&gt;</span> /book
+<span class="out">→ Выберите услугу:
+  1. Маникюр классический — 120 000 сум
+  2. Маникюр + покрытие — 180 000 сум
+  3. Педикюр — 150 000 сум</span>
+
+<span class="prompt">user&gt;</span> 2
+<span class="out">→ Дополнения:
+  ☐ Снятие старого покрытия +30 000
+  ☐ Дизайн 2 ногтя +25 000
+  ☐ Без дополнений</span>
+
+<span class="prompt">user&gt;</span> Снятие
+<span class="out">→ Мастер: Диана · 15 мая, чт
+  10:00  11:30  14:00  16:00</span>
+
+<span class="prompt">user&gt;</span> 14:00
+<span class="out" id="caseTyping">→ ✓ Записаны!
+  Маникюр + покрытие + снятие
+  Мастер: Диана
+  15.05 в 14:00
+  Итого: 210 000 сум
+
+  Напомню за 24ч и за 2ч.</span></pre>
+      </div>
+
+      <aside class="case-spec reveal d1">
+        <div class="head">
+          <span><span data-lang="ru">Карточка проекта</span><span data-lang="en">Project card</span></span>
+          <span>v 1.0</span>
+        </div>
+        <dl>
+          <dt><span data-lang="ru">Заказчик</span><span data-lang="en">Client</span></dt><dd><span data-lang="ru">Бьюти-салоны</span><span data-lang="en">Beauty salons</span></dd>
+          <dt><span data-lang="ru">Роль</span><span data-lang="en">Role</span></dt><dd>Solo</dd>
+          <dt><span data-lang="ru">Срок</span><span data-lang="en">Duration</span></dt><dd><span data-lang="ru">3 мес.</span><span data-lang="en">3 mo.</span></dd>
+          <dt><span data-lang="ru">Стек</span><span data-lang="en">Stack</span></dt><dd>Python · aiogram 3</dd>
+          <dt><span data-lang="ru">БД</span><span data-lang="en">DB</span></dt><dd>SQLite WAL</dd>
+          <dt>Cache</dt><dd>Redis 7</dd>
+          <dt>Schedule</dt><dd>APScheduler</dd>
+          <dt>Deploy</dt><dd>Docker · per-salon VPS</dd>
+          <dt><span data-lang="ru">Лицензия</span><span data-lang="en">License</span></dt><dd>Ed25519 annual</dd>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+
+  <div class="case-layout">
+
+    <article class="case-body">
+
+      <h2 id="brief"><span class="num">§ 01</span><span data-lang="ru">Бриф</span><span data-lang="en">Brief</span></h2>
+      <p>
+        <span data-lang="ru">Типичный бьюти-салон в Ташкенте ведёт запись через WhatsApp и телефонные звонки. Администратор жонглирует бумажным журналом, тремя чатами и памятью. Результат предсказуем: двойные записи на одного мастера, потерянные клиенты, которые не дождались ответа, и no-show без напоминаний.</span>
+        <span data-lang="en">A typical beauty salon in Tashkent handles bookings via WhatsApp and phone calls. The receptionist juggles a paper ledger, three chats, and memory. The result is predictable: double-bookings for the same master, lost clients who never got a reply, and no-shows without reminders.</span>
+      </p>
+      <p>
+        <span data-lang="ru"><strong>Проблемы ручной записи:</strong> клиент пишет в WhatsApp — ответ через 2 часа, когда слот уже занят. Два мастера записаны на одно время. Клиент не приходит, потому что забыл — час простоя стоит салону 150–200 тыс. сум.</span>
+        <span data-lang="en"><strong>Manual booking problems:</strong> a client texts WhatsApp — gets a reply 2 hours later when the slot is already taken. Two masters booked at the same time. A client doesn't show up because they forgot — an idle hour costs the salon 150–200k UZS.</span>
+      </p>
+      <p>
+        <span data-lang="ru"><strong>Задача:</strong> бот, который позволяет клиенту записаться за 30 секунд без звонков и ожидания, а администратору — управлять расписанием без Excel и бумаги. Telegram — потому что в Узбекистане это мессенджер номер один.</span>
+        <span data-lang="en"><strong>Goal:</strong> a bot that lets clients book in 30 seconds without calls or waiting, and lets admins manage the schedule without Excel or paper. Telegram — because it's the number one messenger in Uzbekistan.</span>
+      </p>
+
+      <h2 id="architecture"><span class="num">§ 02</span><span data-lang="ru">Архитектура</span><span data-lang="en">Architecture</span></h2>
+      <p>
+        <span data-lang="ru">FSM-первый дизайн. Запись — это стейт-машина из шести шагов: услуга → дополнения → мастер → дата → время → подтверждение. Каждый шаг валидирует входные данные и проверяет доступность слота в реальном времени. Aiogram 3 FSM идеально ложится на этот поток.</span>
+        <span data-lang="en">FSM-first design. A booking is a state machine of six steps: service → add-ons → master → date → time → confirmation. Each step validates input and checks slot availability in real time. Aiogram 3 FSM maps perfectly to this flow.</span>
+      </p>
+
+      <div class="figure">
+        <div class="fig-bar"><span class="fig-title">architecture · booking fsm</span></div>
+<pre>┌──────────────────────────────────────────────────────────┐
+│  <span class="fl">/book</span>                                                    │
+│       │                                                   │
+│       ▼                                                   │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐                 │
+│  │ <span class="fc">Service</span>  │─▶│ <span class="fc">Add-ons</span>  │─▶│ <span class="fc">Master</span>   │                 │
+│  │ <span class="fm">select</span>   │  │ <span class="fm">select</span>   │  │ <span class="fm">select</span>   │                 │
+│  └──────────┘  └──────────┘  └────┬─────┘                 │
+│                                   │                       │
+│       ┌───────────────────────────┘                       │
+│       ▼                                                   │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐                 │
+│  │ <span class="fc">Date</span>     │─▶│ <span class="fc">Time</span>     │─▶│ <span class="fc">Confirm</span>  │                 │
+│  │ <span class="fm">pick</span>     │  │ <span class="fm">slot</span>     │  │ <span class="fm">+ pay</span>    │                 │
+│  └──────────┘  └──────────┘  └────┬─────┘                 │
+│                                   │                       │
+│       ┌───────────────────────────┘                       │
+│       ▼                                                   │
+│  ┌──────────────────────────────────────────────────┐     │
+│  │ <span class="ft">SQLite WAL</span> · <span class="ft">Redis cache</span> · <span class="ft">APScheduler reminders</span> │     │
+│  └──────────────────────────────────────────────────┘     │
+└──────────────────────────────────────────────────────────┘</pre>
+        <div class="caption"><span data-lang="ru">Рис. 1 · Стейт-машина записи. Доменный слой не зависит от Telegram.</span><span data-lang="en">Fig. 1 · Booking state machine. Domain layer is Telegram-independent.</span></div>
+      </div>
+
+      <p>
+        <span data-lang="ru">Доменный слой полностью независим от транспорта. Бизнес-логика (проверка слотов, расчёт стоимости, управление расписанием) живёт отдельно от Telegram-хендлеров. SQLite WAL выбран осознанно: одна база на салон, бэкап — <code>cp</code> файла, нет сетевых зависимостей. Redis кеширует расписание мастеров и доступные слоты.</span>
+        <span data-lang="en">The domain layer is fully transport-independent. Business logic (slot checks, price calculation, schedule management) lives separately from Telegram handlers. SQLite WAL was a deliberate choice: one database per salon, backup is a file <code>cp</code>, zero network dependencies. Redis caches master schedules and available slots.</span>
+      </p>
+
+      <h2 id="licensing"><span class="num">§ 03</span><span data-lang="ru">Модель лицензирования</span><span data-lang="en">Licensing model</span></h2>
+      <p>
+        <span data-lang="ru">Каждый салон получает годовую лицензию. Ключ подписан Ed25519 — offline-верификация без обращения к серверу лицензий. Grace-период 90 дней: если лицензия истекла, бот продолжает работать, но показывает предупреждение администратору. Это честный подход — салон не теряет данные и записи клиентов.</span>
+        <span data-lang="en">Each salon gets an annual license. The key is signed with Ed25519 — offline verification with no license server calls. 90-day grace period: if the license expires, the bot keeps running but shows a warning to the admin. A fair approach — the salon doesn't lose data or client bookings.</span>
+      </p>
+
+      <div class="code-card">
+        <div class="head">
+          <span class="path">domain/license.py</span>
+          <span class="tag">ed25519</span>
+        </div>
+<pre class="body"><span class="kw">def</span> <span class="fn">verify_license</span>(key_b64: <span class="kw">str</span>, pub: Ed25519PublicKey) -> License:
+    <span class="comment"># Офлайн-проверка, без обращения к серверу</span>
+    payload = base64.b64decode(key_b64)
+    signature, data = payload[:<span class="num-c">64</span>], payload[<span class="num-c">64</span>:]
+    pub.verify(signature, data)
+
+    license = json.loads(data)
+    expires = date.fromisoformat(license[<span class="str">"expires"</span>])
+    grace = expires + timedelta(days=<span class="num-c">90</span>)
+
+    <span class="kw">if</span> date.today() > grace:
+        <span class="kw">raise</span> LicenseExpired(salon=license[<span class="str">"salon"</span>])
+    <span class="kw">if</span> date.today() > expires:
+        logger.warning(<span class="str">"License expired, grace period active"</span>)
+
+    <span class="kw">return</span> License(**license)</pre>
+      </div>
+
+      <p>
+        <span data-lang="ru">Исходный код открыт для аудита заказчиком, но деплой требует валидный ключ. Модель «source-available, deployment-locked» — салон видит, что внутри, но не может поднять второй инстанс без лицензии.</span>
+        <span data-lang="en">Source code is open for client audit, but deployment requires a valid key. The "source-available, deployment-locked" model — the salon sees what's inside but can't spin up a second instance without a license.</span>
+      </p>
+
+      <h2 id="numbers"><span class="num">§ 04</span><span data-lang="ru">Цифры</span><span data-lang="en">Numbers</span></h2>
+
+      <div class="metric-row">
+        <div class="metric">
+          <span class="v"><em>86+</em></span>
+          <span class="l">TESTS</span>
+        </div>
+        <div class="metric">
+          <span class="v">6<em>h</em></span>
+          <span class="l">BACKUP CYCLE</span>
+        </div>
+        <div class="metric">
+          <span class="v">&lt;200<em>ms</em></span>
+          <span class="l">RESPONSE</span>
+        </div>
+        <div class="metric">
+          <span class="v">0</span>
+          <span class="l">DOUBLE-BOOKINGS</span>
+        </div>
+      </div>
+
+      <p>
+        <span data-lang="ru">Автобэкап каждые 6 часов: APScheduler копирует SQLite-файл и отправляет в приватный Telegram-канал. Восстановление — скачать файл и положить на место. Никаких внешних сервисов, никаких S3-бакетов.</span>
+        <span data-lang="en">Auto-backup every 6 hours: APScheduler copies the SQLite file and sends it to a private Telegram channel. Recovery — download the file and drop it in place. No external services, no S3 buckets.</span>
+      </p>
+
+      <h2 id="lessons"><span class="num">§ 05</span><span data-lang="ru">Что я вынес</span><span data-lang="en">Lessons learned</span></h2>
+      <p>
+        <span data-lang="ru"><strong>(а)</strong> UX салона — не UX SaaS. Мастер между клиентами смотрит в телефон 10 секунд. Любой экран с больше чем тремя кнопками — провал. Inline-клавиатуры максимально плоские: один ряд выбора, одна кнопка подтверждения. Каждый лишний тап — потерянная запись.</span>
+        <span data-lang="en"><strong>(a)</strong> Salon UX is not SaaS UX. A master checks their phone for 10 seconds between clients. Any screen with more than three buttons is a failure. Inline keyboards are kept maximally flat: one row of choices, one confirm button. Every extra tap is a lost booking.</span>
+      </p>
+      <p>
+        <span data-lang="ru"><strong>(б)</strong> Self-hosted бьёт SaaS для единичных салонов. Владелец не хочет ежемесячную подписку на платформу и не хочет, чтобы его клиентская база жила на чужом сервере. VPS за $5/мес + годовая лицензия — модель, которую понимают и принимают.</span>
+        <span data-lang="en"><strong>(b)</strong> Self-hosted beats SaaS for individual salons. The owner doesn't want a monthly platform subscription and doesn't want their client base living on someone else's server. A $5/mo VPS + annual license — a model they understand and accept.</span>
+      </p>
+      <p>
+        <span data-lang="ru"><strong>(в)</strong> Лицензирование — не ограничение, а фича продукта. Ed25519-ключ решает три задачи: монетизация, защита от клонирования, и доверие (салон может проверить, что код не изменён). Grace-период снимает страх «бот отключится и я потеряю записи».</span>
+        <span data-lang="en"><strong>(c)</strong> Licensing is not a restriction — it's a product feature. The Ed25519 key solves three problems: monetization, clone protection, and trust (the salon can verify the code hasn't been tampered with). The grace period removes the fear of "the bot will shut down and I'll lose my bookings."</span>
+      </p>
+
+    </article>
+
+    <aside>
+      <nav class="case-toc">
+        <div class="head"><span data-lang="ru">Содержание</span><span data-lang="en">Contents</span></div>
+        <ol>
+          <li><a href="#brief"><span data-lang="ru">Бриф</span><span data-lang="en">Brief</span></a></li>
+          <li><a href="#architecture"><span data-lang="ru">Архитектура</span><span data-lang="en">Architecture</span></a></li>
+          <li><a href="#licensing"><span data-lang="ru">Лицензирование</span><span data-lang="en">Licensing</span></a></li>
+          <li><a href="#numbers"><span data-lang="ru">Цифры</span><span data-lang="en">Numbers</span></a></li>
+          <li><a href="#lessons"><span data-lang="ru">Что я вынес</span><span data-lang="en">Lessons learned</span></a></li>
+        </ol>
+      </nav>
+    </aside>
+
+  </div>
+
+  <nav class="case-nav">
+    <a href="support-bot.html" class="prev">
+      <div class="label"><span data-lang="ru">← Предыдущий кейс</span><span data-lang="en">← Previous case</span></div>
+      <div class="title-line">Support Bot</div>
+    </a>
+    <a href="pekarna-bot.html" class="next">
+      <div class="label"><span data-lang="ru">Следующий кейс →</span><span data-lang="en">Next case →</span></div>
+      <div class="title-line">Pekarna Bot</div>
+    </a>
+  </nav>
+
+  <footer class="site-footer">
+    <div class="row">
+      <a href="../index.html" class="brand">
+        <span class="logo-mark"><svg width="24" height="24" viewBox="0 0 128 128" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><polyline points="24,34 16,34 16,94 24,94"/><polyline points="42,42 59,64 42,86"/><polyline points="86,42 69,64 86,86"/><polyline points="104,34 112,34 112,94 104,94"/></svg></span>
+        <span>Elyor</span>
+      </a>
+      <div class="links">
+        <a href="https://github.com/RiobVo">GitHub</a>
+        <a href="https://t.me/plssog">Telegram</a>
+        <a href="https://linkedin.com/in/%D1%8D%D0%BB%D1%91%D1%80-%D1%8E%D1%81%D1%83%D0%BF%D0%BE%D0%B2-2bb989411">LinkedIn</a>
+              </div>
+    </div>
+    <div class="colophon">© 2026</div>
+  </footer>
+
+</div>
+
+<script src="../scripts/chrome.js"></script>
+<script>
+document.querySelectorAll('.case-nav a').forEach(function(a) {
+  a.addEventListener('mousemove', function(e) {
+    var r = a.getBoundingClientRect();
+    a.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+    a.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+  });
+});
+
+var metrics = document.querySelectorAll('.metric-row .metric');
+if (metrics.length) {
+  new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        metrics.forEach(function(m) { m.classList.add('in-view'); });
+      }
+    });
+  }, { threshold: 0.3 }).observe(document.querySelector('.metric-row'));
+}
+</script>
+</body>
+</html>

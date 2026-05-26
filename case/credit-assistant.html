@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Credit Assistant · Elyor</title>
+<meta name="description" content="SME-скоринг для банка second-tier: 24 правила, bilingual PDF, 1310 тестов, on-premise.">
+<meta property="og:title" content="Credit Assistant — кейс / Элёр">
+<meta property="og:description" content="SME-скоринг для банка second-tier: 24 правила, bilingual PDF, 1310 тестов, on-premise.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="../og/credit-assistant.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="../og/credit-assistant.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../apple-touch-icon.svg">
+<link rel="stylesheet" href="../styles/base.css">
+<link rel="stylesheet" href="../styles/components.css">
+</head>
+<body data-theme="dark">
+
+<nav class="nav-pill" aria-label="Primary">
+  <a href="../index.html" class="brand">
+    <span class="logo-mark"><svg width="24" height="24" viewBox="0 0 128 128" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><polyline points="24,34 16,34 16,94 24,94"/><polyline points="42,42 59,64 42,86"/><polyline points="86,42 69,64 86,86"/><polyline points="104,34 112,34 112,94 104,94"/></svg></span>
+    <span>Elyor</span>
+  </a>
+  <div class="links">
+    <a href="../index.html#work" class="current"><span data-lang="ru">Работы</span><span data-lang="en">Works</span></a>
+    <a href="../services.html"><span data-lang="ru">Услуги</span><span data-lang="en">Services</span></a>
+    <a href="../index.html#principles"><span data-lang="ru">Принципы</span><span data-lang="en">Principles</span></a>
+      </div>
+  <div class="tools">
+    <button type="button" class="icon-btn" data-lang-cycle aria-label="Cycle language">
+      <span data-lang-label>RU</span>
+    </button>
+    <button type="button" class="icon-btn" data-theme-btn aria-label="Toggle theme"></button>
+  </div>
+  <a href="https://t.me/plssog" class="btn primary cta">
+    Get in touch
+    <span class="arrow">↗</span>
+  </a>
+</nav>
+
+<div class="shell" data-screen-label="case-credit-assistant">
+
+  <section class="page-head">
+    <div class="breadcrumb">
+      <a href="../index.html"><span data-lang="ru">Главная</span><span data-lang="en">Home</span></a>
+      <span class="sep">/</span>
+      <a href="../index.html#work"><span data-lang="ru">Работы</span><span data-lang="en">Works</span></a>
+      <span class="sep">/</span>
+      <span>Credit Assistant</span>
+    </div>
+    <div class="case-meta-row">
+      <span class="dot">●</span>
+      <span>Live · Fintech</span>
+      <span class="sep">·</span>
+      <span>2025 – 2026</span>
+      <span class="sep">·</span>
+      <span>SME credit scoring</span>
+    </div>
+    <h1 class="reveal">
+      <span data-lang="ru">Credit Assistant —<br><span class="accent-gradient">SME-скоринг</span> для банка second-tier.</span>
+      <span data-lang="en">Credit Assistant —<br><span class="accent-gradient">SME scoring</span> for a second-tier bank.</span>
+    </h1>
+    <p class="lede reveal d1">
+      <span data-lang="ru">Двенадцать форматов входящих таблиц, 24 правила ЦБ РУз и Basel III, bilingual PDF за 750 мс, on-premise без единой облачной зависимости. Восемь месяцев работы — и 1310 тестов, чтобы было спокойно ночью.</span>
+      <span data-lang="en">Twelve incoming spreadsheet formats, 24 Central Bank of Uzbekistan and Basel III rules, bilingual PDF in 750 ms, on-premise with zero cloud dependencies. Eight months of work — and 1,310 tests to sleep well at night.</span>
+    </p>
+  </section>
+
+  <!-- HERO METRICS -->
+  <section style="padding: 56px 0 24px;">
+    <div class="case-hero-row">
+      <div class="code-card reveal">
+        <div class="head">
+          <span class="path">~/credit-assistant — production</span>
+          <span class="tag">v 2.4.1</span>
+        </div>
+<pre class="body"><span class="prompt">$</span> curl -sX POST https://ca.bank.uz/api/v1/applications \
+    -H "Authorization: Bearer $TOKEN" \
+    -d @application.json | jq '.report'
+<span class="out" id="caseTyping">{
+  <span class="key">"application_id"</span>: <span class="str">"APP-2026-04-2871"</span>,
+  <span class="key">"decision"</span>: <span class="str">"approve_with_collateral"</span>,
+  <span class="key">"risk_class"</span>: <span class="str">"B+"</span>,
+  <span class="key">"pdf_url"</span>: <span class="str">"/reports/APP-2026-04-2871.pdf"</span>,
+  <span class="key">"rules_applied"</span>: <span class="num-c">24</span>,
+  <span class="key">"rules_failed"</span>: [<span class="str">"R-17.dscr_below_1_25"</span>],
+  <span class="key">"audit_trail"</span>: <span class="str">"/audit/APP-2026-04-2871.jsonl"</span>,
+  <span class="key">"render_ms"</span>: <span class="num-c">748</span>
+}</span>
+<span class="prompt">$</span> <span class="comment"><span data-lang="ru"># одна команда — всё, что нужно кредитному комитету</span><span data-lang="en"># one command — everything the credit committee needs</span></span></pre>
+      </div>
+
+      <aside class="case-spec reveal d1">
+        <div class="head">
+          <span><span data-lang="ru">Карточка проекта</span><span data-lang="en">Project card</span></span>
+          <span>v 2.4.1</span>
+        </div>
+        <dl>
+          <dt><span data-lang="ru">Клиент</span><span data-lang="en">Client</span></dt><dd>NDA</dd>
+          <dt><span data-lang="ru">Роль</span><span data-lang="en">Role</span></dt><dd>Tech lead</dd>
+          <dt><span data-lang="ru">Команда</span><span data-lang="en">Team</span></dt><dd>1 + 1 fe</dd>
+          <dt><span data-lang="ru">Срок</span><span data-lang="en">Duration</span></dt><dd><span data-lang="ru">8 мес.</span><span data-lang="en">8 mo.</span></dd>
+          <dt><span data-lang="ru">Стек</span><span data-lang="en">Stack</span></dt><dd>Python · FastAPI</dd>
+          <dt><span data-lang="ru">БД</span><span data-lang="en">DB</span></dt><dd>Postgres 16</dd>
+          <dt>PDF</dt><dd>RL + WeasyPrint</dd>
+          <dt>Auth</dt><dd>LDAP + TOTP</dd>
+          <dt>Deploy</dt><dd>on-prem · air-gapped</dd>
+        </dl>
+        <p class="note">
+          <span data-lang="ru">Имя банка и точные цифры объёмов под NDA. Все технические детали ниже — публичные.</span>
+          <span data-lang="en">The bank's name and exact volume figures are under NDA. All technical details below are public.</span>
+        </p>
+      </aside>
+    </div>
+  </section>
+
+
+  <!-- CASE BODY -->
+  <div class="case-layout">
+
+    <article class="case-body">
+
+      <h2 id="brief"><span class="num">§ 01</span><span data-lang="ru">Бриф</span><span data-lang="en">Brief</span></h2>
+      <p>
+        <span data-lang="ru">Банк выдаёт кредиты SME — малому и среднему бизнесу. У кредитного комитета на каждую заявку уходит около двух дней: аналитик собирает финотчётность клиента в Excel, считает 6 – 8 коэффициентов, формирует pdf-отчёт, отправляет на следующего аналитика. Если по дороге кто-то ошибся в формуле — возврат на круг.</span>
+        <span data-lang="en">The bank issues SME loans. Each application takes the credit committee about two days: an analyst collects the client's financial statements in Excel, calculates 6–8 ratios, generates a PDF report, and passes it to the next analyst. If anyone makes a formula mistake along the way — back to square one.</span>
+      </p>
+      <p>
+        <span data-lang="ru"><strong>Задача:</strong> заменить эту цепочку Excel-файлов одним сервисом, который принимает структурированную форму заявки, прогоняет через 24 правила (ЦБ РУз, Basel III, IFC — лайтовая адаптация), и выдаёт двуязычный PDF — РУ + Узб — c явным аудит-trail каждого решения.</span>
+        <span data-lang="en"><strong>Goal:</strong> replace this chain of Excel files with a single service that accepts a structured application form, runs it through 24 rules (Central Bank of Uzbekistan, Basel III, IFC — light adaptation), and produces a bilingual PDF — RU + UZ — with an explicit audit trail for every decision.</span>
+      </p>
+      <p>
+        <span data-lang="ru"><strong>Жёсткие ограничения:</strong> банковский on-premise (никакого облака), LDAP для аутентификации, MFA для роли «утверждающий», полный аудит для регулятора, OWASP ASVS L2 как минимум.</span>
+        <span data-lang="en"><strong>Hard constraints:</strong> bank's on-premise infrastructure (no cloud), LDAP authentication, MFA for the "approver" role, full audit trail for the regulator, OWASP ASVS L2 minimum.</span>
+      </p>
+
+      <h2 id="architecture"><span class="num">§ 02</span><span data-lang="ru">Архитектура</span><span data-lang="en">Architecture</span></h2>
+      <p>
+        <span data-lang="ru">Один сервис, четыре слоя. Clean Architecture без фанатизма — ровно столько границ, сколько нужно, чтобы завтра можно было заменить ReportLab на WeasyPrint, а LDAP на Keycloak без переписи доменного слоя.</span>
+        <span data-lang="en">One service, four layers. Clean Architecture without fanaticism — just enough boundaries to swap ReportLab for WeasyPrint, or LDAP for Keycloak tomorrow without rewriting the domain layer.</span>
+      </p>
+
+      <div class="figure">
+        <div class="fig-bar"><span class="fig-title">architecture · clean layers</span></div>
+<pre>┌─────────────────────────────────────────────────────────┐
+│  <span class="fl">HTTP</span>   <span class="ft">FastAPI</span> · <span class="ft">OpenAPI 3.1</span> · <span class="ft">pydantic v2</span>              │
+│         <span class="fc">RFC 7807 errors</span> · <span class="fc">ETag/If-Match</span> · <span class="fc">request-id</span>     │
+├─────────────────────────────────────────────────────────┤
+│  <span class="fl">APP</span>    <span class="fc">Use-cases</span>: <span class="ft">SubmitApplication</span>, <span class="ft">RenderReport</span>, ... │
+│         <span class="fc">Idempotency</span> · <span class="fc">Outbox</span> · <span class="fc">permission checks</span>         │
+├─────────────────────────────────────────────────────────┤
+│  <span class="fl">DOMAIN</span> <span class="fc">Entities</span> · <span class="ft">ScoringEngine</span> · <span class="fc">24 rules</span> · <span class="fc">invariants</span>│
+│         <span class="fm">pure functions, zero IO, 100% covered</span>            │
+├─────────────────────────────────────────────────────────┤
+│  <span class="fl">INFRA</span>  <span class="ft">Postgres</span> · <span class="ft">LDAP</span> · <span class="ft">ReportLab</span> · <span class="ft">WeasyPrint</span> · <span class="ft">Redis</span>│
+│         <span class="fm">Adapters behind ports — swappable</span>                │
+└─────────────────────────────────────────────────────────┘</pre>
+        <div class="caption"><span data-lang="ru">Рис. 1 · Четыре слоя. Стрелки направлены только внутрь — к домену.</span><span data-lang="en">Fig. 1 · Four layers. Arrows point inward only — toward the domain.</span></div>
+      </div>
+
+      <p>
+        <span data-lang="ru">Главная инвестиция — в domain. <code>ScoringEngine</code> принимает <code>Application</code>, возвращает <code>Decision</code> с полным trail применённых правил. Pure-функция: никаких IO, никаких <code>datetime.now()</code>, никаких глобалов. Это значит, что весь домен покрывается unit-тестами без единого мока.</span>
+        <span data-lang="en">The main investment is in the domain. <code>ScoringEngine</code> takes an <code>Application</code>, returns a <code>Decision</code> with a full trail of applied rules. Pure function: no IO, no <code>datetime.now()</code>, no globals. This means the entire domain is unit-testable without a single mock.</span>
+      </p>
+
+      <h3 id="rules"><span data-lang="ru">24 правила, один движок</span><span data-lang="en">24 rules, one engine</span></h3>
+      <p>
+        <span data-lang="ru">Каждое правило — класс с <code>id</code>, <code>source</code> (ЦБ РУз / Basel / IFC), <code>applies_to</code> и <code>evaluate(app) -&gt; RuleResult</code>. Правила версионируются: когда регулятор меняет коэффициент, добавляется <code>R-12.v2</code>, старая версия остаётся для ретроспективы.</span>
+        <span data-lang="en">Each rule is a class with <code>id</code>, <code>source</code> (CBU / Basel / IFC), <code>applies_to</code>, and <code>evaluate(app) -&gt; RuleResult</code>. Rules are versioned: when the regulator changes a ratio, <code>R-12.v2</code> is added while the old version stays for retrospective analysis.</span>
+      </p>
+
+      <div class="code-card">
+        <div class="head">
+          <span class="path">domain/rules/r17_dscr.py</span>
+          <span class="tag">basel iii</span>
+        </div>
+<pre class="body"><span class="kw">class</span> <span class="fn">DebtServiceCoverageRatio</span>(Rule):
+    id = <span class="str">"R-17"</span>
+    source = RuleSource.BASEL_III
+    threshold = Decimal(<span class="str">"1.25"</span>)
+    severity = Severity.HARD_FAIL
+
+    <span class="kw">def</span> <span class="fn">evaluate</span>(<span class="kw">self</span>, app: Application) -> RuleResult:
+        <span class="kw">if</span> app.financials.ebitda &lt;= <span class="num-c">0</span>:
+            <span class="kw">return</span> RuleResult.fail(<span class="str">"ebitda_non_positive"</span>)
+
+        dscr = app.financials.ebitda / app.requested.annual_debt_service
+        <span class="kw">if</span> dscr &lt; <span class="kw">self</span>.threshold:
+            <span class="kw">return</span> RuleResult.fail(
+                code=<span class="str">"dscr_below_1_25"</span>,
+                measured=dscr,
+                threshold=<span class="kw">self</span>.threshold,
+            )
+        <span class="kw">return</span> RuleResult.passed(measured=dscr)</pre>
+      </div>
+
+      <p>
+        <span data-lang="ru">Движок прогоняет правила в топологическом порядке (некоторые зависят от результата других — например, проверка по залогу применяется только если DSCR ниже порога), собирает <code>DecisionTrail</code> и отдаёт наверх. PDF-генератор читает trail и превращает в разделы отчёта — по каждому правилу видно, что именно сработало.</span>
+        <span data-lang="en">The engine runs rules in topological order (some depend on others — e.g., collateral check only applies if DSCR is below the threshold), collects a <code>DecisionTrail</code>, and passes it up. The PDF generator reads the trail and turns it into report sections — every triggered rule is explicitly visible.</span>
+      </p>
+
+      <h2 id="challenges"><span class="num">§ 03</span><span data-lang="ru">Что было сложно</span><span data-lang="en">Challenges</span></h2>
+
+      <h3><span data-lang="ru">1. Двенадцать форматов входных таблиц</span><span data-lang="en">1. Twelve input spreadsheet formats</span></h3>
+      <p>
+        <span data-lang="ru">Финотчётность приходит из 1С, из Excel, иногда из pdf со сканированной таблицы. На старте казалось, что найдём 2 – 3 формата и закроем. На неделе 3 их было уже двенадцать.</span>
+        <span data-lang="en">Financial statements come from 1C, Excel, and sometimes from PDFs with scanned tables. At the start, we expected 2–3 formats. By week 3, there were already twelve.</span>
+      </p>
+      <p>
+        <span data-lang="ru">Решение — слой <code>FinancialIngestor</code>: цепочка парсеров, каждый отвечает за один формат, плюс <code>ManualEntry</code> как дефолт. Pydantic v2 на границе — дальше в домен заходит только валидный <code>Financials</code>. Никаких <code>dict[str, Any]</code> внутри.</span>
+        <span data-lang="en">Solution — a <code>FinancialIngestor</code> layer: a chain of parsers, each responsible for one format, plus <code>ManualEntry</code> as the default. Pydantic v2 at the boundary — only a validated <code>Financials</code> object enters the domain. No <code>dict[str, Any]</code> inside.</span>
+      </p>
+
+      <h3><span data-lang="ru">2. Bilingual PDF без кошмара</span><span data-lang="en">2. Bilingual PDF without the nightmare</span></h3>
+      <p>
+        <span data-lang="ru">Отчёт двуязычный: каждая страница содержит русскую и узбекскую версии в двух колонках. Узбекский — кириллица и латиница, по выбору банка. ReportLab напрямую с кириллицей не дружит без шрифтов; WeasyPrint умеет HTML/CSS, но медленный.</span>
+        <span data-lang="en">The report is bilingual: every page has Russian and Uzbek versions in two columns. Uzbek — Cyrillic or Latin script, the bank's choice. ReportLab doesn't handle Cyrillic well without custom fonts; WeasyPrint supports HTML/CSS but is slow.</span>
+      </p>
+      <p>
+        <span data-lang="ru">Гибрид: WeasyPrint для титулки и структуры, ReportLab для таблиц с коэффициентами, <code>pypdf</code> чтобы сшить. <strong>p95: 748 мс</strong>. Было 2.3 секунды до разделения.</span>
+        <span data-lang="en">Hybrid approach: WeasyPrint for the title page and structure, ReportLab for ratio tables, <code>pypdf</code> to merge. <strong>p95: 748 ms</strong>. Was 2.3 seconds before the split.</span>
+      </p>
+
+      <div class="pullquote">
+        <span data-lang="ru">90% сложности оказалось не в банковской математике, а в том, чтобы PDF был одинаковый на Linux-сервере банка и на моём ноутбуке.</span>
+        <span data-lang="en">90% of the complexity turned out to be not in the banking math, but in making the PDF look identical on the bank's Linux server and on my laptop.</span>
+      </div>
+
+      <h3><span data-lang="ru">3. On-premise air-gapped</span><span data-lang="en">3. On-premise air-gapped</span></h3>
+      <p>
+        <span data-lang="ru">Сервер банка не ходит в интернет. Пакеты, зависимости, образ Docker, всё — собирается на CI и приезжает на флешке (буквально). Это значит: vendored deps, проверка SBOM на каждом релизе, отдельный playbook для upgrade без интернета.</span>
+        <span data-lang="en">The bank's server has no internet access. Packages, dependencies, Docker image — everything is built on CI and delivered via USB drive (literally). This means: vendored deps, SBOM verification on every release, a dedicated playbook for upgrades without internet.</span>
+      </p>
+
+      <h2 id="numbers"><span class="num">§ 04</span><span data-lang="ru">Цифры</span><span data-lang="en">Numbers</span></h2>
+
+      <div class="metric-row">
+        <div class="metric">
+          <span class="v"><em>1 310</em></span>
+          <span class="l">TESTS</span>
+        </div>
+        <div class="metric">
+          <span class="v">87.4<em>%</em></span>
+          <span class="l">COVERAGE</span>
+        </div>
+        <div class="metric">
+          <span class="v">748<em>ms</em></span>
+          <span class="l">PDF P95</span>
+        </div>
+        <div class="metric">
+          <span class="v"><em>8.5</em>/10</span>
+          <span class="l">SECURITY</span>
+        </div>
+      </div>
+
+      <p>
+        <span data-lang="ru">За первые два месяца в проде: ~470 заявок прошли через систему. Среднее время решения упало с ~2 рабочих дней до ~40 минут (включая ручную проверку аналитиком). Кредитный комитет получает один документ вместо шести Excel-файлов от разных людей.</span>
+        <span data-lang="en">In the first two months in production: ~470 applications went through the system. Average decision time dropped from ~2 business days to ~40 minutes (including manual review by an analyst). The credit committee receives one document instead of six Excel files from different people.</span>
+      </p>
+
+      <h2 id="lessons"><span class="num">§ 05</span><span data-lang="ru">Что я вынес</span><span data-lang="en">Lessons learned</span></h2>
+      <p>
+        <span data-lang="ru"><strong>(а)</strong> Pydantic v2 на границе — это не «валидация», это договор между слоями. Сначала боролся, потом осознал, потом полюбил.</span>
+        <span data-lang="en"><strong>(a)</strong> Pydantic v2 at the boundary is not "validation" — it's a contract between layers. First I resisted, then I understood, then I embraced it.</span>
+      </p>
+      <p>
+        <span data-lang="ru"><strong>(б)</strong> Версионируемые правила — дорого на старте, бесценно через полгода, когда регулятор поменял один коэффициент и нужно объяснить, почему прошлогодние решения были правильными по тогдашним правилам.</span>
+        <span data-lang="en"><strong>(b)</strong> Versioned rules are expensive at the start, priceless six months later when the regulator changes a ratio and you need to explain why last year's decisions were correct under the rules at the time.</span>
+      </p>
+      <p>
+        <span data-lang="ru"><strong>(в)</strong> «On-premise» на деле означает «у вас не будет интернета, и точно сломается то, что вы не могли предусмотреть без опыта on-prem». На следующем проекте я закладывал отдельные две недели на это по умолчанию.</span>
+        <span data-lang="en"><strong>(c)</strong> "On-premise" in practice means "you will have no internet, and something you couldn't anticipate without on-prem experience will definitely break." On the next project, I budgeted two extra weeks for this by default.</span>
+      </p>
+
+    </article>
+
+    <aside>
+      <nav class="case-toc" aria-label="Table of contents">
+        <div class="head"><span data-lang="ru">Содержание</span><span data-lang="en">Contents</span></div>
+        <ol>
+          <li><a href="#brief"><span data-lang="ru">Бриф</span><span data-lang="en">Brief</span></a></li>
+          <li><a href="#architecture"><span data-lang="ru">Архитектура</span><span data-lang="en">Architecture</span></a></li>
+          <li><a href="#challenges"><span data-lang="ru">Что было сложно</span><span data-lang="en">Challenges</span></a></li>
+          <li><a href="#numbers"><span data-lang="ru">Цифры</span><span data-lang="en">Numbers</span></a></li>
+          <li><a href="#lessons"><span data-lang="ru">Что я вынес</span><span data-lang="en">Lessons learned</span></a></li>
+        </ol>
+      </nav>
+    </aside>
+
+  </div>
+
+  <nav class="case-nav">
+    <a href="pekarna-bot.html" class="prev">
+      <div class="label"><span data-lang="ru">← Предыдущий кейс</span><span data-lang="en">← Previous case</span></div>
+      <div class="title-line">Pekarna Bot</div>
+    </a>
+    <a href="container-bot.html" class="next">
+      <div class="label"><span data-lang="ru">Следующий кейс →</span><span data-lang="en">Next case →</span></div>
+      <div class="title-line">Container Terminal Bot</div>
+    </a>
+  </nav>
+
+  <footer class="site-footer">
+    <div class="row">
+      <a href="../index.html" class="brand">
+        <span class="logo-mark"><svg width="24" height="24" viewBox="0 0 128 128" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><polyline points="24,34 16,34 16,94 24,94"/><polyline points="42,42 59,64 42,86"/><polyline points="86,42 69,64 86,86"/><polyline points="104,34 112,34 112,94 104,94"/></svg></span>
+        <span>Elyor</span>
+      </a>
+      <div class="links">
+        <a href="https://github.com/RiobVo">GitHub</a>
+        <a href="https://t.me/plssog">Telegram</a>
+        <a href="https://linkedin.com/in/%D1%8D%D0%BB%D1%91%D1%80-%D1%8E%D1%81%D1%83%D0%BF%D0%BE%D0%B2-2bb989411">LinkedIn</a>
+              </div>
+    </div>
+    <div class="colophon">© 2026</div>
+  </footer>
+
+</div>
+
+<script src="../scripts/chrome.js"></script>
+<script>
+document.querySelectorAll('.case-nav a').forEach(function(a) {
+  a.addEventListener('mousemove', function(e) {
+    var r = a.getBoundingClientRect();
+    a.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+    a.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+  });
+});
+
+var metrics = document.querySelectorAll('.metric-row .metric');
+if (metrics.length) {
+  new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        metrics.forEach(function(m) { m.classList.add('in-view'); });
+      }
+    });
+  }, { threshold: 0.3 }).observe(document.querySelector('.metric-row'));
+}
+</script>
+</body>
+</html>

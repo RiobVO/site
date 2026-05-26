@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Container Terminal Bot · Elyor</title>
+<meta name="description" content="Telegram-учёт контейнеров для трёх терминалов: ISO 6346, билинг на сервере, xlsx-отчёты в чат.">
+<meta property="og:title" content="Container Terminal Bot — кейс / Элёр">
+<meta property="og:description" content="Telegram-учёт контейнеров для трёх терминалов: ISO 6346, билинг на сервере, xlsx-отчёты в чат.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="../og/container-bot.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="../og/container-bot.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../apple-touch-icon.svg">
+<link rel="stylesheet" href="../styles/base.css">
+<link rel="stylesheet" href="../styles/components.css">
+</head>
+<body data-theme="dark">
+
+<nav class="nav-pill" aria-label="Primary">
+  <a href="../index.html" class="brand">
+    <span class="logo-mark"><svg width="24" height="24" viewBox="0 0 128 128" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><polyline points="24,34 16,34 16,94 24,94"/><polyline points="42,42 59,64 42,86"/><polyline points="86,42 69,64 86,86"/><polyline points="104,34 112,34 112,94 104,94"/></svg></span>
+    <span>Elyor</span>
+  </a>
+  <div class="links">
+    <a href="../index.html#work" class="current"><span data-lang="ru">Работы</span><span data-lang="en">Works</span></a>
+    <a href="../services.html"><span data-lang="ru">Услуги</span><span data-lang="en">Services</span></a>
+    <a href="../index.html#principles"><span data-lang="ru">Принципы</span><span data-lang="en">Principles</span></a>
+      </div>
+  <div class="tools">
+    <button type="button" class="icon-btn" data-lang-cycle aria-label="Cycle language">
+      <span data-lang-label>RU</span>
+    </button>
+    <button type="button" class="icon-btn" data-theme-btn aria-label="Toggle theme"></button>
+  </div>
+  <a href="https://t.me/plssog" class="btn primary cta">
+    Get in touch
+    <span class="arrow">↗</span>
+  </a>
+</nav>
+
+<div class="shell" data-screen-label="case-container-bot">
+
+  <section class="page-head">
+    <div class="breadcrumb">
+      <a href="../index.html"><span data-lang="ru">Главная</span><span data-lang="en">Home</span></a>
+      <span class="sep">/</span>
+      <a href="../index.html#work"><span data-lang="ru">Работы</span><span data-lang="en">Works</span></a>
+      <span class="sep">/</span>
+      <span>Container Bot</span>
+    </div>
+    <div class="case-meta-row">
+      <span class="dot">●</span>
+      <span>Live · Logistics</span>
+      <span class="sep">·</span>
+      <span>2024 – 2025</span>
+      <span class="sep">·</span>
+      <span><span data-lang="ru">3 терминала</span><span data-lang="en">3 terminals</span></span>
+    </div>
+    <h1 class="reveal">
+      <span data-lang="ru">Container Terminal Bot —<br><span class="accent-gradient">учёт контейнеров</span> из Telegram.</span>
+      <span data-lang="en">Container Terminal Bot —<br><span class="accent-gradient">container tracking</span> via Telegram.</span>
+    </h1>
+    <p class="lede reveal d1">
+      <span data-lang="ru">Заменил расшаренный Excel-файл на трёх контейнерных терминалах. ISO 6346 валидация, биллинг на сервере, xlsx-отчёты прямо в чат. p50 латентность 78 мс.</span>
+      <span data-lang="en">Replaced a shared Excel file across three container terminals. ISO 6346 validation, server-side billing, xlsx reports delivered straight to chat. p50 latency 78 ms.</span>
+    </p>
+  </section>
+
+  <section style="padding: 56px 0 24px;">
+    <div class="case-hero-row">
+      <div class="code-card reveal">
+        <div class="head">
+          <span class="path">Telegram · @container_bot</span>
+          <span class="tag">live</span>
+        </div>
+<pre class="body"><span class="prompt">user&gt;</span> /in MSKU 304221 5 40HC
+<span class="out">→ Контейнер принят на хранение
+  ID:       MSKU3042215 · 40' HC
+  Терминал: Sergeli A-2
+  Дата:     2026-04-12 14:22
+  Тариф:    $4.20 / сутки
+  Чек:      #INV-04-2871</span>
+
+<span class="prompt">user&gt;</span> /report 2026-04
+<span class="out" id="caseTyping">→ Готовлю отчёт...
+  📎 sergeli_april_2026.xlsx · 312 KB
+  📊 1 247 движений · 38 клиентов
+  💰 $42 318 биллинга</span>
+
+<span class="prompt">user&gt;</span> /in ABC-12
+<span class="warn">⚠ ABC-12 не похож на ISO 6346.
+  Формат: 4 буквы + 7 цифр.
+  Пример: MSKU 304221 5</span></pre>
+      </div>
+
+      <aside class="case-spec reveal d1">
+        <div class="head">
+          <span><span data-lang="ru">Карточка проекта</span><span data-lang="en">Project card</span></span>
+          <span>v 1.7.3</span>
+        </div>
+        <dl>
+          <dt><span data-lang="ru">Заказчик</span><span data-lang="en">Client</span></dt><dd>Container op.</dd>
+          <dt><span data-lang="ru">Роль</span><span data-lang="en">Role</span></dt><dd>Solo</dd>
+          <dt><span data-lang="ru">Срок</span><span data-lang="en">Duration</span></dt><dd><span data-lang="ru">4 мес.</span><span data-lang="en">4 mo.</span></dd>
+          <dt><span data-lang="ru">Стек</span><span data-lang="en">Stack</span></dt><dd>Python · aiogram 3</dd>
+          <dt><span data-lang="ru">БД</span><span data-lang="en">DB</span></dt><dd>Postgres 15</dd>
+          <dt><span data-lang="ru">Отчёты</span><span data-lang="en">Reports</span></dt><dd>openpyxl</dd>
+          <dt><span data-lang="ru">Очередь</span><span data-lang="en">Queue</span></dt><dd>Redis · ARQ</dd>
+          <dt>Deploy</dt><dd>Docker · Hetzner</dd>
+        </dl>
+        <p class="note">
+          <span data-lang="ru">Имя оператора и тарифные сетки под NDA. Технические детали — публичные.</span>
+          <span data-lang="en">The operator's name and tariff schedules are under NDA. Technical details are public.</span>
+        </p>
+      </aside>
+    </div>
+  </section>
+
+
+  <div class="case-layout">
+
+    <article class="case-body">
+
+      <h2 id="brief"><span class="num">§ 01</span><span data-lang="ru">Бриф</span><span data-lang="en">Brief</span></h2>
+      <p>
+        <span data-lang="ru">Контейнерный оператор имеет три терминала в Ташкенте и Сергелях. На каждом сидит диспетчер с ноутбуком, на котором — расшаренный по Dropbox <code>контейнеры.xlsx</code>. Когда заезжает контейнер, диспетчер открывает файл, вписывает строку. Когда выезжает — вписывает дату выезда. Раз в месяц бухгалтерия считает биллинг ручкой.</span>
+        <span data-lang="en">The container operator runs three terminals in Tashkent and Sergeli. Each one has a dispatcher with a laptop sharing <code>containers.xlsx</code> via Dropbox. When a container arrives, the dispatcher opens the file and adds a row. When it leaves — enters the departure date. Once a month, accounting calculates billing by hand.</span>
+      </p>
+      <p>
+        <span data-lang="ru"><strong>Проблемы Excel-файла:</strong> два диспетчера правят одновременно — потеря строк. Кто-то опечатывается в номере контейнера — потеря денег. Биллинг считается раз в месяц — клиенты спорят с цифрами через полтора месяца.</span>
+        <span data-lang="en"><strong>Excel file problems:</strong> two dispatchers editing simultaneously — lost rows. Someone mistypes a container number — lost revenue. Billing is calculated once a month — clients dispute figures six weeks later.</span>
+      </p>
+      <p>
+        <span data-lang="ru"><strong>Задача:</strong> заменить картину на что-то, что диспетчер сможет использовать с телефона, без установки приложений и без обучения. Telegram — очевидный выбор, потому что все уже в нём сидят.</span>
+        <span data-lang="en"><strong>Goal:</strong> replace this setup with something a dispatcher can use from a phone, no app installs, no training needed. Telegram was the obvious choice — everyone already uses it.</span>
+      </p>
+
+      <h2 id="architecture"><span class="num">§ 02</span><span data-lang="ru">Архитектура</span><span data-lang="en">Architecture</span></h2>
+      <p>
+        <span data-lang="ru">FSM-первый дизайн. Каждая операция (приём, выдача, перемещение, корректировка) — короткий стейт-машинный сценарий из 3 – 5 шагов. Aiogram 3 даёт FSM из коробки, и это идеально ложится на Telegram-UX, где каждое сообщение — шаг.</span>
+        <span data-lang="en">FSM-first design. Each operation (check-in, release, transfer, correction) is a short state-machine scenario of 3–5 steps. Aiogram 3 provides FSM out of the box, and it maps perfectly to Telegram UX where each message is a step.</span>
+      </p>
+
+      <div class="figure">
+        <div class="fig-bar"><span class="fig-title">architecture · operation flow</span></div>
+<pre>┌──────────────────────────────────────────────────────────┐
+│  <span class="fl">Telegram Update</span>                                          │
+│       │                                                   │
+│       ▼                                                   │
+│  ┌─────────┐    <span class="fw">invalid</span>    ┌──────────────────────────┐   │
+│  │ <span class="fc">Router</span>  │ ─────────────▶│ <span class="fw">Helpful error + retry</span>    │   │
+│  └─────────┘               └──────────────────────────┘   │
+│       │                                                   │
+│       ▼                                                   │
+│  ┌─────────┐  ┌─────────┐  ┌─────────┐                    │
+│  │  <span class="fc">FSM</span>    │─▶│ <span class="fc">Use-</span>    │─▶│ <span class="fc">Domain</span>  │                    │
+│  │ <span class="fm">scene</span>   │  │ <span class="fm">case</span>    │  │ <span class="fm">+ Rules</span> │                    │
+│  └─────────┘  └─────────┘  └────┬────┘                    │
+│       ▲                          │                        │
+│       │                          ▼                        │
+│       │      ┌──────────────────────────────────────┐     │
+│       └──────│ <span class="ft">Postgres</span> · <span class="ft">Outbox</span> · <span class="ft">Audit log</span>        │     │
+│              └──────────────────────────────────────┘     │
+└──────────────────────────────────────────────────────────┘</pre>
+        <div class="caption"><span data-lang="ru">Рис. 1 · Поток одной операции. Доменный слой не знает про Telegram.</span><span data-lang="en">Fig. 1 · Flow of a single operation. The domain layer knows nothing about Telegram.</span></div>
+      </div>
+
+      <p>
+        <span data-lang="ru">Доменный слой ничего не знает про Telegram. Это дало возможность через полгода добавить web-админку для бухгалтерии без переписи логики — та же FastAPI поверх тех же use-cases, другой UI.</span>
+        <span data-lang="en">The domain layer knows nothing about Telegram. This made it possible to add a web admin panel for accounting six months later without rewriting any logic — the same FastAPI on top of the same use-cases, different UI.</span>
+      </p>
+
+      <h3 id="iso"><span data-lang="ru">ISO 6346 валидация на этапе ввода</span><span data-lang="en">ISO 6346 validation at input</span></h3>
+      <p>
+        <span data-lang="ru">Номер контейнера — это 4 буквы (owner code) + 7 цифр, где последняя — check digit по стандарту ISO 6346. Считается через умножение позиций на степени двойки. Самая частая ошибка диспетчера — перепутать <code>B</code> и <code>8</code> или <code>0</code> и <code>O</code>. Валидация на входе ловит 100% таких опечаток.</span>
+        <span data-lang="en">A container number is 4 letters (owner code) + 7 digits, where the last one is a check digit per ISO 6346. It's calculated by multiplying positions by powers of two. The most common dispatcher mistake is confusing <code>B</code> with <code>8</code> or <code>0</code> with <code>O</code>. Input validation catches 100% of such typos.</span>
+      </p>
+
+      <div class="code-card">
+        <div class="head">
+          <span class="path">domain/container_number.py</span>
+          <span class="tag">iso 6346</span>
+        </div>
+<pre class="body"><span class="kw">def</span> <span class="fn">validate_iso6346</span>(number: <span class="kw">str</span>) -> ContainerNumber:
+    <span class="comment"># MSKU 304221 5 — 4 letters + 6 digits + check</span>
+    norm = number.upper().replace(<span class="str">" "</span>, <span class="str">""</span>)
+    <span class="kw">if not</span> _PATTERN.match(norm):
+        <span class="kw">raise</span> InvalidContainerNumber(norm, reason=<span class="str">"format"</span>)
+
+    owner, serial, check = norm[:<span class="num-c">4</span>], norm[<span class="num-c">4</span>:<span class="num-c">10</span>], norm[<span class="num-c">10</span>]
+    expected = _check_digit(owner + serial)
+    <span class="kw">if</span> <span class="kw">int</span>(check) != expected:
+        <span class="kw">raise</span> InvalidContainerNumber(
+            norm, reason=<span class="str">"check_digit"</span>,
+            expected=expected, got=<span class="kw">int</span>(check),
+        )
+    <span class="kw">return</span> ContainerNumber(owner=owner, serial=serial)</pre>
+      </div>
+
+      <h2 id="billing"><span class="num">§ 03</span><span data-lang="ru">Биллинг как домен</span><span data-lang="en">Billing as a domain</span></h2>
+      <p>
+        <span data-lang="ru">Биллинг — это всегда соблазн посчитать в Excel. Соблазн нужно задушить рано, потому что «один клиент с нестандартным тарифом» превращается в «пятьдесят клиентов с разными правилами», и Excel становится бомбой замедленного действия.</span>
+        <span data-lang="en">Billing is always tempting to calculate in Excel. That temptation must be killed early, because "one client with a custom tariff" turns into "fifty clients with different rules," and Excel becomes a ticking time bomb.</span>
+      </p>
+      <p>
+        <span data-lang="ru">В доменном слое: <code>Tariff</code>, <code>TariffPeriod</code>, <code>Discount</code>, <code>PartialDay</code>-логика. Любая сумма пересчитывается на лету — я нигде не храню готовое число. Хранится <code>Movement</code> с точными timestamp'ами входа и выхода, а сумма — функция от состояния тарифной сетки на момент движения.</span>
+        <span data-lang="en">In the domain layer: <code>Tariff</code>, <code>TariffPeriod</code>, <code>Discount</code>, <code>PartialDay</code> logic. Every amount is recalculated on the fly — I never store a pre-computed number. What's stored is a <code>Movement</code> with exact entry/exit timestamps, and the amount is a function of the tariff schedule at the time of the movement.</span>
+      </p>
+
+      <div class="pullquote">
+        <span data-lang="ru">Хранить вычисленное число — значит, гарантированно расходиться с реальностью через три месяца, когда поменяется тариф задним числом.</span>
+        <span data-lang="en">Storing a computed number means guaranteed divergence from reality three months later, when a tariff is changed retroactively.</span>
+      </div>
+
+      <h2 id="numbers"><span class="num">§ 04</span><span data-lang="ru">Цифры</span><span data-lang="en">Numbers</span></h2>
+
+      <div class="metric-row">
+        <div class="metric">
+          <span class="v"><em>3k+</em></span>
+          <span class="l">CONTAINERS / Y</span>
+        </div>
+        <div class="metric">
+          <span class="v">78<em>ms</em></span>
+          <span class="l">P50 LATENCY</span>
+        </div>
+        <div class="metric">
+          <span class="v"><em>3</em></span>
+          <span class="l">TERMINALS</span>
+        </div>
+        <div class="metric">
+          <span class="v">0</span>
+          <span class="l">DATA LOSS</span>
+        </div>
+      </div>
+
+      <h2 id="lessons"><span class="num">§ 05</span><span data-lang="ru">Что я вынес</span><span data-lang="en">Lessons learned</span></h2>
+      <p>
+        <span data-lang="ru"><strong>(а)</strong> Telegram — нормальная замена админке для небольших ops-команд. Если все уже в нём сидят, бот окупается в первые две недели. Главное — не строить из него «настоящее приложение» с inline-клавиатурами на десять рядов.</span>
+        <span data-lang="en"><strong>(a)</strong> Telegram is a viable admin panel replacement for small ops teams. If everyone is already using it, the bot pays for itself in the first two weeks. The key is not to build a "real application" with ten rows of inline keyboards.</span>
+      </p>
+      <p>
+        <span data-lang="ru"><strong>(б)</strong> FSM в aiogram 3 — идеальное соответствие тому, как человек ведёт диалог в мессенджере. Шаг — сообщение, отмена — <code>/cancel</code>, валидация — сразу.</span>
+        <span data-lang="en"><strong>(b)</strong> FSM in aiogram 3 is a perfect match for how people converse in a messenger. Step — message, cancel — <code>/cancel</code>, validation — instant.</span>
+      </p>
+      <p>
+        <span data-lang="ru"><strong>(в)</strong> Биллинг считать как функцию от состояния, а не как поле в БД. Это спасло от двух историй вида «тариф поменялся неделю назад, давайте пересчитаем».</span>
+        <span data-lang="en"><strong>(c)</strong> Calculate billing as a function of state, not as a field in the DB. This saved us from two incidents of the "tariff changed a week ago, let's recalculate" variety.</span>
+      </p>
+
+    </article>
+
+    <aside>
+      <nav class="case-toc">
+        <div class="head"><span data-lang="ru">Содержание</span><span data-lang="en">Contents</span></div>
+        <ol>
+          <li><a href="#brief"><span data-lang="ru">Бриф</span><span data-lang="en">Brief</span></a></li>
+          <li><a href="#architecture"><span data-lang="ru">Архитектура</span><span data-lang="en">Architecture</span></a></li>
+          <li><a href="#billing"><span data-lang="ru">Биллинг</span><span data-lang="en">Billing</span></a></li>
+          <li><a href="#numbers"><span data-lang="ru">Цифры</span><span data-lang="en">Numbers</span></a></li>
+          <li><a href="#lessons"><span data-lang="ru">Что я вынес</span><span data-lang="en">Lessons learned</span></a></li>
+        </ol>
+      </nav>
+    </aside>
+
+  </div>
+
+  <nav class="case-nav">
+    <a href="credit-assistant.html" class="prev">
+      <div class="label"><span data-lang="ru">← Предыдущий кейс</span><span data-lang="en">← Previous case</span></div>
+      <div class="title-line">Credit Assistant</div>
+    </a>
+    <a href="serviceflow.html" class="next">
+      <div class="label"><span data-lang="ru">Следующий кейс →</span><span data-lang="en">Next case →</span></div>
+      <div class="title-line">ServiceFlow Platform</div>
+    </a>
+  </nav>
+
+  <footer class="site-footer">
+    <div class="row">
+      <a href="../index.html" class="brand">
+        <span class="logo-mark"><svg width="24" height="24" viewBox="0 0 128 128" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><polyline points="24,34 16,34 16,94 24,94"/><polyline points="42,42 59,64 42,86"/><polyline points="86,42 69,64 86,86"/><polyline points="104,34 112,34 112,94 104,94"/></svg></span>
+        <span>Elyor</span>
+      </a>
+      <div class="links">
+        <a href="https://github.com/RiobVo">GitHub</a>
+        <a href="https://t.me/plssog">Telegram</a>
+        <a href="https://linkedin.com/in/%D1%8D%D0%BB%D1%91%D1%80-%D1%8E%D1%81%D1%83%D0%BF%D0%BE%D0%B2-2bb989411">LinkedIn</a>
+              </div>
+    </div>
+    <div class="colophon">© 2026</div>
+  </footer>
+
+</div>
+
+<script src="../scripts/chrome.js"></script>
+<script>
+document.querySelectorAll('.case-nav a').forEach(function(a) {
+  a.addEventListener('mousemove', function(e) {
+    var r = a.getBoundingClientRect();
+    a.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+    a.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+  });
+});
+
+var metrics = document.querySelectorAll('.metric-row .metric');
+if (metrics.length) {
+  new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        metrics.forEach(function(m) { m.classList.add('in-view'); });
+      }
+    });
+  }, { threshold: 0.3 }).observe(document.querySelector('.metric-row'));
+}
+</script>
+</body>
+</html>

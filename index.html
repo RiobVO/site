@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elyor · Backend Engineer</title>
+<meta name="description" content="Production-серверы для финтеха, логистики и операционной автоматизации. Clean Architecture, наблюдаемость, тесты как контракт.">
+<meta property="og:title" content="Элёр — Backend Engineer">
+<meta property="og:description" content="Production-серверы для финтеха, логистики и операционной автоматизации. Clean Architecture, наблюдаемость, тесты как контракт.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="og/home.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Элёр — Backend Engineer">
+<meta name="twitter:description" content="Production-серверы для финтеха, логистики и операционной автоматизации. Clean Architecture, наблюдаемость, тесты как контракт.">
+<meta name="twitter:image" content="og/home.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.svg">
+<link rel="stylesheet" href="styles/base.css">
+<link rel="stylesheet" href="styles/components.css">
+<template id="__bundler_thumbnail" data-bg-color="#1a1a1a">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="g" cx="50%" cy="35%" r="50%">
+        <stop offset="0%" stop-color="#E07A41" stop-opacity="0.4"/>
+        <stop offset="100%" stop-color="#E07A41" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="t" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#ffd4b0"/>
+        <stop offset="50%" stop-color="#E07A41"/>
+        <stop offset="100%" stop-color="#f0a06a"/>
+      </linearGradient>
+    </defs>
+    <rect width="1200" height="800" fill="#1a1a1a"/>
+    <ellipse cx="600" cy="280" rx="500" ry="240" fill="url(#g)"/>
+    <text x="600" y="420" font-family="JetBrains Mono, monospace" font-size="120" font-weight="500" text-anchor="middle" fill="url(#t)" letter-spacing="-4">Elyor</text>
+    <text x="600" y="490" font-family="JetBrains Mono, monospace" font-size="22" text-anchor="middle" fill="#8a8f98" letter-spacing="4">BACKEND ENGINEER</text>
+  </svg>
+</template>
+</head>
+<body data-theme="dark">
+
+<!-- ── Floating pill nav ── -->
+<nav class="nav-pill" aria-label="Primary">
+  <a href="index.html" class="brand">
+    <span class="logo-mark"><svg width="24" height="24" viewBox="0 0 128 128" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><polyline points="24,34 16,34 16,94 24,94"/><polyline points="42,42 59,64 42,86"/><polyline points="86,42 69,64 86,86"/><polyline points="104,34 112,34 112,94 104,94"/></svg></span>
+    <span>Elyor</span>
+  </a>
+  <div class="links">
+    <a href="index.html#work" class="current"><span data-lang="ru">Работы</span><span data-lang="en">Works</span></a>
+    <a href="services.html"><span data-lang="ru">Услуги</span><span data-lang="en">Services</span></a>
+    <a href="index.html#principles"><span data-lang="ru">Принципы</span><span data-lang="en">Principles</span></a>
+      </div>
+  <div class="tools">
+    <button type="button" class="icon-btn" data-lang-cycle aria-label="Cycle language">
+      <span data-lang-label>RU</span>
+    </button>
+    <button type="button" class="icon-btn" data-theme-btn aria-label="Toggle theme"></button>
+  </div>
+  <a href="https://t.me/plssog" class="btn primary cta">
+    Get in touch
+    <span class="arrow">↗</span>
+  </a>
+</nav>
+
+<div class="shell" data-screen-label="home">
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="eyebrow reveal d1">
+      <span class="dot"></span>
+      <span data-lang="ru">Открыт для проектов</span>
+      <span data-lang="en">Open for projects</span>
+    </div>
+    <h1 class="display reveal d2">
+      <span data-lang="ru">
+        Проектирую.<br>
+        Строю.<br>
+        <span class="accent-gradient">Запускаю.</span>
+      </span>
+      <span data-lang="en">
+        Design.<br>
+        Build.<br>
+        <span class="accent-gradient">Ship.</span>
+      </span>
+    </h1>
+    <p class="lede reveal d3">
+      <span data-lang="ru">Полный цикл: от архитектуры до продакшена. Backend, frontend, AI-интеграции — одна точка ответственности, весь код ваш.</span>
+      <span data-lang="en">Full cycle: from architecture to production. Backend, frontend, AI integrations — one point of responsibility, you own the code.</span>
+    </p>
+
+    <div class="hero-terminal-wrap reveal d4">
+      <div class="hero-terminal" id="hero-term-card">
+        <div class="term-bar">
+          <span class="term-dot r"></span>
+          <span class="term-dot y"></span>
+          <span class="term-dot g"></span>
+          <span class="term-title">elyor@production ~/projects</span>
+        </div>
+        <div class="term-body" id="hero-term">
+          <div class="term-line" data-delay="300">
+            <span class="t-prompt">$</span>
+            <span class="t-cmd">deploy</span>
+            <span class="t-flag">credit-assistant</span>
+            <span class="t-val">--rules 24 --tests 1310</span>
+          </div>
+          <div class="term-line t-output" data-delay="1100">
+            <span class="t-ok">✓</span> coverage <span class="t-metric">87.4%</span> · pdf <span class="t-metric">750ms</span> · audit <span class="t-metric">8.5/10</span>
+            <a href="case/credit-assistant.html" class="t-link"><span data-lang="ru">→ кейс</span><span data-lang="en">→ case</span></a>
+          </div>
+          <div class="term-line" data-delay="2200">
+            <span class="t-prompt">$</span>
+            <span class="t-cmd">deploy</span>
+            <span class="t-flag">support-bot</span>
+            <span class="t-val">--users 4500 --integration bitrix24</span>
+          </div>
+          <div class="term-line t-output" data-delay="3000">
+            <span class="t-ok">✓</span> hr load <span class="t-metric">−70%</span> · fsm forms · ticket routing
+            <a href="case/support-bot.html" class="t-link"><span data-lang="ru">→ кейс</span><span data-lang="en">→ case</span></a>
+          </div>
+          <div class="term-line" data-delay="4100">
+            <span class="t-prompt">$</span>
+            <span class="t-cmd">deploy</span>
+            <span class="t-flag">container-terminal</span>
+            <span class="t-val">--terminals 3 --validation iso6346</span>
+          </div>
+          <div class="term-line t-output" data-delay="4900">
+            <span class="t-ok">✓</span> p50 <span class="t-metric">78ms</span> · xlsx reports · 3 terminals live
+            <a href="case/container-bot.html" class="t-link"><span data-lang="ru">→ кейс</span><span data-lang="en">→ case</span></a>
+          </div>
+          <div class="term-line" data-delay="6000">
+            <span class="t-prompt">$</span>
+            <span class="t-cmd">status</span>
+            <span class="t-flag">--all</span>
+          </div>
+          <div class="term-line t-output" data-delay="6600">
+            <span class="t-ok">✓</span> all systems operational · <span class="t-metric">ready for next project</span><span class="t-cursor"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ctas reveal d5">
+      <a href="#work" class="btn primary">
+        <span data-lang="ru">Смотреть кейсы</span><span data-lang="en">View cases</span>
+        <span class="arrow">→</span>
+      </a>
+      <a href="https://t.me/plssog" class="btn secondary">
+        <span data-lang="ru">Обсудить проект</span><span data-lang="en">Discuss a project</span>
+        <span class="arrow">↗</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── FEATURED WORK ── -->
+  <section class="spread" id="featured">
+    <div class="section-head reveal">
+      <span class="kicker"><span data-lang="ru">В продакшене</span><span data-lang="en">In production</span></span>
+      <h2 class="headline"><span data-lang="ru">Код в продакшене, <span class="accent-gradient">не в презентации.</span></span><span data-lang="en">Code in production, <span class="accent-gradient">not in a pitch deck.</span></span></h2>
+    </div>
+
+    <div class="feature-block reveal">
+      <div class="copy">
+        <span class="kicker no-bar" style="color: var(--accent-cyan);">Fintech · NDA bank · live</span>
+        <h3><span data-lang="ru">Credit Assistant — SME-скоринг с двуязычным PDF за&nbsp;750&nbsp;мс.</span><span data-lang="en">Credit Assistant — SME scoring with bilingual PDF in&nbsp;750&nbsp;ms.</span></h3>
+        <p>
+          <span data-lang="ru">Платформа автоматизирует кредитное решение по малому бизнесу: 24 правила, привязанных к ЦБ РУз, Basel III и стандартам IFC, превращают разрозненную финансовую отчётность в bilingual PDF.</span><span data-lang="en">The platform automates SME credit decisions: 24 rules tied to the Central Bank of Uzbekistan, Basel III and IFC standards turn fragmented financial reports into a bilingual PDF.</span>
+        </p>
+        <p>
+          <span data-lang="ru">On-premise, LDAP, MFA, без облака — потому что банки. 1310 тестов, 87.4% покрытие, 8.5/10 на внешнем security аудите.</span><span data-lang="en">On-premise, LDAP, MFA, no cloud — because banks. 1310 tests, 87.4% coverage, 8.5/10 on an external security audit.</span>
+        </p>
+        <div class="meta-row">
+          <div class="stat">
+            <span class="v"><em>1 310</em></span>
+            <span class="l">TESTS</span>
+          </div>
+          <div class="stat">
+            <span class="v">87.4<em>%</em></span>
+            <span class="l">COVERAGE</span>
+          </div>
+          <div class="stat">
+            <span class="v">748<em>ms</em></span>
+            <span class="l">PDF P95</span>
+          </div>
+          <div class="stat">
+            <span class="v"><em>8.5</em>/10</span>
+            <span class="l">AUDIT</span>
+          </div>
+        </div>
+        <div class="cta-row">
+          <a href="case/credit-assistant.html" class="btn secondary">
+            <span data-lang="ru">Читать кейс</span><span data-lang="en">Read case</span>
+            <span class="arrow">→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="visual">
+        <div class="pipeline">
+          <div class="pipe-head">
+            <span class="title-row">Decision pipeline · production</span>
+            <span class="meta">v 2.4.1</span>
+          </div>
+          <div class="pipe-stage">
+            <span class="ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+            </span>
+            <div class="meta">
+              <div class="name">Application</div>
+              <div class="sub">Finance data in 12 formats</div>
+            </div>
+            <div class="stamp">
+              <span class="step">STEP 01</span>
+              <span class="t">— ms</span>
+            </div>
+          </div>
+          <div class="pipe-link"><div class="vline"></div></div>
+          <div class="pipe-stage">
+            <span class="ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+            </span>
+            <div class="meta">
+              <div class="name">Parse &amp; validate</div>
+              <div class="sub">12 formats → 1 typed model</div>
+            </div>
+            <div class="stamp">
+              <span class="step">STEP 02</span>
+              <span class="t">82 ms</span>
+            </div>
+          </div>
+          <div class="pipe-link"><div class="vline"></div></div>
+          <div class="pipe-stage">
+            <span class="ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            </span>
+            <div class="meta">
+              <div class="name">24 rules engine</div>
+              <div class="sub">Basel III · IFC · ЦБ РУз</div>
+            </div>
+            <div class="stamp">
+              <span class="step">STEP 03</span>
+              <span class="t">38 ms</span>
+            </div>
+          </div>
+          <div class="pipe-link"><div class="vline"></div></div>
+          <div class="pipe-stage">
+            <span class="ico score">B+</span>
+            <div class="meta">
+              <div class="name">Risk score · decision</div>
+              <div class="sub">23 / 24 passed · approve w/ collateral</div>
+            </div>
+            <div class="stamp">
+              <span class="step">STEP 04</span>
+              <span class="t">6 ms</span>
+            </div>
+          </div>
+          <div class="pipe-link"><div class="vline"></div></div>
+          <div class="pipe-stage">
+            <span class="ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+            </span>
+            <div class="meta">
+              <div class="name">Bilingual PDF</div>
+              <div class="sub">RU + UZ · ReportLab + WeasyPrint</div>
+            </div>
+            <div class="stamp">
+              <span class="step">STEP 05</span>
+              <span class="t">622 ms</span>
+            </div>
+          </div>
+          <div class="pipe-footer">
+            <div class="cell">
+              <span class="v">748<em>ms</em></span>
+              <span class="l">P95 LATENCY</span>
+            </div>
+            <div class="cell">
+              <span class="v">99.4<em>%</em></span>
+              <span class="l">SUCCESS</span>
+            </div>
+            <div class="cell">
+              <span class="v">0</span>
+              <span class="l">FAILED / 24H</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ALL WORK — CLI browser ── -->
+  <section class="spread" id="work">
+    <div class="section-head reveal">
+      <span class="kicker"><span data-lang="ru">Проекты</span><span data-lang="en">Projects</span></span>
+      <h2 class="headline"><span data-lang="ru">Ещё пять <span class="accent-gradient">в продакшене.</span></span><span data-lang="en">Five more <span class="accent-gradient">in production.</span></span></h2>
+    </div>
+
+    <div class="workstation reveal d1">
+      <div class="ws-titlebar">
+        <div class="ws-dots"><span></span><span></span><span></span></div>
+        <div class="ws-title">~/projects — zsh</div>
+      </div>
+      <div class="ws-split">
+        <aside class="ws-tree" id="wsTree"></aside>
+        <main class="ws-detail" id="wsDetail"></main>
+      </div>
+      <div class="ws-statusbar" id="wsStatus"></div>
+    </div>
+  </section>
+
+  <!-- ── PRINCIPLES ── -->
+  <section class="spread" id="principles">
+    <div class="section-head reveal">
+      <span class="kicker"><span data-lang="ru">Принципы</span><span data-lang="en">Principles</span></span>
+      <h2 class="headline"><span data-lang="ru">Как я <span class="accent-gradient">строю.</span></span><span data-lang="en">How I <span class="accent-gradient">build.</span></span></h2>
+    </div>
+
+    <div class="principles-grid reveal">
+      <div class="principle-cell">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        </div>
+        <h4><span data-lang="ru">Сначала чертёж, потом стройка</span><span data-lang="en">Blueprint first, then build</span></h4>
+        <p><span data-lang="ru">Прежде чем писать код, продумываем что и как будет работать. Это дешевле, чем потом переделывать.</span><span data-lang="en">Before writing code, we think through what and how it will work. It is cheaper than rewriting later.</span></p>
+        <div class="pc-demo">
+          <div class="pc-demo-inner">
+            <span data-lang="ru"><strong>Например:</strong> для банка мы за неделю обсуждений и схем сэкономили <strong>3 месяца</strong> переписывания кода. Час на чертёж экономит день на стройке.</span><span data-lang="en"><strong>Example:</strong> for a bank, a week of discussions and diagrams saved <strong>3 months</strong> of rewriting code. An hour on a blueprint saves a day on the build.</span>
+          </div>
+        </div>
+        <span class="pc-cta"><span class="arr">›</span> <span><span data-lang="ru">Подробнее...</span><span data-lang="en">Details...</span></span></span>
+      </div>
+
+      <div class="principle-cell">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        </div>
+        <h4><span data-lang="ru">Проверяем всё перед запуском</span><span data-lang="en">We test everything before launch</span></h4>
+        <p><span data-lang="ru">Каждая функция автоматически тестируется. Ошибка вылезает до того, как её увидит ваш клиент.</span><span data-lang="en">Every function is automatically tested. Bugs surface before your client ever sees them.</span></p>
+        <div class="pc-demo">
+          <div class="pc-demo-inner">
+            <span data-lang="ru"><strong>В цифрах:</strong> в одном из проектов <strong>1 310 автоматических проверок</strong> запускаются при каждом изменении кода. Если что-то ломается — сборка падает, и в прод это не уходит.</span><span data-lang="en"><strong>In numbers:</strong> in one project <strong>1,310 automated checks</strong> run on every code change. If something breaks, the build fails and nothing reaches production.</span>
+          </div>
+        </div>
+        <span class="pc-cta"><span class="arr">›</span> <span><span data-lang="ru">Подробнее...</span><span data-lang="en">Details...</span></span></span>
+      </div>
+
+      <div class="principle-cell">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg>
+        </div>
+        <h4><span data-lang="ru">Всегда видим, что происходит</span><span data-lang="en">We always see what is happening</span></h4>
+        <p><span data-lang="ru">Подключаем мониторинг с первого дня. Если что-то сломается — узнаем раньше, чем заметят пользователи.</span><span data-lang="en">Monitoring is set up from day one. If something breaks, we know before your users notice.</span></p>
+        <div class="pc-demo">
+          <div class="pc-demo-inner">
+            <span data-lang="ru"><strong>На практике:</strong> если время ответа сервера превысит секунду — нам приходит уведомление в Telegram. Чиним до того, как ваши клиенты заметят.</span><span data-lang="en"><strong>In practice:</strong> if server response time exceeds one second, we get a Telegram alert. We fix it before your clients notice.</span>
+          </div>
+        </div>
+        <span class="pc-cta"><span class="arr">›</span> <span><span data-lang="ru">Подробнее...</span><span data-lang="en">Details...</span></span></span>
+      </div>
+
+      <div class="principle-cell">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </div>
+        <h4><span data-lang="ru">Ничего не теряется</span><span data-lang="en">Nothing gets lost</span></h4>
+        <p><span data-lang="ru">Если сервер перезагрузился или пропал интернет — данные всё равно дойдут. Никаких пропавших заявок.</span><span data-lang="en">If the server restarts or the internet drops, data still gets through. No lost requests.</span></p>
+        <div class="pc-demo">
+          <div class="pc-demo-inner">
+            <span data-lang="ru"><strong>Пример:</strong> бот в Telegram упал на 5 минут — но 18 заявок, пришедших в это время, уже лежали в нашей базе. Когда поднялся — все ушли в CRM. Клиент даже не заметил.</span><span data-lang="en"><strong>Example:</strong> the Telegram bot went down for 5 minutes, but 18 requests received during that time were already in our database. When it came back up, all of them went to the CRM. The client did not even notice.</span>
+          </div>
+        </div>
+        <span class="pc-cta"><span class="arr">›</span> <span><span data-lang="ru">Подробнее...</span><span data-lang="en">Details...</span></span></span>
+      </div>
+
+      <div class="principle-cell">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+        </div>
+        <h4><span data-lang="ru">Всё описано понятным языком</span><span data-lang="en">Everything is documented clearly</span></h4>
+        <p><span data-lang="ru">Если завтра вам понадобится другой разработчик — он разберётся в системе за день, а не за месяц.</span><span data-lang="en">If tomorrow you need another developer, they will understand the system in a day, not a month.</span></p>
+        <div class="pc-demo">
+          <div class="pc-demo-inner">
+            <span data-lang="ru"><strong>Гарантия независимости:</strong> вы не привязаны ко мне навсегда. Инструкции, схемы, обоснования решений лежат рядом с кодом. Любой опытный разработчик подхватит проект.</span><span data-lang="en"><strong>Independence guarantee:</strong> you are not locked in forever. Instructions, diagrams, and decision rationale live next to the code. Any experienced developer can pick up the project.</span>
+          </div>
+        </div>
+        <span class="pc-cta"><span class="arr">›</span> <span><span data-lang="ru">Подробнее...</span><span data-lang="en">Details...</span></span></span>
+      </div>
+
+      <div class="principle-cell">
+        <div class="icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <h4><span data-lang="ru">Используем проверенное, не модное</span><span data-lang="en">We use proven tools, not trendy ones</span></h4>
+        <p><span data-lang="ru">Берём инструменты, которые работают 10+ лет. Стабильнее, дешевле и проще найти специалиста позже.</span><span data-lang="en">We pick tools that have worked for 10+ years. More stable, cheaper, and easier to find specialists later.</span></p>
+        <div class="pc-demo">
+          <div class="pc-demo-inner">
+            <span data-lang="ru"><strong>Логика:</strong> Python работает с 1991 года, Postgres — с 1996-го. Они никуда не денутся. А «модный фреймворк года» может умереть через 18 месяцев — и вы остаётесь с кодом, который никто не поддерживает.</span><span data-lang="en"><strong>Logic:</strong> Python has been around since 1991, Postgres since 1996. They are not going anywhere. The "trendy framework of the year" might die in 18 months, leaving you with code nobody supports.</span>
+          </div>
+        </div>
+        <span class="pc-cta"><span class="arr">›</span> <span><span data-lang="ru">Подробнее...</span><span data-lang="en">Details...</span></span></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROCESS TIMELINE ── -->
+  <section class="spread" id="process">
+    <div class="section-head reveal">
+      <span class="kicker"><span data-lang="ru">Процесс · 5 шагов</span><span data-lang="en">Process · 5 steps</span></span>
+      <h2 class="headline"><span data-lang="ru">От первого письма <span class="accent-gradient">до запуска и поддержки.</span></span><span data-lang="en">From first email <span class="accent-gradient">to launch and support.</span></span></h2>
+    </div>
+
+    <div class="process-timeline reveal">
+      <div class="pt-grid">
+
+        <div class="pt-step in active">
+          <span class="pt-num-big">01</span>
+          <div class="pt-dot"></div>
+          <div class="pt-content">
+            <span class="pt-time"><span data-lang="ru">Бесплатно</span><span data-lang="en">Free</span></span>
+            <h4><span data-lang="ru">Созвон</span><span data-lang="en">Discovery call</span></h4>
+            <p><span data-lang="ru">Вы рассказываете задачу, я задаю вопросы. 30 минут, без обязательств. Если не подходим друг другу — ничего не должны.</span><span data-lang="en">You describe the task, I ask questions. 30 minutes, no obligations. If we are not a fit, you owe nothing.</span></p>
+            <span class="pt-status done"><span data-lang="ru">бесплатно</span><span data-lang="en">free</span></span>
+          </div>
+        </div>
+
+        <div class="pt-step">
+          <span class="pt-num-big">02</span>
+          <div class="pt-dot"></div>
+          <div class="pt-content">
+            <span class="pt-time"><span data-lang="ru">1 – 3 дня</span><span data-lang="en">1 – 3 days</span></span>
+            <h4><span data-lang="ru">Оценка</span><span data-lang="en">Estimate</span></h4>
+            <p><span data-lang="ru">Пишу что именно сделаю, за сколько и в какие сроки. Отдельно — что НЕ входит. Документ на две страницы, не на двадцать.</span><span data-lang="en">I write down exactly what I will do, for how much, and by when. Separately — what is NOT included. A two-page document, not twenty.</span></p>
+            <span class="pt-status"><span data-lang="ru">документ</span><span data-lang="en">document</span></span>
+          </div>
+        </div>
+
+        <div class="pt-step">
+          <span class="pt-num-big">03</span>
+          <div class="pt-dot"></div>
+          <div class="pt-content">
+            <span class="pt-time"><span data-lang="ru">Основной этап</span><span data-lang="en">Main phase</span></span>
+            <h4><span data-lang="ru">Работа</span><span data-lang="en">Development</span></h4>
+            <p><span data-lang="ru">Каждую пятницу показываю что сделано. Каждый понедельник уточняем план. Вы видите прогресс, а не ждёте три месяца.</span><span data-lang="en">Every Friday I show what is done. Every Monday we refine the plan. You see progress instead of waiting three months.</span></p>
+            <span class="pt-status now"><span data-lang="ru">еженедельные демо</span><span data-lang="en">weekly demos</span></span>
+          </div>
+        </div>
+
+        <div class="pt-step">
+          <span class="pt-num-big">04</span>
+          <div class="pt-dot"></div>
+          <div class="pt-content">
+            <span class="pt-time"><span data-lang="ru">Финал</span><span data-lang="en">Final</span></span>
+            <h4><span data-lang="ru">Сдача</span><span data-lang="en">Delivery</span></h4>
+            <p><span data-lang="ru">Ставлю систему на ваш сервер, показываю вашей команде как ей пользоваться, передаю все пароли и документацию.</span><span data-lang="en">I deploy the system to your server, show your team how to use it, and hand over all credentials and documentation.</span></p>
+            <span class="pt-status"><span data-lang="ru">всё ваше</span><span data-lang="en">all yours</span></span>
+          </div>
+        </div>
+
+        <div class="pt-step">
+          <span class="pt-num-big">05</span>
+          <div class="pt-dot"></div>
+          <div class="pt-content">
+            <span class="pt-time"><span data-lang="ru">+30 дней</span><span data-lang="en">+30 days</span></span>
+            <h4><span data-lang="ru">Гарантия</span><span data-lang="en">Warranty</span></h4>
+            <p><span data-lang="ru">Месяц после сдачи — чиню баги, отвечаю на вопросы. Входит в стоимость. Если что-то сломается — не бросаю.</span><span data-lang="en">One month after delivery I fix bugs and answer questions. Included in the price. If something breaks, I do not walk away.</span></p>
+            <span class="pt-status done"><span data-lang="ru">включено в цену</span><span data-lang="en">included</span></span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── INTEGRATIONS ── -->
+  <section class="spread integrations-section">
+    <div class="section-head reveal">
+      <span class="kicker"><span data-lang="ru">Интеграции</span><span data-lang="en">Integrations</span></span>
+      <h2 class="headline"><span data-lang="ru">1С, Bitrix24, банки, маркетплейсы — <span class="accent-gradient">пусть говорят друг с другом.</span></span><span data-lang="en">1C, Bitrix24, banks, marketplaces — <span class="accent-gradient">let them talk to each other.</span></span></h2>
+    </div>
+
+    <div class="integrations-row">
+      <div class="reveal">
+        <p class="int-copy">
+          <span data-lang="ru">Если данные приходится переносить вручную из системы в систему — это работа для сервера, не для человека. Делаем надёжные интеграции, которые переживают пиковые нагрузки, перезапуски и плохую связь.</span><span data-lang="en">If data has to be moved manually between systems, that is a job for a server, not a person. We build reliable integrations that survive peak loads, restarts, and poor connectivity.</span>
+        </p>
+        <ul class="int-list">
+          <li>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            <span data-lang="ru">Двусторонняя синхронизация 1С ↔ CRM</span><span data-lang="en">Bidirectional 1C ↔ CRM sync</span>
+          </li>
+          <li>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            <span data-lang="ru">Bitrix24 как pipeline продаж</span><span data-lang="en">Bitrix24 as a sales pipeline</span>
+          </li>
+          <li>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            <span data-lang="ru">Платёжные системы, банки, маркетплейсы</span><span data-lang="en">Payment systems, banks, marketplaces</span>
+          </li>
+          <li>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+            <span data-lang="ru">Retry-логика — чтобы данные не терялись</span><span data-lang="en">Retry logic — so no data is lost</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="reveal d1">
+        <div class="integrations-viz">
+          <svg class="lines" viewBox="0 0 400 340" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="iline" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="rgba(224,122,65,0.05)"/>
+                <stop offset="50%" stop-color="rgba(224,122,65,0.6)"/>
+                <stop offset="100%" stop-color="rgba(224,122,65,0.05)"/>
+              </linearGradient>
+            </defs>
+            <path id="path1" class="p1" d="M 50 60 Q 200 60 200 170" fill="none" stroke="url(#iline)" stroke-width="1.5"/>
+            <path id="path2" class="p2" d="M 50 170 Q 130 170 200 170" fill="none" stroke="url(#iline)" stroke-width="1.5"/>
+            <path id="path3" class="p3" d="M 50 280 Q 200 280 200 170" fill="none" stroke="url(#iline)" stroke-width="1.5"/>
+            <path id="path4" class="p4" d="M 200 170 Q 200 60 350 60" fill="none" stroke="url(#iline)" stroke-width="1.5"/>
+            <path id="path5" class="p5" d="M 200 170 Q 270 170 350 170" fill="none" stroke="url(#iline)" stroke-width="1.5"/>
+            <path id="path6" class="p6" d="M 200 170 Q 200 280 350 280" fill="none" stroke="url(#iline)" stroke-width="1.5"/>
+
+            <circle class="packet" r="3">
+              <animateMotion dur="3.8s" repeatCount="indefinite"><mpath href="#path1"/></animateMotion>
+            </circle>
+            <circle class="packet green" r="3">
+              <animateMotion dur="3.2s" repeatCount="indefinite" begin="0.6s"><mpath href="#path2"/></animateMotion>
+            </circle>
+            <circle class="packet pink" r="3">
+              <animateMotion dur="4.2s" repeatCount="indefinite" begin="1.2s"><mpath href="#path3"/></animateMotion>
+            </circle>
+            <circle class="packet" r="3">
+              <animateMotion dur="3.6s" repeatCount="indefinite" begin="0.3s"><mpath href="#path4"/></animateMotion>
+            </circle>
+            <circle class="packet green" r="3">
+              <animateMotion dur="3s" repeatCount="indefinite" begin="0.9s"><mpath href="#path5"/></animateMotion>
+            </circle>
+            <circle class="packet pink" r="3">
+              <animateMotion dur="4s" repeatCount="indefinite" begin="1.5s"><mpath href="#path6"/></animateMotion>
+            </circle>
+          </svg>
+          <div class="col">
+            <span class="pill"><span class="bd"></span><span data-lang="ru">1С Бухгалтерия</span><span data-lang="en">1C Accounting</span></span>
+            <span class="pill"><span class="bd green"></span>Bitrix24 CRM</span>
+            <span class="pill"><span class="bd purple"></span>Bank API</span>
+          </div>
+          <div class="core-shell">
+            <span class="core-pulse"></span>
+            <span class="core-pulse"></span>
+            <span class="core-pulse"></span>
+            <span class="core-orbit"><span></span><span></span><span></span></span>
+            <div class="core">
+              Your system
+              <span class="small">CORE</span>
+            </div>
+          </div>
+          <div class="col right">
+            <span class="pill">Telegram <span class="bd"></span></span>
+            <span class="pill">Email <span class="bd green"></span></span>
+            <span class="pill"><span data-lang="ru">Маркетплейсы</span><span data-lang="en">Marketplaces</span> <span class="bd purple"></span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ── CONTACT (engineering) ── -->
+  <section class="cta engineering" id="contact">
+    <div class="shell">
+      <div class="contact-panel reveal">
+        <div class="cp-head">
+          <span class="left"><span data-lang="ru">Открыт для проектов · 1 слот свободен</span><span data-lang="en">Open for projects · 1 slot available</span></span>
+          <span class="right"><span data-lang="ru">↵ ответ в течение дня</span><span data-lang="en">↵ reply within a day</span></span>
+        </div>
+        <div class="cp-body">
+          <h2 class="cp-title"><span data-lang="ru">Есть задача? <span class="accent-gradient">Напишите.</span></span><span data-lang="en">Have a task? <span class="accent-gradient">Get in touch.</span></span></h2>
+          <p class="cp-sub"><span data-lang="ru">Расскажите что строите и где болит — отвечу в течение дня.</span><span data-lang="en">Tell me what you're building and where it hurts — I will reply within a day.</span></p>
+
+          <div class="ctas" style="margin-top: 32px; display: flex; gap: 12px; flex-wrap: wrap;">
+            <a href="https://t.me/plssog" class="btn primary">
+              Telegram
+              <span class="arrow">↗</span>
+            </a>
+            <a href="mailto:eleru340@gmail.com" class="btn secondary">
+              eleru340@gmail.com
+              <span class="arrow">↗</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer class="site-footer">
+    <div class="row">
+      <a href="index.html" class="brand">
+        <span class="logo-mark"><svg width="24" height="24" viewBox="0 0 128 128" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><polyline points="24,34 16,34 16,94 24,94"/><polyline points="42,42 59,64 42,86"/><polyline points="86,42 69,64 86,86"/><polyline points="104,34 112,34 112,94 104,94"/></svg></span>
+        <span>Elyor</span>
+      </a>
+      <div class="links">
+        <a href="https://github.com/RiobVo">GitHub</a>
+        <a href="https://t.me/plssog">Telegram</a>
+        <a href="https://linkedin.com/in/%D1%8D%D0%BB%D1%91%D1%80-%D1%8E%D1%81%D1%83%D0%BF%D0%BE%D0%B2-2bb989411">LinkedIn</a>
+              </div>
+    </div>
+    <div class="colophon">
+      © 2026 · Hand-built, no analytics, no cookies
+    </div>
+  </footer>
+
+</div>
+
+<script src="scripts/chrome.js"></script>
+<script>
+(function(){
+  // CLI project browser
+  var WS_PROJECTS = [
+    {
+      id: 'container-bot', name: 'container-bot', status: 'live', year: '2024 – 2025',
+      domain: 'Logistics · Container tracking',
+      desc_ru: 'Заменил Excel на трёх терминалах. ISO 6346 валидация, биллинг на лету, xlsx-отчёты в чат.',
+      desc_en: 'Replaced Excel across three terminals. ISO 6346 validation, on-the-fly billing, xlsx reports to chat.',
+      result_ru: 'Ноль потерянных строк, ноль опечаток в номерах. Биллинг из ручного стал мгновенным.',
+      result_en: 'Zero lost rows, zero number typos. Billing went from manual to instant.',
+      metrics: [{val:'78ms',label:'p50 latency'},{val:'3',label:'Terminals'},{val:'3k+',label:'Containers/y'},{val:'0',label:'Data loss'}],
+      stack: ['aiogram','Postgres','openpyxl','Docker'],
+      case: 'case/container-bot.html'
+    },
+    {
+      id: 'serviceflow', name: 'serviceflow', status: 'ref', year: '2024',
+      domain: 'Open Source · Reference architecture',
+      desc_ru: 'Clean Architecture: Repository + UoW, domain FSM, outbox, ETag/If-Match, RFC 7807. Открытый код с ADR.',
+      desc_en: 'Clean Architecture: Repository + UoW, domain FSM, outbox, ETag/If-Match, RFC 7807. Open source with ADRs.',
+      result_ru: 'Шаблон, который можно форкнуть и запустить за 10 минут. Каждое решение задокументировано.',
+      result_en: 'A template you can fork and run in 10 minutes. Every decision is documented.',
+      metrics: [{val:'Clean',label:'Architecture'},{val:'UoW',label:'Pattern'},{val:'FSM',label:'State mgmt'},{val:'RFC 7807',label:'Errors'}],
+      stack: ['FastAPI','React','Postgres','Pydantic v2'],
+      case: 'case/serviceflow.html'
+    },
+    {
+      id: 'support-bot', name: 'support-bot', status: 'live', year: '2023 – 2024',
+      domain: 'Enterprise · Internal support · 4 500 emp',
+      desc_ru: '4500 сотрудников → FSM-формы → маршрутизация → Bitrix24. Три локали. HR-почта −70%.',
+      desc_en: '4,500 employees → FSM forms → routing → Bitrix24. Three locales. HR inbox −70%.',
+      result_ru: 'HR-отдел перестал тонуть в одинаковых письмах. Рутина ушла в бота, люди занялись людьми.',
+      result_en: 'HR department stopped drowning in repetitive emails. Routine went to the bot, people focused on people.',
+      metrics: [{val:'4 500',label:'Employees'},{val:'−70%',label:'HR inbox'},{val:'Bitrix24',label:'CRM sync'},{val:'RU/UZ/EN',label:'Locales'}],
+      stack: ['Python','aiogram','Bitrix24','Postgres'],
+      case: 'case/support-bot.html'
+    },
+    {
+      id: 'manicure-bot', name: 'manicure-bot', status: 'live', year: '2025 – now',
+      domain: 'Beauty · SaaS · Per-salon licensing',
+      desc_ru: 'Per-salon VPS, Ed25519-лицензия, booking FSM, напоминания 24ч/2ч, бэкап каждые 6ч.',
+      desc_en: 'Per-salon VPS, Ed25519 licensing, booking FSM, reminders at 24h/2h, backup every 6h.',
+      result_ru: 'Ноль двойных записей. Клиенты не забывают о визите — напоминания работают.',
+      result_en: 'Zero double bookings. Clients never forget their visit — reminders do the job.',
+      metrics: [{val:'Ed25519',label:'Licensing'},{val:'86+',label:'Tests'},{val:'6h',label:'Backup'},{val:'<200ms',label:'Response'}],
+      stack: ['aiogram','SQLite WAL','Redis','Docker'],
+      case: 'case/manicure-bot.html'
+    },
+    {
+      id: 'pekarna-bot', name: 'pekarna-bot', status: 'live', year: '2025',
+      domain: 'B2B · Bakery operations',
+      desc_ru: 'Кафе и магазины заказывают через Telegram. Цены на клиента, автоотчёт в 08:00, xlsx-выгрузка.',
+      desc_en: 'Cafes and shops order via Telegram. Per-client pricing, auto-report at 08:00, xlsx export.',
+      result_ru: 'Утренний отчёт готов до прихода директора. Ошибки в заказах исчезли.',
+      result_en: 'Morning report is ready before the director arrives. Order errors disappeared.',
+      metrics: [{val:'08:00',label:'Auto-report'},{val:'Per-client',label:'Pricing'},{val:'B2B',label:'Model'},{val:'.xlsx',label:'Export'}],
+      stack: ['aiogram','SQLAlchemy','APScheduler','openpyxl'],
+      case: 'case/pekarna-bot.html'
+    }
+  ];
+
+  function initWorkstation() {
+    var tree = document.getElementById('wsTree');
+    var detail = document.getElementById('wsDetail');
+    if (!tree || !detail) return;
+
+    var treeHtml = '<div class="ws-tree-header">Explorer</div><div class="ws-tree-root">~/projects/</div><ul class="ws-tree-list">';
+    WS_PROJECTS.forEach(function(p, i) {
+      var branch = i === WS_PROJECTS.length - 1 ? '└──' : '├──';
+      var cls = i === 0 ? ' active' : '';
+      treeHtml += '<li class="ws-tree-item' + cls + '" data-project="' + p.id + '">' +
+        '<span class="ws-branch">' + branch + '</span>' +
+        '<span class="ws-dot ' + (p.status === 'live' ? 'live' : 'ref') + '"></span>' +
+        '<span class="ws-name">' + p.name + '/</span></li>';
+    });
+    treeHtml += '</ul>';
+    tree.innerHTML = treeHtml;
+
+    var detailHtml = '';
+    WS_PROJECTS.forEach(function(p, i) {
+      var active = i === 0 ? ' active' : '';
+      var badge = p.status === 'live'
+        ? '<span class="ws-badge live"><span class="ws-badge-dot"></span>Live</span>'
+        : '<span class="ws-badge ref"><span class="ws-badge-dot"></span>Reference</span>';
+      var metricsHtml = '';
+      p.metrics.forEach(function(m) {
+        metricsHtml += '<div class="ws-metric"><div class="ws-metric-val">' + m.val + '</div><div class="ws-metric-label">' + m.label + '</div></div>';
+      });
+      var stackHtml = '';
+      p.stack.forEach(function(s) { stackHtml += '<span class="ws-pill">' + s + '</span>'; });
+
+      detailHtml += '<div class="ws-view' + active + '" data-project="' + p.id + '">' +
+        '<div class="ws-proj-header"><h3 class="ws-proj-name">' + p.name + '</h3>' +
+        '<div class="ws-proj-meta-row">' + badge + '</div>' +
+        '<div class="ws-proj-domain">' + p.domain + '</div></div>' +
+        '<p class="ws-proj-desc"><span data-lang="ru">' + p.desc_ru + '</span><span data-lang="en">' + p.desc_en + '</span></p>' +
+        '<p class="ws-proj-result"><span data-lang="ru">' + p.result_ru + '</span><span data-lang="en">' + p.result_en + '</span></p>' +
+        '<div class="ws-metrics">' + metricsHtml + '</div>' +
+        '<div class="ws-stack">' + stackHtml + '</div>' +
+        '<a href="' + p.case + '" class="ws-case-link"><span data-lang="ru">Читать кейс</span><span data-lang="en">Read full case</span> <span class="arrow">→</span></a>' +
+        '</div>';
+    });
+    detail.innerHTML = detailHtml;
+
+    var statusBar = document.getElementById('wsStatus');
+    function updateStatus(id) {
+      var p = WS_PROJECTS.find(function(x) { return x.id === id; });
+      if (!p || !statusBar) return;
+      var liveCount = WS_PROJECTS.filter(function(x) { return x.status === 'live'; }).length;
+      statusBar.innerHTML =
+        '<span class="ws-sb-item"><span class="ws-sb-dot"></span>' + p.stack[0] + '</span>' +
+        '<span class="ws-sb-item">' + p.domain.split(' · ')[0] + '</span>' +
+        '<span class="ws-sb-right">' + liveCount + ' live · ' + WS_PROJECTS.length + ' projects</span>';
+    }
+    updateStatus(WS_PROJECTS[0].id);
+
+    tree.querySelectorAll('.ws-tree-item').forEach(function(item) {
+      item.addEventListener('click', function() {
+        var id = item.dataset.project;
+        tree.querySelectorAll('.ws-tree-item').forEach(function(el) { el.classList.toggle('active', el.dataset.project === id); });
+        detail.querySelectorAll('.ws-view').forEach(function(el) {
+          if (el.dataset.project === id) requestAnimationFrame(function() { el.classList.add('active'); });
+          else el.classList.remove('active');
+        });
+        updateStatus(id);
+      });
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return;
+      var activeItem = tree.querySelector('.ws-tree-item.active');
+      if (!activeItem) return;
+      var idx = WS_PROJECTS.findIndex(function(p) { return p.id === activeItem.dataset.project; });
+      var next;
+      if (e.key === 'ArrowDown') next = idx < WS_PROJECTS.length - 1 ? idx + 1 : 0;
+      else next = idx > 0 ? idx - 1 : WS_PROJECTS.length - 1;
+      tree.querySelectorAll('.ws-tree-item')[next].click();
+      e.preventDefault();
+    });
+  }
+  initWorkstation();
+
+  // Re-apply language to dynamically created data-lang spans
+  const lang = document.body.getAttribute('data-active-lang') || 'ru';
+  document.querySelectorAll('#wsDetail [data-lang]').forEach(b => {
+    b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+  });
+
+  // Interactive principles cards
+  document.querySelectorAll('.principle-cell').forEach(cell => {
+    cell.addEventListener('mousemove', (e) => {
+      const r = cell.getBoundingClientRect();
+      cell.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      cell.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    });
+    cell.addEventListener('click', () => {
+      cell.classList.toggle('open');
+    });
+  });
+
+  // Process timeline — hover transfers .active
+  const ptSteps = document.querySelectorAll('.process-timeline .pt-step');
+  ptSteps.forEach(step => {
+    step.addEventListener('mouseenter', () => {
+      ptSteps.forEach(s => s.classList.remove('active'));
+      step.classList.add('active');
+    });
+  });
+
+  // Bidirectional scroll reveal — fades in entering, fades out leaving
+  if ('IntersectionObserver' in window && ptSteps.length) {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          e.target.classList.remove('out');
+        } else {
+          // Only fade out if we've scrolled PAST it (above the viewport)
+          // not if we haven't scrolled to it yet (below the viewport)
+          const rect = e.boundingClientRect;
+          if (rect.bottom < 0) {
+            e.target.classList.remove('in');
+            e.target.classList.add('out');
+          } else {
+            e.target.classList.remove('in');
+            e.target.classList.remove('out');
+          }
+        }
+      });
+    }, { threshold: [0, 0.2, 0.5], rootMargin: '-15% 0px -15% 0px' });
+
+    ptSteps.forEach((step, i) => {
+      step.style.transitionDelay = (i % 2 === 0 ? 0 : 0.05) + 's';
+      obs.observe(step);
+    });
+
+    // Scroll-driven active step (whichever is closest to viewport center)
+    let raf = 0;
+    const updateActive = () => {
+      raf = 0;
+      const center = window.innerHeight / 2;
+      let closest = null;
+      let closestDist = Infinity;
+      ptSteps.forEach(s => {
+        const r = s.getBoundingClientRect();
+        const c = r.top + r.height / 2;
+        const d = Math.abs(c - center);
+        if (d < closestDist && r.top < window.innerHeight && r.bottom > 0) {
+          closestDist = d;
+          closest = s;
+        }
+      });
+      ptSteps.forEach(s => s.classList.toggle('active', s === closest));
+    };
+    window.addEventListener('scroll', () => {
+      if (!raf) raf = requestAnimationFrame(updateActive);
+    }, { passive: true });
+    updateActive();
+  } else {
+    ptSteps.forEach(s => s.classList.add('in'));
+  }
+})();
+</script>
+</body>
+</html>
