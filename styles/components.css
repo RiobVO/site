@@ -2165,7 +2165,21 @@
   padding: 40px 0 56px;
   border-top: 1px solid var(--line);
 }
-@media (max-width: 720px) { .case-nav { flex-direction: column; gap: 24px; } }
+@media (max-width: 720px) {
+  .case-nav {
+    flex-direction: column;
+    gap: 0;
+    padding: 24px 0 32px;
+  }
+  .case-nav a {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line);
+    width: 100%;
+  }
+  .case-nav a:last-child { border-bottom: 0; }
+  .case-nav a.next { text-align: left; align-items: flex-start; }
+  .case-nav a .title-line { font-size: 17px; }
+}
 .case-nav a {
   text-decoration: none;
   color: inherit;
