@@ -313,8 +313,46 @@ function initCaseTyping() {
   }, { threshold: 0.3 }).observe(card);
 }
 
+function initMobileNav() {
+  const nav = document.querySelector('.nav-pill');
+  if (!nav) return;
+  const links = nav.querySelector('.links');
+  if (!links) return;
+
+  const burger = document.createElement('button');
+  burger.type = 'button';
+  burger.className = 'nav-burger';
+  burger.setAttribute('aria-label', 'Menu');
+  burger.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>';
+
+  const tools = nav.querySelector('.tools');
+  if (tools) tools.before(burger);
+
+  const menu = document.createElement('div');
+  menu.className = 'nav-mobile-menu';
+  Array.from(links.querySelectorAll('a')).forEach((a) => {
+    const clone = a.cloneNode(true);
+    menu.appendChild(clone);
+  });
+  document.body.appendChild(menu);
+
+  burger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const open = menu.classList.toggle('open');
+    burger.setAttribute('aria-expanded', String(open));
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!menu.contains(/** @type {Node} */(e.target)) && e.target !== burger) {
+      menu.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+    }
+  });
+}
+
 function initAll() {
   bindChrome();
+  initMobileNav();
   initScrollReveal();
   initFaqAnimation();
   initCardHover();
