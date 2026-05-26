@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Support Bot · Elyor</title>
+<meta name="description" content="Точка приёма заявок от 4500 сотрудников: Bitrix24, RU/UZ/EN, FSM-формы.">
+<meta property="og:title" content="Internal Support Bot — кейс / Элёр">
+<meta property="og:description" content="Точка приёма заявок от 4500 сотрудников: Bitrix24, RU/UZ/EN, FSM-формы.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="../og/support-bot.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="../og/support-bot.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../apple-touch-icon.svg">
+<link rel="stylesheet" href="../styles/base.css">
+<link rel="stylesheet" href="../styles/components.css">
+</head>
+<body data-theme="dark">
+
+<nav class="nav-pill" aria-label="Primary">
+  <a href="../index.html" class="brand">
+    <span class="logo-mark"><svg width="24" height="24" viewBox="0 0 128 128" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><polyline points="24,34 16,34 16,94 24,94"/><polyline points="42,42 59,64 42,86"/><polyline points="86,42 69,64 86,86"/><polyline points="104,34 112,34 112,94 104,94"/></svg></span>
+    <span>Elyor</span>
+  </a>
+  <div class="links">
+    <a href="../index.html#work" class="current"><span data-lang="ru">Работы</span><span data-lang="en">Works</span></a>
+    <a href="../services.html"><span data-lang="ru">Услуги</span><span data-lang="en">Services</span></a>
+    <a href="../index.html#principles"><span data-lang="ru">Принципы</span><span data-lang="en">Principles</span></a>
+      </div>
+  <div class="tools">
+    <button type="button" class="icon-btn" data-lang-cycle aria-label="Cycle language">
+      <span data-lang-label>RU</span>
+    </button>
+    <button type="button" class="icon-btn" data-theme-btn aria-label="Toggle theme"></button>
+  </div>
+  <a href="https://t.me/plssog" class="btn primary cta">
+    Get in touch
+    <span class="arrow">↗</span>
+  </a>
+</nav>
+
+<div class="shell" data-screen-label="case-support-bot">
+
+  <section class="page-head">
+    <div class="breadcrumb">
+      <a href="../index.html"><span data-lang="ru">Главная</span><span data-lang="en">Home</span></a>
+      <span class="sep">/</span>
+      <a href="../index.html#work"><span data-lang="ru">Работы</span><span data-lang="en">Works</span></a>
+      <span class="sep">/</span>
+      <span>Support Bot</span>
+    </div>
+    <div class="case-meta-row">
+      <span class="dot">●</span>
+      <span>Live · Enterprise</span>
+      <span class="sep">·</span>
+      <span>2024</span>
+      <span class="sep">·</span>
+      <span><span data-lang="ru">4 500 сотрудников</span><span data-lang="en">4,500 employees</span></span>
+    </div>
+    <h1 class="reveal">
+      <span data-lang="ru">Internal Support Bot —<br><span class="accent-gradient">единое окно</span> для HR, IT и АХО.</span>
+      <span data-lang="en">Internal Support Bot —<br><span class="accent-gradient">single entry point</span> for HR, IT, and Facilities.</span>
+    </h1>
+    <p class="lede reveal d1">
+      <span data-lang="ru">Заменил три разных почтовых ящика и корпоративный портал, которым никто не пользовался. Заявка за четыре нажатия в Telegram, всё падает в Bitrix24 уже с правильным тэгом и маршрутизацией.</span>
+      <span data-lang="en">Replaced three separate mailboxes and a corporate portal nobody used. A request in four taps via Telegram — everything lands in Bitrix24 with the right tag and routing already applied.</span>
+    </p>
+  </section>
+
+  <section style="padding: 56px 0 24px;">
+    <div class="case-hero-row">
+      <div class="code-card reveal">
+        <div class="head">
+          <span class="path">Telegram · @company_support_bot</span>
+          <span class="tag">live</span>
+        </div>
+<pre class="body"><span class="prompt">user&gt;</span> /start
+<span class="out">→ Salom! Tilni tanlang / Выберите язык
+   [O'zbek]  [Русский]  [English]</span>
+
+<span class="prompt">user&gt;</span> [Русский]
+<span class="out">→ Что произошло?
+   [IT-проблема]  [HR-вопрос]  [АХО]
+   [Корпоративная техника]  [Другое]</span>
+
+<span class="prompt">user&gt;</span> [IT-проблема]
+<span class="out">→ В двух словах опишите проблему:</span>
+
+<span class="prompt">user&gt;</span> Не работает принтер на 4 этаже,
+        блок Б, рядом с переговоркой.
+<span class="out">→ Прикрепите фото (если есть)
+   или нажмите /skip</span>
+
+<span class="prompt">user&gt;</span> /skip
+<span class="ok" id="caseTyping">→ Заявка #IT-04-8721 создана
+  ⏱ Ответ в течение 2 часов
+  📎 Bitrix24 → Назначено: Алексей К.</span></pre>
+      </div>
+
+      <aside class="case-spec reveal d1">
+        <div class="head">
+          <span><span data-lang="ru">Карточка проекта</span><span data-lang="en">Project card</span></span>
+          <span>v 2.1.4</span>
+        </div>
+        <dl>
+          <dt><span data-lang="ru">Клиент</span><span data-lang="en">Client</span></dt><dd><span data-lang="ru">Корп. сектор</span><span data-lang="en">Corporate</span></dd>
+          <dt><span data-lang="ru">Сотрудников</span><span data-lang="en">Employees</span></dt><dd>4 500+</dd>
+          <dt><span data-lang="ru">Срок</span><span data-lang="en">Duration</span></dt><dd><span data-lang="ru">3 мес.</span><span data-lang="en">3 mo.</span></dd>
+          <dt><span data-lang="ru">Стек</span><span data-lang="en">Stack</span></dt><dd>Python · aiogram</dd>
+          <dt><span data-lang="ru">БД</span><span data-lang="en">DB</span></dt><dd>Postgres 14</dd>
+          <dt>Integration</dt><dd>Bitrix24 REST</dd>
+          <dt><span data-lang="ru">Языки</span><span data-lang="en">Languages</span></dt><dd>UZ · RU · EN</dd>
+          <dt>Deploy</dt><dd>Docker</dd>
+        </dl>
+        <p class="note">
+          <span data-lang="ru">Корп-имя клиента под NDA. Цифры и технические детали — публичные.</span>
+          <span data-lang="en">The corporate client's name is under NDA. Figures and technical details are public.</span>
+        </p>
+      </aside>
+    </div>
+  </section>
+
+
+  <div class="case-layout">
+
+    <article class="case-body">
+
+      <h2 id="brief"><span class="num">§ 01</span><span data-lang="ru">Бриф</span><span data-lang="en">Brief</span></h2>
+      <p>
+        <span data-lang="ru">Компания на 4 500 человек, три отдела принимают заявки: IT, HR, АХО. У каждого — свой почтовый ящик и свой Bitrix24-pipeline. Сотрудник, у которого «не печатает принтер», должен сначала угадать, куда писать; потом написать письмо в свободной форме; потом ждать.</span>
+        <span data-lang="en">A 4,500-person company, three departments accept requests: IT, HR, Facilities. Each has its own mailbox and its own Bitrix24 pipeline. An employee whose "printer won't print" first has to guess where to write, then compose a free-form email, then wait.</span>
+      </p>
+      <p>
+        <span data-lang="ru">Корпоративный портал был — но им не пользовались. Долгая авторизация, форма из 14 полей, обязательное закрепление файла.</span>
+        <span data-lang="en">There was a corporate portal — but nobody used it. Slow login, a 14-field form, mandatory file attachment.</span>
+      </p>
+      <p>
+        <span data-lang="ru"><strong>Задача:</strong> сделать одну точку входа, доступную с телефона за секунду, на трёх языках, чтобы заявка попадала в правильный Bitrix24-pipeline уже с правильным тэгом и назначенным исполнителем.</span>
+        <span data-lang="en"><strong>Goal:</strong> create a single entry point accessible from a phone in one second, in three languages, so that the request lands in the right Bitrix24 pipeline with the correct tag and assigned executor.</span>
+      </p>
+
+      <h2 id="design"><span class="num">§ 02</span><span data-lang="ru">Дизайн UX</span><span data-lang="en">UX Design</span></h2>
+      <p>
+        <span data-lang="ru">Главное правило: <strong>не больше четырёх нажатий</strong> от старта до поданной заявки. Это потолок, ниже которого сотрудник просто пишет письмо коллеге.</span>
+        <span data-lang="en">The main rule: <strong>no more than four taps</strong> from start to submitted request. That's the ceiling — below it, the employee just emails a colleague.</span>
+      </p>
+      <ul>
+        <li><span data-lang="ru">Шаг 1: выбор языка (запоминается)</span><span data-lang="en">Step 1: language selection (remembered)</span></li>
+        <li><span data-lang="ru">Шаг 2: категория (4 кнопки)</span><span data-lang="en">Step 2: category (4 buttons)</span></li>
+        <li><span data-lang="ru">Шаг 3: подкатегория (если нужна)</span><span data-lang="en">Step 3: subcategory (if needed)</span></li>
+        <li><span data-lang="ru">Шаг 4: одно текстовое поле + опциональное фото</span><span data-lang="en">Step 4: one text field + optional photo</span></li>
+      </ul>
+      <p>
+        <span data-lang="ru">FSM реализуется через aiogram 3, состояния хранятся в Redis. Если сотрудник «потерял» бот на середине — state-recovery возвращает его на последний шаг, не начиная сначала.</span>
+        <span data-lang="en">FSM is implemented via aiogram 3, states stored in Redis. If an employee "loses" the bot mid-flow — state recovery returns them to the last step without starting over.</span>
+      </p>
+
+      <h2 id="i18n"><span class="num">§ 03</span><span data-lang="ru">Локализация без боли</span><span data-lang="en">Painless localization</span></h2>
+      <p>
+        <span data-lang="ru">Три языка: узбекский (кириллица по умолчанию, латиница опционально), русский, английский. Не gettext: тут нет смысла, потому что строки короткие, переводы могут править non-tech люди.</span>
+        <span data-lang="en">Three languages: Uzbek (Cyrillic by default, Latin optional), Russian, English. Not gettext — no point here since strings are short and translations can be edited by non-tech people.</span>
+      </p>
+      <p>
+        <span data-lang="ru">Переводы лежат в Postgres-таблице с ключом <code>(code, lang)</code>. HR-менеджер заходит в web-админку и правит формулировку «не работает интернет» на узбекском, не трогая код. Кэш в Redis на 5 минут.</span>
+        <span data-lang="en">Translations live in a Postgres table keyed by <code>(code, lang)</code>. An HR manager opens the web admin and edits the Uzbek wording for "internet is down" without touching code. Redis cache with a 5-minute TTL.</span>
+      </p>
+
+      <div class="pullquote">
+        <span data-lang="ru">Локализация — это не файл .po. Это процесс, в котором HR-менеджер должен править формулировки без деплоя.</span>
+        <span data-lang="en">Localization is not a .po file. It's a process where an HR manager needs to edit wording without a deploy.</span>
+      </div>
+
+      <h2 id="bitrix"><span class="num">§ 04</span><span data-lang="ru">Bitrix24 как тонкое место</span><span data-lang="en">Bitrix24 as the bottleneck</span></h2>
+      <p>
+        <span data-lang="ru">Bitrix24 REST API — rate-limited, не идемпотентный, иногда отвечает 502 без объяснения причины. Прямые вызовы из handler'а — гарантированный путь к потерянным заявкам.</span>
+        <span data-lang="en">Bitrix24 REST API is rate-limited, non-idempotent, and occasionally returns 502 with no explanation. Direct calls from the handler are a guaranteed path to lost requests.</span>
+      </p>
+      <p>
+        <span data-lang="ru">Решение: outbox pattern. Handler пишет заявку в Postgres и кладёт событие <code>CreateBitrixDeal</code> в outbox-таблицу в той же транзакции. ARQ-worker подхватывает событие, идёт в Bitrix, обрабатывает 502 с экспоненциальным backoff. Если за 15 минут не удалось — алерт админу в Telegram.</span>
+        <span data-lang="en">Solution: outbox pattern. The handler writes the request to Postgres and places a <code>CreateBitrixDeal</code> event in the outbox table within the same transaction. An ARQ worker picks up the event, calls Bitrix, handles 502 with exponential backoff. If it fails for 15 minutes — an alert goes to the admin via Telegram.</span>
+      </p>
+
+      <h2 id="numbers"><span class="num">§ 05</span><span data-lang="ru">Цифры</span><span data-lang="en">Numbers</span></h2>
+
+      <div class="metric-row">
+        <div class="metric">
+          <span class="v"><em>4.5k+</em></span>
+          <span class="l">EMPLOYEES</span>
+        </div>
+        <div class="metric">
+          <span class="v">−<em>70%</em></span>
+          <span class="l">HR EMAIL LOAD</span>
+        </div>
+        <div class="metric">
+          <span class="v">~<em>2h</em></span>
+          <span class="l">AVG RESPONSE</span>
+        </div>
+        <div class="metric">
+          <span class="v"><em>3</em></span>
+          <span class="l">LANGUAGES</span>
+        </div>
+      </div>
+
+      <h2 id="lessons"><span class="num">§ 06</span><span data-lang="ru">Что я вынес</span><span data-lang="en">Lessons learned</span></h2>
+      <p>
+        <span data-lang="ru"><strong>(а)</strong> Корпоративные пользователи — такие же люди, как остальные. Если интерфейс требует более 30 секунд — им воспользуется только тот, кому абсолютно необходимо.</span>
+        <span data-lang="en"><strong>(a)</strong> Corporate users are people too. If the interface takes more than 30 seconds — only those who absolutely must will use it.</span>
+      </p>
+      <p>
+        <span data-lang="ru"><strong>(б)</strong> Локализация на трёх языках — это не технический вопрос, это процесс. HR должен иметь возможность поменять формулировку без тикета на разработку.</span>
+        <span data-lang="en"><strong>(b)</strong> Localization in three languages is not a technical question — it's a process. HR must be able to change wording without filing a development ticket.</span>
+      </p>
+      <p>
+        <span data-lang="ru"><strong>(в)</strong> Внешние API — всегда тонкое место. Outbox + retry + алерт — скучные паттерны, которые ловят 100% инцидентов с Bitrix.</span>
+        <span data-lang="en"><strong>(c)</strong> External APIs are always the bottleneck. Outbox + retry + alert — boring patterns that catch 100% of Bitrix incidents.</span>
+      </p>
+
+    </article>
+
+    <aside>
+      <nav class="case-toc">
+        <div class="head"><span data-lang="ru">Содержание</span><span data-lang="en">Contents</span></div>
+        <ol>
+          <li><a href="#brief"><span data-lang="ru">Бриф</span><span data-lang="en">Brief</span></a></li>
+          <li><a href="#design"><span data-lang="ru">Дизайн UX</span><span data-lang="en">UX Design</span></a></li>
+          <li><a href="#i18n"><span data-lang="ru">Локализация</span><span data-lang="en">Localization</span></a></li>
+          <li><a href="#bitrix"><span data-lang="ru">Bitrix24</span><span data-lang="en">Bitrix24</span></a></li>
+          <li><a href="#numbers"><span data-lang="ru">Цифры</span><span data-lang="en">Numbers</span></a></li>
+          <li><a href="#lessons"><span data-lang="ru">Что я вынес</span><span data-lang="en">Lessons learned</span></a></li>
+        </ol>
+      </nav>
+    </aside>
+
+  </div>
+
+  <nav class="case-nav">
+    <a href="serviceflow.html" class="prev">
+      <div class="label"><span data-lang="ru">← Предыдущий кейс</span><span data-lang="en">← Previous case</span></div>
+      <div class="title-line">ServiceFlow Platform</div>
+    </a>
+    <a href="manicure-bot.html" class="next">
+      <div class="label"><span data-lang="ru">Следующий кейс →</span><span data-lang="en">Next case →</span></div>
+      <div class="title-line">Manicure Bot</div>
+    </a>
+  </nav>
+
+  <footer class="site-footer">
+    <div class="row">
+      <a href="../index.html" class="brand">
+        <span class="logo-mark"><svg width="24" height="24" viewBox="0 0 128 128" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><polyline points="24,34 16,34 16,94 24,94"/><polyline points="42,42 59,64 42,86"/><polyline points="86,42 69,64 86,86"/><polyline points="104,34 112,34 112,94 104,94"/></svg></span>
+        <span>Elyor</span>
+      </a>
+      <div class="links">
+        <a href="https://github.com/RiobVo">GitHub</a>
+        <a href="https://t.me/plssog">Telegram</a>
+        <a href="https://linkedin.com/in/%D1%8D%D0%BB%D1%91%D1%80-%D1%8E%D1%81%D1%83%D0%BF%D0%BE%D0%B2-2bb989411">LinkedIn</a>
+              </div>
+    </div>
+    <div class="colophon">© 2026</div>
+  </footer>
+
+</div>
+
+<script src="../scripts/chrome.js"></script>
+<script>
+// Cursor glow on case nav
+document.querySelectorAll('.case-nav a').forEach(function(a) {
+  a.addEventListener('mousemove', function(e) {
+    var r = a.getBoundingClientRect();
+    a.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+    a.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+  });
+});
+
+// Metrics scroll reveal with stagger
+var metrics = document.querySelectorAll('.metric-row .metric');
+if (metrics.length) {
+  new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        metrics.forEach(function(m) { m.classList.add('in-view'); });
+      }
+    });
+  }, { threshold: 0.3 }).observe(document.querySelector('.metric-row'));
+}
+</script>
+</body>
+</html>

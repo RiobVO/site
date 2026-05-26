@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pekarna Bot · Elyor</title>
+<meta name="description" content="Telegram-бот для управления заказами пекарни: B2B-клиенты, индивидуальные цены, утренние отчёты, Excel-экспорт.">
+<meta property="og:title" content="Pekarna Bot — кейс / Элёр">
+<meta property="og:description" content="Telegram-бот для управления заказами пекарни: B2B-клиенты, индивидуальные цены, утренние отчёты, Excel-экспорт.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="../og/pekarna-bot.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="../og/pekarna-bot.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../apple-touch-icon.svg">
+<link rel="stylesheet" href="../styles/base.css">
+<link rel="stylesheet" href="../styles/components.css">
+</head>
+<body data-theme="dark">
+
+<nav class="nav-pill" aria-label="Primary">
+  <a href="../index.html" class="brand">
+    <span class="logo-mark"><svg width="24" height="24" viewBox="0 0 128 128" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><polyline points="24,34 16,34 16,94 24,94"/><polyline points="42,42 59,64 42,86"/><polyline points="86,42 69,64 86,86"/><polyline points="104,34 112,34 112,94 104,94"/></svg></span>
+    <span>Elyor</span>
+  </a>
+  <div class="links">
+    <a href="../index.html#work" class="current"><span data-lang="ru">Работы</span><span data-lang="en">Works</span></a>
+    <a href="../services.html"><span data-lang="ru">Услуги</span><span data-lang="en">Services</span></a>
+    <a href="../index.html#principles"><span data-lang="ru">Принципы</span><span data-lang="en">Principles</span></a>
+      </div>
+  <div class="tools">
+    <button type="button" class="icon-btn" data-lang-cycle aria-label="Cycle language">
+      <span data-lang-label>RU</span>
+    </button>
+    <button type="button" class="icon-btn" data-theme-btn aria-label="Toggle theme"></button>
+  </div>
+  <a href="https://t.me/plssog" class="btn primary cta">
+    Get in touch
+    <span class="arrow">↗</span>
+  </a>
+</nav>
+
+<div class="shell" data-screen-label="case-pekarna-bot">
+
+  <section class="page-head">
+    <div class="breadcrumb">
+      <a href="../index.html"><span data-lang="ru">Главная</span><span data-lang="en">Home</span></a>
+      <span class="sep">/</span>
+      <a href="../index.html#work"><span data-lang="ru">Работы</span><span data-lang="en">Works</span></a>
+      <span class="sep">/</span>
+      <span>Pekarna Bot</span>
+    </div>
+    <div class="case-meta-row">
+      <span class="dot">●</span>
+      <span>Live · Food &amp; Bev</span>
+      <span class="sep">·</span>
+      <span>2025</span>
+      <span class="sep">·</span>
+      <span><span data-lang="ru">B2B-заказы</span><span data-lang="en">B2B orders</span></span>
+    </div>
+    <h1 class="reveal">
+      <span data-lang="ru">Pekarna Bot —<br><span class="accent-gradient">управление заказами пекарни</span> через Telegram.</span>
+      <span data-lang="en">Pekarna Bot —<br><span class="accent-gradient">bakery order management</span> via Telegram.</span>
+    </h1>
+    <p class="lede reveal d1">
+      <span data-lang="ru">Перевёл пекарню с телефонных звонков и WhatsApp-заказов на структурированный Telegram-бот. Индивидуальные цены для каждого клиента, автоматические утренние отчёты в 08:00, Excel-экспорт, RU/UZ интерфейс.</span>
+      <span data-lang="en">Moved a bakery from phone calls and WhatsApp orders to a structured Telegram bot. Per-client pricing, automated morning reports at 08:00, Excel export, RU/UZ interface.</span>
+    </p>
+  </section>
+
+  <section style="padding: 56px 0 24px;">
+    <div class="case-hero-row">
+      <div class="code-card reveal">
+        <div class="head">
+          <span class="path">Telegram · @pekarna_bot</span>
+          <span class="tag">live</span>
+        </div>
+<pre class="body"><span class="prompt">admin&gt;</span> /orders 2026-03-27
+<span class="out">→ Заказы на 27 марта:
+  #1041 · Кафе «Восток» · доставка
+    Хлеб белый ×50, Самса ×30, Лепёшка ×80
+    Итого: 1 240 000 сум · ⏳ новый
+
+  #1042 · ООО «Green Food» · самовывоз
+    Хлеб чёрный ×20, Булочка ×100
+    Итого: 890 000 сум · ✓ принят</span>
+
+<span class="prompt">admin&gt;</span> /accept 1041
+<span class="out">→ ✓ Заказ #1041 принят.
+  Клиенту отправлено уведомление.
+  Статус: новый → принят → готовится</span>
+
+<span class="prompt">admin&gt;</span> /stats march
+<span class="out" id="caseTyping">→ 📊 Март 2026:
+  Заказов: 847
+  Выручка: 42.3M сум
+  Средний чек: 499 000 сум
+  📎 march_2026_report.xlsx</span></pre>
+      </div>
+
+      <aside class="case-spec reveal d1">
+        <div class="head">
+          <span><span data-lang="ru">Карточка проекта</span><span data-lang="en">Project card</span></span>
+          <span>v 1.0</span>
+        </div>
+        <dl>
+          <dt><span data-lang="ru">Заказчик</span><span data-lang="en">Client</span></dt><dd><span data-lang="ru">Пекарня</span><span data-lang="en">Bakery</span></dd>
+          <dt><span data-lang="ru">Роль</span><span data-lang="en">Role</span></dt><dd>Solo</dd>
+          <dt><span data-lang="ru">Срок</span><span data-lang="en">Duration</span></dt><dd><span data-lang="ru">2 мес.</span><span data-lang="en">2 mo.</span></dd>
+          <dt><span data-lang="ru">Стек</span><span data-lang="en">Stack</span></dt><dd>Python · aiogram 3</dd>
+          <dt><span data-lang="ru">БД</span><span data-lang="en">DB</span></dt><dd>SQLite / Postgres</dd>
+          <dt><span data-lang="ru">Экспорт</span><span data-lang="en">Export</span></dt><dd>openpyxl</dd>
+          <dt><span data-lang="ru">Расписание</span><span data-lang="en">Schedule</span></dt><dd>APScheduler</dd>
+          <dt>Deploy</dt><dd>Railway</dd>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+
+  <div class="case-layout">
+
+    <article class="case-body">
+
+      <h2 id="brief"><span class="num">§ 01</span><span data-lang="ru">Бриф</span><span data-lang="en">Brief</span></h2>
+      <p>
+        <span data-lang="ru">Пекарня продаёт хлеб, самсу и выпечку оптом — кафе, рестораны, магазины. Заказы принимаются по телефону и в WhatsApp. Менеджер записывает в тетрадку, потом перебивает в Excel. К утру пекарь получает сводку на бумажке.</span>
+        <span data-lang="en">The bakery sells bread, samsa, and pastries wholesale — to cafes, restaurants, and shops. Orders come in via phone calls and WhatsApp. A manager writes them down in a notebook, then re-enters into Excel. By morning the baker gets a summary on a piece of paper.</span>
+      </p>
+      <p>
+        <span data-lang="ru"><strong>Проблемы:</strong> ошибки в количествах при ручном переносе, потерянные заказы в WhatsApp-чатах, нет истории — клиент спорит «я заказывал 80, а не 50». Биллинг — раз в месяц вручную, цены у каждого клиента свои, и менеджер помнит их по памяти.</span>
+        <span data-lang="en"><strong>Problems:</strong> quantity errors during manual transfer, lost orders buried in WhatsApp chats, no history — the client argues "I ordered 80, not 50." Billing once a month by hand, each client has custom pricing, and the manager remembers it all from memory.</span>
+      </p>
+      <p>
+        <span data-lang="ru"><strong>Задача:</strong> Telegram-бот, через который клиенты сами оформляют заказы, а админ видит сводку и управляет статусами. Без сайта, без приложения — всё в мессенджере.</span>
+        <span data-lang="en"><strong>Goal:</strong> a Telegram bot where clients place orders themselves, and the admin sees a summary and manages statuses. No website, no app — everything in the messenger.</span>
+      </p>
+
+      <h2 id="architecture"><span class="num">§ 02</span><span data-lang="ru">Архитектура</span><span data-lang="en">Architecture</span></h2>
+      <p>
+        <span data-lang="ru">FSM-подход для обоих потоков. Регистрация клиента — трёхшаговый сценарий: контактные данные → название организации → телефон. Оформление заказа — выбор продуктов, количество, комментарий, тип доставки и дата. Каждый шаг валидируется сразу, ошибка — понятное сообщение и повтор.</span>
+        <span data-lang="en">FSM approach for both flows. Client registration is a three-step scenario: contact details → organization name → phone. Order placement: product selection, quantity, comment, delivery type and date. Each step is validated immediately — error means a clear message and retry.</span>
+      </p>
+
+      <div class="figure">
+        <div class="fig-bar"><span class="fig-title">architecture · router split</span></div>
+<pre>┌────────────────────────────────────────────────────────┐
+│  <span class="fl">Telegram Update</span>                                        │
+│       │                                                 │
+│       ▼                                                 │
+│  ┌──────────┐  <span class="fw">admin?</span>  ┌──────────────────────────┐     │
+│  │  <span class="fc">Router</span>   │────<span class="fw">YES</span>──▶│ <span class="fc">Admin Router</span> <span class="fm">(priority)</span>  │     │
+│  └──────────┘          └──────────────────────────┘     │
+│       │ <span class="fw">NO</span>                                              │
+│       ▼                                                 │
+│  ┌──────────┐  ┌──────────┐  ┌──────────────────┐      │
+│  │  <span class="fc">Client</span>   │─▶│   <span class="fc">FSM</span>    │─▶│  <span class="fc">Domain Models</span>   │      │
+│  │  <span class="fm">Router</span>   │  │  <span class="fm">States</span>  │  │  <span class="fm">Order/Product/</span>  │      │
+│  └──────────┘  └──────────┘  │  <span class="fm">ClientPrice</span>     │      │
+│                               └────────┬─────────┘      │
+│                                        │                │
+│       ┌────────────────────────────────┘                │
+│       ▼                                                 │
+│  ┌──────────────────────────────────────────────────┐   │
+│  │  <span class="ft">SQLAlchemy async</span> · <span class="ft">SQLite</span> / <span class="ft">PostgreSQL</span>           │   │
+│  └──────────────────────────────────────────────────┘   │
+│       │                                                 │
+│       ▼                                                 │
+│  ┌──────────────┐  ┌──────────────┐                     │
+│  │  <span class="ft">APScheduler</span>  │  │   <span class="ft">openpyxl</span>   │                     │
+│  │  <span class="fm">08:00 daily</span>  │  │  <span class="fm">xlsx export</span> │                     │
+│  └──────────────┘  └──────────────┘                     │
+└────────────────────────────────────────────────────────┘</pre>
+        <div class="caption"><span data-lang="ru">Рис. 1 · Разделение роутеров: админ-команды обрабатываются приоритетно, клиентские — через FSM-сценарии.</span><span data-lang="en">Fig. 1 · Router separation: admin commands are handled with priority, client requests go through FSM scenarios.</span></div>
+      </div>
+
+      <p>
+        <span data-lang="ru">Доменные модели: <code>Client</code> с юридическими полями (ИНН, МФО, расчётный счёт, адрес), <code>Product</code> с базовой ценой, <code>Order</code> с позициями и статусами, <code>ClientPrice</code> — индивидуальная цена продукта для конкретного клиента. Если записи в ClientPrice нет, берётся базовая цена из Product.</span>
+        <span data-lang="en">Domain models: <code>Client</code> with legal entity fields (INN, MFO, bank account, address), <code>Product</code> with base price, <code>Order</code> with line items and statuses, <code>ClientPrice</code> — per-product pricing for a specific client. If no ClientPrice record exists, the base price from Product is used.</span>
+      </p>
+      <p>
+        <span data-lang="ru">Два потока статусов: доставка (новый → принят → готовится → в пути → доставлен) и самовывоз (новый → принят → готовится → готов → выдан). Каждая смена статуса отправляет уведомление клиенту.</span>
+        <span data-lang="en">Two status workflows: delivery (new → accepted → preparing → on the way → delivered) and pickup (new → accepted → preparing → ready → given). Each status change sends a notification to the client.</span>
+      </p>
+
+      <h2 id="b2b"><span class="num">§ 03</span><span data-lang="ru">B2B-специфика</span><span data-lang="en">B2B specifics</span></h2>
+      <p>
+        <span data-lang="ru">Это не потребительский бот с каталогом и корзиной. Клиенты — юрлица, и бот обязан хранить реквизиты: ИНН, МФО, расчётный счёт, юридический адрес. Эти данные нужны для выставления счетов и сверки. Клиент редактирует реквизиты сам через профиль — не через менеджера.</span>
+        <span data-lang="en">This is not a consumer bot with a catalog and shopping cart. Clients are legal entities, and the bot must store their details: INN (tax ID), MFO (bank code), bank account, legal address. This data is required for invoicing and reconciliation. Clients edit their own details through the profile — not through a manager.</span>
+      </p>
+      <p>
+        <span data-lang="ru"><strong>Индивидуальные цены.</strong> Кафе «Восток» покупает хлеб по 8 000 сум, а ООО «Green Food» — по 7 500, потому что берёт больше. Модель <code>ClientPrice</code> хранит пару (клиент, продукт) → цена. Админ назначает через бот: <code>/set_price @client Хлеб белый 7500</code>. Если для клиента нет записи — применяется базовая цена из каталога.</span>
+        <span data-lang="en"><strong>Per-client pricing.</strong> Cafe "Vostok" buys bread at 8,000 sum, while "Green Food" LLC pays 7,500 because they order larger volumes. The <code>ClientPrice</code> model stores a (client, product) → price pair. Admin sets it via bot: <code>/set_price @client White bread 7500</code>. If no record exists for the client — the base catalog price applies.</span>
+      </p>
+      <p>
+        <span data-lang="ru"><strong>Утренние отчёты.</strong> APScheduler запускает задачу каждый день в 08:00 Asia/Tashkent. Админ получает сводку: сколько заказов на сегодня, общая сумма, список позиций по продуктам. Пекарь видит, что печь, до начала смены.</span>
+        <span data-lang="en"><strong>Morning reports.</strong> APScheduler fires a task every day at 08:00 Asia/Tashkent. The admin receives a summary: how many orders for today, total amount, product breakdown. The baker sees what to bake before the shift starts.</span>
+      </p>
+
+      <h2 id="numbers"><span class="num">§ 04</span><span data-lang="ru">Цифры</span><span data-lang="en">Numbers</span></h2>
+
+      <div class="metric-row">
+        <div class="metric">
+          <span class="v">08:00</span>
+          <span class="l"><span data-lang="ru">УТРЕННИЙ ОТЧЁТ</span><span data-lang="en">DAILY REPORT</span></span>
+        </div>
+        <div class="metric">
+          <span class="v">xlsx</span>
+          <span class="l"><span data-lang="ru">ЭКСПОРТ</span><span data-lang="en">EXPORT</span></span>
+        </div>
+        <div class="metric">
+          <span class="v">MIN<em>sum</em></span>
+          <span class="l"><span data-lang="ru">ПОРОГ ЗАКАЗА</span><span data-lang="en">ORDER THRESHOLD</span></span>
+        </div>
+        <div class="metric">
+          <span class="v">15<em>/min</em></span>
+          <span class="l"><span data-lang="ru">СПАМ-ЗАЩИТА</span><span data-lang="en">SPAM GUARD</span></span>
+        </div>
+      </div>
+
+      <h2 id="lessons"><span class="num">§ 05</span><span data-lang="ru">Что я вынес</span><span data-lang="en">Lessons learned</span></h2>
+      <p>
+        <span data-lang="ru"><strong>(а)</strong> B2B-бот обязан поддерживать юрлица с первого дня. ИНН, МФО, расчётный счёт — это не «потом добавим», а фундамент. Без реквизитов клиент не может получить счёт, а бизнес — провести оплату.</span>
+        <span data-lang="en"><strong>(a)</strong> A B2B bot must support legal entities from day one. Tax ID, bank code, bank account — this is not "we'll add it later," it's the foundation. Without these details the client can't receive an invoice, and the business can't process payment.</span>
+      </p>
+      <p>
+        <span data-lang="ru"><strong>(б)</strong> Индивидуальные цены запрашивают всегда. Даже если заказчик говорит «у нас один прайс для всех» — через неделю появляется VIP-клиент с особыми условиями. <code>ClientPrice</code> как отдельная модель с фолбэком на базовую цену — минимальное решение, которое закрывает 100% случаев.</span>
+        <span data-lang="en"><strong>(b)</strong> Per-client pricing is always requested. Even when the client says "we have one price for everyone" — a week later a VIP customer with special terms appears. <code>ClientPrice</code> as a separate model with a fallback to the base price is the minimal solution that covers 100% of cases.</span>
+      </p>
+      <p>
+        <span data-lang="ru"><strong>(в)</strong> Автоматический утренний отчёт в 08:00 экономит час менеджера каждый день. Не нужно собирать заказы вручную, не нужно звонить пекарю — сводка уже в чате. Для команды из трёх человек это 30 часов в месяц.</span>
+        <span data-lang="en"><strong>(c)</strong> An automated morning report at 08:00 saves the manager an hour every day. No need to collect orders manually, no need to call the baker — the summary is already in the chat. For a three-person team, that's 30 hours a month.</span>
+      </p>
+
+    </article>
+
+    <aside>
+      <nav class="case-toc">
+        <div class="head"><span data-lang="ru">Содержание</span><span data-lang="en">Contents</span></div>
+        <ol>
+          <li><a href="#brief"><span data-lang="ru">Бриф</span><span data-lang="en">Brief</span></a></li>
+          <li><a href="#architecture"><span data-lang="ru">Архитектура</span><span data-lang="en">Architecture</span></a></li>
+          <li><a href="#b2b"><span data-lang="ru">B2B-специфика</span><span data-lang="en">B2B specifics</span></a></li>
+          <li><a href="#numbers"><span data-lang="ru">Цифры</span><span data-lang="en">Numbers</span></a></li>
+          <li><a href="#lessons"><span data-lang="ru">Что я вынес</span><span data-lang="en">Lessons learned</span></a></li>
+        </ol>
+      </nav>
+    </aside>
+
+  </div>
+
+  <nav class="case-nav">
+    <a href="manicure-bot.html" class="prev">
+      <div class="label"><span data-lang="ru">← Предыдущий кейс</span><span data-lang="en">← Previous case</span></div>
+      <div class="title-line">Manicure Bot</div>
+    </a>
+    <a href="credit-assistant.html" class="next">
+      <div class="label"><span data-lang="ru">Следующий кейс →</span><span data-lang="en">Next case →</span></div>
+      <div class="title-line">Credit Assistant</div>
+    </a>
+  </nav>
+
+  <footer class="site-footer">
+    <div class="row">
+      <a href="../index.html" class="brand">
+        <span class="logo-mark"><svg width="24" height="24" viewBox="0 0 128 128" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><polyline points="24,34 16,34 16,94 24,94"/><polyline points="42,42 59,64 42,86"/><polyline points="86,42 69,64 86,86"/><polyline points="104,34 112,34 112,94 104,94"/></svg></span>
+        <span>Elyor</span>
+      </a>
+      <div class="links">
+        <a href="https://github.com/RiobVo">GitHub</a>
+        <a href="https://t.me/plssog">Telegram</a>
+        <a href="https://linkedin.com/in/%D1%8D%D0%BB%D1%91%D1%80-%D1%8E%D1%81%D1%83%D0%BF%D0%BE%D0%B2-2bb989411">LinkedIn</a>
+              </div>
+    </div>
+    <div class="colophon">© 2026</div>
+  </footer>
+
+</div>
+
+<script src="../scripts/chrome.js"></script>
+<script>
+document.querySelectorAll('.case-nav a').forEach(function(a) {
+  a.addEventListener('mousemove', function(e) {
+    var r = a.getBoundingClientRect();
+    a.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+    a.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+  });
+});
+
+var metrics = document.querySelectorAll('.metric-row .metric');
+if (metrics.length) {
+  new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        metrics.forEach(function(m) { m.classList.add('in-view'); });
+      }
+    });
+  }, { threshold: 0.3 }).observe(document.querySelector('.metric-row'));
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ServiceFlow · Elyor</title>
+<meta name="description" content="Helpdesk reference backend: Repository + UoW, domain FSM, idempotency, outbox, ETag/If-Match, OpenTelemetry.">
+<meta property="og:title" content="ServiceFlow Platform — кейс / Элёр">
+<meta property="og:description" content="Helpdesk reference backend: Repository + UoW, domain FSM, idempotency, outbox, ETag/If-Match, OpenTelemetry.">
+<meta property="og:type" content="article">
+<meta property="og:image" content="../og/serviceflow.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="../og/serviceflow.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../apple-touch-icon.svg">
+<link rel="stylesheet" href="../styles/base.css">
+<link rel="stylesheet" href="../styles/components.css">
+</head>
+<body data-theme="dark">
+
+<nav class="nav-pill" aria-label="Primary">
+  <a href="../index.html" class="brand">
+    <span class="logo-mark"><svg width="24" height="24" viewBox="0 0 128 128" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><polyline points="24,34 16,34 16,94 24,94"/><polyline points="42,42 59,64 42,86"/><polyline points="86,42 69,64 86,86"/><polyline points="104,34 112,34 112,94 104,94"/></svg></span>
+    <span>Elyor</span>
+  </a>
+  <div class="links">
+    <a href="../index.html#work" class="current"><span data-lang="ru">Работы</span><span data-lang="en">Works</span></a>
+    <a href="../services.html"><span data-lang="ru">Услуги</span><span data-lang="en">Services</span></a>
+    <a href="../index.html#principles"><span data-lang="ru">Принципы</span><span data-lang="en">Principles</span></a>
+      </div>
+  <div class="tools">
+    <button type="button" class="icon-btn" data-lang-cycle aria-label="Cycle language">
+      <span data-lang-label>RU</span>
+    </button>
+    <button type="button" class="icon-btn" data-theme-btn aria-label="Toggle theme"></button>
+  </div>
+  <a href="https://t.me/plssog" class="btn primary cta">
+    Get in touch
+    <span class="arrow">↗</span>
+  </a>
+</nav>
+
+<div class="shell" data-screen-label="case-serviceflow">
+
+  <section class="page-head">
+    <div class="breadcrumb">
+      <a href="../index.html"><span data-lang="ru">Главная</span><span data-lang="en">Home</span></a>
+      <span class="sep">/</span>
+      <a href="../index.html#work"><span data-lang="ru">Работы</span><span data-lang="en">Works</span></a>
+      <span class="sep">/</span>
+      <span>ServiceFlow</span>
+    </div>
+    <div class="case-meta-row">
+      <span>Reference · open spec</span>
+      <span class="sep">·</span>
+      <span>2025</span>
+      <span class="sep">·</span>
+      <span>FastAPI + React</span>
+    </div>
+    <h1 class="reveal">
+      <span data-lang="ru">ServiceFlow Platform —<br><span class="accent-gradient">reference-бэкенд</span> для helpdesk-систем.</span>
+      <span data-lang="en">ServiceFlow Platform —<br><span class="accent-gradient">reference backend</span> for helpdesk systems.</span>
+    </h1>
+    <p class="lede reveal d1">
+      <span data-lang="ru">Не клиентский проект, а учебник. Repository + UoW, доменный FSM, idempotency, outbox, ETag/If-Match, OpenTelemetry — все паттерны, к которым я возвращаюсь из проекта в проект, собранные в один читабельный код.</span>
+      <span data-lang="en">Not a client project — a textbook. Repository + UoW, domain FSM, idempotency, outbox, ETag/If-Match, OpenTelemetry — every pattern I keep returning to across projects, collected into one readable codebase.</span>
+    </p>
+  </section>
+
+  <section style="padding: 56px 0 24px;">
+    <div class="case-hero-row">
+      <div class="code-card reveal">
+        <div class="head">
+          <span class="path">~/serviceflow/app/api/tickets.py</span>
+          <span class="tag">open</span>
+        </div>
+<pre class="body"><span class="kw">@</span>router.post(<span class="str">"/tickets"</span>, status_code=<span class="num-c">201</span>)
+<span class="kw">async def</span> <span class="fn">create_ticket</span>(
+    cmd: CreateTicket,
+    idem_key: IdempotencyKey = Header(<span class="str">"Idempotency-Key"</span>),
+    user: User = Depends(current_user),
+    uow: UnitOfWork = Depends(),
+) -> TicketView:
+    <span class="kw">async with</span> uow:
+        existing = <span class="kw">await</span> uow.idempotency.find(idem_key)
+        <span class="kw">if</span> existing:
+            <span class="kw">return</span> existing.response
+
+        ticket = Ticket.create(cmd, opened_by=user.id)
+        <span class="kw">await</span> uow.tickets.add(ticket)
+        <span class="kw">await</span> uow.outbox.add(TicketOpened(ticket.id))
+        <span class="kw">await</span> uow.idempotency.save(idem_key, ticket.view())
+        <span class="kw">await</span> uow.commit()
+    <span class="ok" id="caseTyping">return ticket.view()</span></pre>
+      </div>
+
+      <aside class="case-spec reveal d1">
+        <div class="head">
+          <span><span data-lang="ru">Карточка проекта</span><span data-lang="en">Project card</span></span>
+          <span>open</span>
+        </div>
+        <dl>
+          <dt><span data-lang="ru">Тип</span><span data-lang="en">Type</span></dt><dd>Open reference</dd>
+          <dt><span data-lang="ru">Стек</span><span data-lang="en">Stack</span></dt><dd>FastAPI + React</dd>
+          <dt><span data-lang="ru">БД</span><span data-lang="en">DB</span></dt><dd>Postgres 16</dd>
+          <dt><span data-lang="ru">Очереди</span><span data-lang="en">Queues</span></dt><dd>Redis · ARQ</dd>
+          <dt>Observ.</dt><dd>OpenTelemetry</dd>
+          <dt><span data-lang="ru">Контракты</span><span data-lang="en">Contracts</span></dt><dd>OpenAPI 3.1</dd>
+          <dt><span data-lang="ru">Ошибки</span><span data-lang="en">Errors</span></dt><dd>RFC 7807</dd>
+          <dt>Auth</dt><dd>argon2id</dd>
+          <dt><span data-lang="ru">Лицензия</span><span data-lang="en">License</span></dt><dd>MIT</dd>
+        </dl>
+        <p class="note">
+          <span data-lang="ru">Исходники в открытом доступе. Цель — показать, как паттерны выглядят в реальном коде, без тутора и маркетинга.</span>
+          <span data-lang="en">Source code is public. The goal is to show what patterns look like in real code, without tutorials or marketing.</span>
+        </p>
+      </aside>
+    </div>
+  </section>
+
+
+  <div class="case-layout">
+
+    <article class="case-body">
+
+      <h2 id="why"><span class="num">§ 01</span><span data-lang="ru">Зачем</span><span data-lang="en">Why</span></h2>
+      <p>
+        <span data-lang="ru">За несколько коммерческих проектов я заметил, что объясняю одни и те же вещи: «почему Repository, а не Active Record», «зачем outbox, если есть транзакция», «как сделать идемпотентный POST». Объяснять на продакшен-коде нельзя — NDA. На примерах из книги — тоже плохо, они слишком стерильны.</span>
+        <span data-lang="en">After several commercial projects, I noticed I keep explaining the same things: "why Repository and not Active Record," "why outbox when there's a transaction," "how to make an idempotent POST." Explaining with production code is off-limits — NDA. Book examples don't work either — too sterile.</span>
+      </p>
+      <p>
+        <span data-lang="ru">ServiceFlow — это helpdesk-бэкенд, написанный достаточно подробно, чтобы на нём можно было показать всё, что я считаю важным. Достаточно простой, чтобы домен не закрывал паттерны.</span>
+        <span data-lang="en">ServiceFlow is a helpdesk backend written in enough detail to demonstrate everything I consider important. Simple enough that the domain doesn't obscure the patterns.</span>
+      </p>
+
+      <h2 id="what"><span class="num">§ 02</span><span data-lang="ru">Что внутри</span><span data-lang="en">What's inside</span></h2>
+      <ul>
+        <li><span data-lang="ru"><strong>Repository + UoW</strong> — чистый домен, тестируемый без БД.</span><span data-lang="en"><strong>Repository + UoW</strong> — clean domain, testable without a database.</span></li>
+        <li><span data-lang="ru"><strong>Доменный FSM</strong> — переходы статусов тикета как явная машина, не набор if'ов.</span><span data-lang="en"><strong>Domain FSM</strong> — ticket status transitions as an explicit state machine, not a bunch of ifs.</span></li>
+        <li><span data-lang="ru"><strong>Idempotency</strong> — заголовок <code>Idempotency-Key</code>, повтор запроса возвращает тот же ответ без побочных эффектов.</span><span data-lang="en"><strong>Idempotency</strong> — <code>Idempotency-Key</code> header, retrying a request returns the same response with no side effects.</span></li>
+        <li><span data-lang="ru"><strong>Outbox pattern</strong> — события в ту же транзакцию, отправка асинхронно.</span><span data-lang="en"><strong>Outbox pattern</strong> — events in the same transaction, delivery is asynchronous.</span></li>
+        <li><span data-lang="ru"><strong>ETag / If-Match</strong> — оптимистичный concurrency control на HTTP-уровне.</span><span data-lang="en"><strong>ETag / If-Match</strong> — optimistic concurrency control at the HTTP level.</span></li>
+        <li><span data-lang="ru"><strong>RFC 7807 ошибки</strong> — единый формат problem-details.</span><span data-lang="en"><strong>RFC 7807 errors</strong> — unified problem-details format.</span></li>
+        <li><span data-lang="ru"><strong>OpenTelemetry</strong> — трейсы, метрики, логи с первого коммита.</span><span data-lang="en"><strong>OpenTelemetry</strong> — traces, metrics, logs from the first commit.</span></li>
+        <li><span data-lang="ru"><strong>API keys на argon2id</strong> — проверка занимает 100 мс намеренно.</span><span data-lang="en"><strong>API keys on argon2id</strong> — verification takes 100 ms intentionally.</span></li>
+      </ul>
+
+      <h2 id="layout"><span class="num">§ 03</span><span data-lang="ru">Структура</span><span data-lang="en">Structure</span></h2>
+      <div class="figure">
+        <div class="fig-bar"><span class="fig-title">structure · project layout</span></div>
+<pre><span class="fc">serviceflow/</span>
+├── <span class="fl">domain/</span>         <span class="fm"># entities · value objects · FSM · invariants</span>
+│   ├── <span class="ft">ticket.py</span>
+│   ├── <span class="ft">status.py</span>   <span class="fm"># FSM transitions, no IO</span>
+│   └── <span class="fc">policies/</span>
+├── <span class="fl">app/</span>            <span class="fm"># use-cases, ports</span>
+│   ├── <span class="fc">tickets/</span>
+│   ├── <span class="ft">idempotency.py</span>
+│   └── <span class="ft">outbox.py</span>
+├── <span class="fl">infra/</span>          <span class="fm"># adapters: Postgres, Redis, ARQ workers</span>
+│   ├── <span class="fc">repo/</span>
+│   ├── <span class="ft">outbox_worker.py</span>
+│   └── <span class="ft">otel.py</span>
+└── <span class="fl">api/</span>            <span class="fm"># FastAPI routers, pydantic IO models</span>
+    ├── <span class="fc">v1/</span>
+    └── <span class="ft">errors.py</span>   <span class="fm"># RFC 7807</span></pre>
+        <div class="caption"><span data-lang="ru">Рис. 1 · Структура. Стрелки зависимостей идут вверх — домен ничего не знает.</span><span data-lang="en">Fig. 1 · Structure. Dependency arrows point upward — the domain knows nothing.</span></div>
+      </div>
+
+      <h2 id="links"><span class="num">§ 04</span><span data-lang="ru">Где посмотреть</span><span data-lang="en">Where to look</span></h2>
+      <p>
+        <span data-lang="ru">Репозиторий открытый. README ведёт за руку: 10 минут — и всё крутится локально. ADR-папка объясняет каждое нетривиальное решение — почему UoW поверх SQLAlchemy 2.x, почему outbox, а не CDC, почему ARQ, а не Celery для этого размера.</span>
+        <span data-lang="en">The repository is public. The README walks you through setup: 10 minutes and everything runs locally. The ADR folder explains every non-trivial decision — why UoW on top of SQLAlchemy 2.x, why outbox and not CDC, why ARQ and not Celery for this scale.</span>
+      </p>
+      <ul>
+        <li><a href="https://github.com/RiobVo/ServiceFlow" class="inline-link">github.com/RiobVo/ServiceFlow</a></li>
+        <li><a href="https://github.com/RiobVo/ServiceFlow/tree/main/docs/adr" class="inline-link"><span data-lang="ru">Архитектурные ADR</span><span data-lang="en">Architecture ADRs</span></a></li>
+      </ul>
+
+      <div class="pullquote">
+        <span data-lang="ru">Не «делайте как я», а «вот примеры; разбирайтесь, что подходит вам».</span>
+        <span data-lang="en">Not "do as I do," but "here are examples — figure out what works for you."</span>
+      </div>
+
+    </article>
+
+    <aside>
+      <nav class="case-toc">
+        <div class="head"><span data-lang="ru">Содержание</span><span data-lang="en">Contents</span></div>
+        <ol>
+          <li><a href="#why"><span data-lang="ru">Зачем</span><span data-lang="en">Why</span></a></li>
+          <li><a href="#what"><span data-lang="ru">Что внутри</span><span data-lang="en">What's inside</span></a></li>
+          <li><a href="#layout"><span data-lang="ru">Структура</span><span data-lang="en">Structure</span></a></li>
+          <li><a href="#links"><span data-lang="ru">Где посмотреть</span><span data-lang="en">Where to look</span></a></li>
+        </ol>
+      </nav>
+    </aside>
+
+  </div>
+
+  <nav class="case-nav">
+    <a href="container-bot.html" class="prev">
+      <div class="label"><span data-lang="ru">← Предыдущий кейс</span><span data-lang="en">← Previous case</span></div>
+      <div class="title-line">Container Terminal Bot</div>
+    </a>
+    <a href="support-bot.html" class="next">
+      <div class="label"><span data-lang="ru">Следующий кейс →</span><span data-lang="en">Next case →</span></div>
+      <div class="title-line">Internal Support Bot</div>
+    </a>
+  </nav>
+
+  <footer class="site-footer">
+    <div class="row">
+      <a href="../index.html" class="brand">
+        <span class="logo-mark"><svg width="24" height="24" viewBox="0 0 128 128" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><polyline points="24,34 16,34 16,94 24,94"/><polyline points="42,42 59,64 42,86"/><polyline points="86,42 69,64 86,86"/><polyline points="104,34 112,34 112,94 104,94"/></svg></span>
+        <span>Elyor</span>
+      </a>
+      <div class="links">
+        <a href="https://github.com/RiobVo">GitHub</a>
+        <a href="https://t.me/plssog">Telegram</a>
+        <a href="https://linkedin.com/in/%D1%8D%D0%BB%D1%91%D1%80-%D1%8E%D1%81%D1%83%D0%BF%D0%BE%D0%B2-2bb989411">LinkedIn</a>
+              </div>
+    </div>
+    <div class="colophon">© 2026</div>
+  </footer>
+
+</div>
+
+<script src="../scripts/chrome.js"></script>
+<script>
+document.querySelectorAll('.case-nav a').forEach(function(a) {
+  a.addEventListener('mousemove', function(e) {
+    var r = a.getBoundingClientRect();
+    a.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+    a.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+  });
+});
+</script>
+</body>
+</html>
