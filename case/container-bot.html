@@ -28,8 +28,7 @@
   </a>
   <div class="links">
     <a href="../index.html#work" class="current"><span data-lang="ru">Работы</span><span data-lang="en">Works</span></a>
-    <a href="../services.html"><span data-lang="ru">Услуги</span><span data-lang="en">Services</span></a>
-    <a href="../index.html#principles"><span data-lang="ru">Принципы</span><span data-lang="en">Principles</span></a>
+    <a href="../services.html"><span data-lang="ru">Услуги</span><span data-lang="en">Services</span></a>    <a href="../index.html#principles"><span data-lang="ru">Принципы</span><span data-lang="en">Principles</span></a>
       </div>
   <div class="tools">
     <button type="button" class="icon-btn" data-lang-cycle aria-label="Cycle language">
@@ -142,8 +141,8 @@
 
       <h2 id="architecture"><span class="num">§ 02</span><span data-lang="ru">Архитектура</span><span data-lang="en">Architecture</span></h2>
       <p>
-        <span data-lang="ru">FSM-первый дизайн. Каждая операция (приём, выдача, перемещение, корректировка) — короткий стейт-машинный сценарий из 3 – 5 шагов. Aiogram 3 даёт FSM из коробки, и это идеально ложится на Telegram-UX, где каждое сообщение — шаг.</span>
-        <span data-lang="en">FSM-first design. Each operation (check-in, release, transfer, correction) is a short state-machine scenario of 3–5 steps. Aiogram 3 provides FSM out of the box, and it maps perfectly to Telegram UX where each message is a step.</span>
+        <span data-lang="ru">FSM-первый дизайн. Каждая операция (приём, выдача, перемещение, корректировка) — короткий стейт-машинный сценарий из <strong class="num">3 – 5 шагов</strong>. Aiogram 3 даёт FSM из коробки, и это идеально ложится на Telegram-UX, где каждое сообщение — шаг.</span>
+        <span data-lang="en">FSM-first design. Each operation (check-in, release, transfer, correction) is a short state-machine scenario of <strong class="num">3–5 steps</strong>. Aiogram 3 provides FSM out of the box, and it maps perfectly to Telegram UX where each message is a step.</span>
       </p>
 
       <div class="figure">
@@ -177,8 +176,8 @@
 
       <h3 id="iso"><span data-lang="ru">ISO 6346 валидация на этапе ввода</span><span data-lang="en">ISO 6346 validation at input</span></h3>
       <p>
-        <span data-lang="ru">Номер контейнера — это 4 буквы (owner code) + 7 цифр, где последняя — check digit по стандарту ISO 6346. Считается через умножение позиций на степени двойки. Самая частая ошибка диспетчера — перепутать <code>B</code> и <code>8</code> или <code>0</code> и <code>O</code>. Валидация на входе ловит 100% таких опечаток.</span>
-        <span data-lang="en">A container number is 4 letters (owner code) + 7 digits, where the last one is a check digit per ISO 6346. It's calculated by multiplying positions by powers of two. The most common dispatcher mistake is confusing <code>B</code> with <code>8</code> or <code>0</code> with <code>O</code>. Input validation catches 100% of such typos.</span>
+        <span data-lang="ru">Номер контейнера — это <strong class="num">4 буквы + 7 цифр</strong>, где последняя — check digit по стандарту ISO 6346. Считается через умножение позиций на степени двойки. Самая частая ошибка диспетчера — перепутать <code>B</code> и <code>8</code> или <code>0</code> и <code>O</code>. Валидация на входе ловит <strong class="num">100%</strong> таких опечаток.</span>
+        <span data-lang="en">A container number is <strong class="num">4 letters + 7 digits</strong>, where the last one is a check digit per ISO 6346. It's calculated by multiplying positions by powers of two. The most common dispatcher mistake is confusing <code>B</code> with <code>8</code> or <code>0</code> with <code>O</code>. Input validation catches <strong class="num">100%</strong> of such typos.</span>
       </p>
 
       <div class="code-card">
@@ -240,8 +239,8 @@
 
       <h2 id="lessons"><span class="num">§ 05</span><span data-lang="ru">Что я вынес</span><span data-lang="en">Lessons learned</span></h2>
       <p>
-        <span data-lang="ru"><strong>(а)</strong> Telegram — нормальная замена админке для небольших ops-команд. Если все уже в нём сидят, бот окупается в первые две недели. Главное — не строить из него «настоящее приложение» с inline-клавиатурами на десять рядов.</span>
-        <span data-lang="en"><strong>(a)</strong> Telegram is a viable admin panel replacement for small ops teams. If everyone is already using it, the bot pays for itself in the first two weeks. The key is not to build a "real application" with ten rows of inline keyboards.</span>
+        <span data-lang="ru"><strong>(а)</strong> Telegram — нормальная замена админке для небольших ops-команд. Если все уже в нём сидят, бот окупается в <strong class="num">первые две недели</strong>. Главное — не строить из него «настоящее приложение» с inline-клавиатурами на десять рядов.</span>
+        <span data-lang="en"><strong>(a)</strong> Telegram is a viable admin panel replacement for small ops teams. If everyone is already using it, the bot pays for itself in the <strong class="num">first two weeks</strong>. The key is not to build a "real application" with ten rows of inline keyboards.</span>
       </p>
       <p>
         <span data-lang="ru"><strong>(б)</strong> FSM в aiogram 3 — идеальное соответствие тому, как человек ведёт диалог в мессенджере. Шаг — сообщение, отмена — <code>/cancel</code>, валидация — сразу.</span>
@@ -289,7 +288,6 @@
       <div class="links">
         <a href="https://github.com/RiobVo">GitHub</a>
         <a href="https://t.me/plssog">Telegram</a>
-        <a href="https://linkedin.com/in/%D1%8D%D0%BB%D1%91%D1%80-%D1%8E%D1%81%D1%83%D0%BF%D0%BE%D0%B2-2bb989411">LinkedIn</a>
               </div>
     </div>
     <div class="colophon">© 2026</div>

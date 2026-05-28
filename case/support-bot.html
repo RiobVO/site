@@ -28,8 +28,7 @@
   </a>
   <div class="links">
     <a href="../index.html#work" class="current"><span data-lang="ru">Работы</span><span data-lang="en">Works</span></a>
-    <a href="../services.html"><span data-lang="ru">Услуги</span><span data-lang="en">Services</span></a>
-    <a href="../index.html#principles"><span data-lang="ru">Принципы</span><span data-lang="en">Principles</span></a>
+    <a href="../services.html"><span data-lang="ru">Услуги</span><span data-lang="en">Services</span></a>    <a href="../index.html#principles"><span data-lang="ru">Принципы</span><span data-lang="en">Principles</span></a>
       </div>
   <div class="tools">
     <button type="button" class="icon-btn" data-lang-cycle aria-label="Cycle language">
@@ -131,12 +130,12 @@
 
       <h2 id="brief"><span class="num">§ 01</span><span data-lang="ru">Бриф</span><span data-lang="en">Brief</span></h2>
       <p>
-        <span data-lang="ru">Компания на 4 500 человек, три отдела принимают заявки: IT, HR, АХО. У каждого — свой почтовый ящик и свой Bitrix24-pipeline. Сотрудник, у которого «не печатает принтер», должен сначала угадать, куда писать; потом написать письмо в свободной форме; потом ждать.</span>
-        <span data-lang="en">A 4,500-person company, three departments accept requests: IT, HR, Facilities. Each has its own mailbox and its own Bitrix24 pipeline. An employee whose "printer won't print" first has to guess where to write, then compose a free-form email, then wait.</span>
+        <span data-lang="ru">Компания на <strong class="num">4 500 человек</strong>, три отдела принимают заявки: IT, HR, АХО. У каждого — свой почтовый ящик и свой Bitrix24-pipeline. Сотрудник, у которого «не печатает принтер», должен сначала угадать, куда писать; потом написать письмо в свободной форме; потом ждать.</span>
+        <span data-lang="en">A <strong class="num">4,500-person</strong> company, three departments accept requests: IT, HR, Facilities. Each has its own mailbox and its own Bitrix24 pipeline. An employee whose "printer won't print" first has to guess where to write, then compose a free-form email, then wait.</span>
       </p>
       <p>
-        <span data-lang="ru">Корпоративный портал был — но им не пользовались. Долгая авторизация, форма из 14 полей, обязательное закрепление файла.</span>
-        <span data-lang="en">There was a corporate portal — but nobody used it. Slow login, a 14-field form, mandatory file attachment.</span>
+        <span data-lang="ru">Корпоративный портал был — но им не пользовались. Долгая авторизация, форма из <strong class="num">14 полей</strong>, обязательное закрепление файла.</span>
+        <span data-lang="en">There was a corporate portal — but nobody used it. Slow login, a <strong class="num">14-field</strong> form, mandatory file attachment.</span>
       </p>
       <p>
         <span data-lang="ru"><strong>Задача:</strong> сделать одну точку входа, доступную с телефона за секунду, на трёх языках, чтобы заявка попадала в правильный Bitrix24-pipeline уже с правильным тэгом и назначенным исполнителем.</span>
@@ -180,8 +179,8 @@
         <span data-lang="en">Bitrix24 REST API is rate-limited, non-idempotent, and occasionally returns 502 with no explanation. Direct calls from the handler are a guaranteed path to lost requests.</span>
       </p>
       <p>
-        <span data-lang="ru">Решение: outbox pattern. Handler пишет заявку в Postgres и кладёт событие <code>CreateBitrixDeal</code> в outbox-таблицу в той же транзакции. ARQ-worker подхватывает событие, идёт в Bitrix, обрабатывает 502 с экспоненциальным backoff. Если за 15 минут не удалось — алерт админу в Telegram.</span>
-        <span data-lang="en">Solution: outbox pattern. The handler writes the request to Postgres and places a <code>CreateBitrixDeal</code> event in the outbox table within the same transaction. An ARQ worker picks up the event, calls Bitrix, handles 502 with exponential backoff. If it fails for 15 minutes — an alert goes to the admin via Telegram.</span>
+        <span data-lang="ru">Решение: outbox pattern. Handler пишет заявку в Postgres и кладёт событие <code>CreateBitrixDeal</code> в outbox-таблицу в той же транзакции. ARQ-worker подхватывает событие, идёт в Bitrix, обрабатывает 502 с экспоненциальным backoff. Если за <strong class="num">15 минут</strong> не удалось — алерт админу в Telegram.</span>
+        <span data-lang="en">Solution: outbox pattern. The handler writes the request to Postgres and places a <code>CreateBitrixDeal</code> event in the outbox table within the same transaction. An ARQ worker picks up the event, calls Bitrix, handles 502 with exponential backoff. If it fails for <strong class="num">15 minutes</strong> — an alert goes to the admin via Telegram.</span>
       </p>
 
       <h2 id="numbers"><span class="num">§ 05</span><span data-lang="ru">Цифры</span><span data-lang="en">Numbers</span></h2>
@@ -207,16 +206,16 @@
 
       <h2 id="lessons"><span class="num">§ 06</span><span data-lang="ru">Что я вынес</span><span data-lang="en">Lessons learned</span></h2>
       <p>
-        <span data-lang="ru"><strong>(а)</strong> Корпоративные пользователи — такие же люди, как остальные. Если интерфейс требует более 30 секунд — им воспользуется только тот, кому абсолютно необходимо.</span>
-        <span data-lang="en"><strong>(a)</strong> Corporate users are people too. If the interface takes more than 30 seconds — only those who absolutely must will use it.</span>
+        <span data-lang="ru"><strong>(а)</strong> Корпоративные пользователи — такие же люди, как остальные. Если интерфейс требует более <strong class="num">30 секунд</strong> — им воспользуется только тот, кому абсолютно необходимо.</span>
+        <span data-lang="en"><strong>(a)</strong> Corporate users are people too. If the interface takes more than <strong class="num">30 seconds</strong> — only those who absolutely must will use it.</span>
       </p>
       <p>
         <span data-lang="ru"><strong>(б)</strong> Локализация на трёх языках — это не технический вопрос, это процесс. HR должен иметь возможность поменять формулировку без тикета на разработку.</span>
         <span data-lang="en"><strong>(b)</strong> Localization in three languages is not a technical question — it's a process. HR must be able to change wording without filing a development ticket.</span>
       </p>
       <p>
-        <span data-lang="ru"><strong>(в)</strong> Внешние API — всегда тонкое место. Outbox + retry + алерт — скучные паттерны, которые ловят 100% инцидентов с Bitrix.</span>
-        <span data-lang="en"><strong>(c)</strong> External APIs are always the bottleneck. Outbox + retry + alert — boring patterns that catch 100% of Bitrix incidents.</span>
+        <span data-lang="ru"><strong>(в)</strong> Внешние API — всегда тонкое место. Outbox + retry + алерт — скучные паттерны, которые ловят <strong class="num">100%</strong> инцидентов с Bitrix.</span>
+        <span data-lang="en"><strong>(c)</strong> External APIs are always the bottleneck. Outbox + retry + alert — boring patterns that catch <strong class="num">100%</strong> of Bitrix incidents.</span>
       </p>
 
     </article>
@@ -257,7 +256,6 @@
       <div class="links">
         <a href="https://github.com/RiobVo">GitHub</a>
         <a href="https://t.me/plssog">Telegram</a>
-        <a href="https://linkedin.com/in/%D1%8D%D0%BB%D1%91%D1%80-%D1%8E%D1%81%D1%83%D0%BF%D0%BE%D0%B2-2bb989411">LinkedIn</a>
               </div>
     </div>
     <div class="colophon">© 2026</div>
