@@ -37,6 +37,9 @@
   --radius:        12px;
   --radius-lg:     16px;
   --radius-pill:   9999px;
+
+  /* Floating nav: ~44px высоты + 18px top inset = ~62px занято. +18px воздуха под якорный скролл. */
+  --header-h:     80px;
 }
 
 [data-theme="light"] {
@@ -57,7 +60,13 @@
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--header-h);
+}
+@media (max-width: 760px) {
+  :root { --header-h: 76px; }
+}
 
 body {
   background: var(--bg);
@@ -231,15 +240,22 @@ p.body, .body-text {
   align-items: center;
   gap: 6px;
   padding: 6px 6px 6px 18px;
-  background: rgba(26,26,26,0.75);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  background: rgba(26,26,26,0.94);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-pill);
   font-size: 13px;
   max-width: calc(100vw - 24px);
 }
-[data-theme="light"] .nav-pill { background: rgba(250,251,252,0.75); }
+[data-theme="light"] .nav-pill { background: rgba(250,250,250,0.94); }
+
+@supports not ((backdrop-filter: blur(12px)) or (-webkit-backdrop-filter: blur(12px))) {
+  .nav-pill { background: rgba(26,26,26,0.98); }
+  [data-theme="light"] .nav-pill { background: rgba(250,250,250,0.98); }
+  .nav-mobile-menu { background: rgba(26,26,26,0.98); }
+  [data-theme="light"] .nav-mobile-menu { background: rgba(250,250,250,0.98); }
+}
 
 .nav-pill .brand {
   display: inline-flex;
@@ -346,9 +362,9 @@ p.body, .body-text {
   left: 50%;
   transform: translateX(-50%);
   z-index: 49;
-  background: rgba(26,26,26,0.92);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  background: rgba(26,26,26,0.94);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
   border: 1px solid var(--line-strong);
   border-radius: var(--radius);
   padding: 8px;
@@ -356,7 +372,7 @@ p.body, .body-text {
   flex-direction: column;
   gap: 2px;
 }
-[data-theme="light"] .nav-mobile-menu { background: rgba(250,251,252,0.92); }
+[data-theme="light"] .nav-mobile-menu { background: rgba(250,250,250,0.94); }
 .nav-mobile-menu.open { display: flex; }
 .nav-mobile-menu a {
   display: block;

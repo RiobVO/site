@@ -1864,7 +1864,6 @@
   padding-top: 40px;
   border-top: 1px solid var(--line);
   color: var(--text);
-  scroll-margin-top: 80px;
 }
 .case-body h2:first-child { border-top: none; padding-top: 0; }
 .case-body h2 .num {
