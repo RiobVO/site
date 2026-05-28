@@ -313,6 +313,118 @@ function initCaseTyping() {
   }, { threshold: 0.3 }).observe(card);
 }
 
+/**
+ * One-shot "decision pipeline" run animation on the home page. Stages, links
+ * and footer fade / draw in sequence the first time the pipeline scrolls into
+ * view. Illustrative single pass — NOT a live feed (the product is on-premise
+ * under NDA and streams nothing).
+ */
+function initPipelineRun() {
+  const pipeline = document.querySelector('.pipeline');
+  if (!pipeline) return;
+
+  // Respect reduced-motion: leave the block fully visible, skip the animation.
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return;
+  }
+
+  const STEP = 0.16; // seconds between consecutive items
+  const items = /** @type {HTMLElement[]} */ (
+    Array.from(pipeline.querySelectorAll('.pipe-stage, .pipe-link, .pipe-footer'))
+  );
+  if (!items.length) return;
+
+  // Arm the hidden state now that JS + motion are confirmed, and stagger each
+  // item's delay by DOM order so the cascade flows top-to-bottom.
+  pipeline.classList.add('anim');
+  items.forEach((el, i) => {
+    const delay = (i * STEP) + 's';
+    el.style.transitionDelay = delay;
+    const vline = /** @type {HTMLElement | null} */ (el.querySelector('.vline'));
+    if (vline) vline.style.transitionDelay = delay;
+    const score = /** @type {HTMLElement | null} */ (el.querySelector('.ico.score'));
+    if (score) score.style.animationDelay = delay;
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        pipeline.classList.add('run');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.25 });
+
+  observer.observe(pipeline);
+}
+
+/**
+ * One-shot run animation for the services process timeline: the spine draws in
+ * and the steps fade up in sequence the first time it scrolls into view. Same
+ * progressive-enhancement contract as initPipelineRun (no JS / reduced-motion →
+ * full static view).
+ */
+function initWorkflowRun() {
+  const workflow = document.querySelector('.workflow');
+  if (!workflow) return;
+
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return;
+  }
+
+  const steps = /** @type {HTMLElement[]} */ (Array.from(workflow.querySelectorAll('.step')));
+  if (!steps.length) return;
+
+  workflow.classList.add('anim');
+  steps.forEach((el, i) => {
+    el.style.transitionDelay = (0.2 + i * 0.12) + 's';
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        workflow.classList.add('run');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  observer.observe(workflow);
+}
+
+/**
+ * FAQ cards stagger up the first time the list scrolls into view — same run
+ * feel as the timeline. Same progressive-enhancement contract; open/close
+ * interaction is untouched (handled by initFaqAnimation).
+ */
+function initFaqReveal() {
+  const faq = document.querySelector('.faq');
+  if (!faq) return;
+
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return;
+  }
+
+  const items = /** @type {HTMLElement[]} */ (Array.from(faq.querySelectorAll('details')));
+  if (!items.length) return;
+
+  faq.classList.add('anim');
+  items.forEach((el, i) => {
+    el.style.transitionDelay = (i * 0.07) + 's';
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        faq.classList.add('run');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  observer.observe(faq);
+}
+
 function initMobileNav() {
   const nav = document.querySelector('.nav-pill');
   if (!nav) return;
@@ -358,6 +470,9 @@ function initAll() {
   initCardHover();
   initHeroTerminal();
   initCaseTyping();
+  initPipelineRun();
+  initWorkflowRun();
+  initFaqReveal();
 }
 
 if (document.readyState === 'loading') {
