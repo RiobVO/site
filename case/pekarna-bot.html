@@ -28,8 +28,7 @@
   </a>
   <div class="links">
     <a href="../index.html#work" class="current"><span data-lang="ru">Работы</span><span data-lang="en">Works</span></a>
-    <a href="../services.html"><span data-lang="ru">Услуги</span><span data-lang="en">Services</span></a>
-    <a href="../index.html#principles"><span data-lang="ru">Принципы</span><span data-lang="en">Principles</span></a>
+    <a href="../services.html"><span data-lang="ru">Услуги</span><span data-lang="en">Services</span></a>    <a href="../index.html#principles"><span data-lang="ru">Принципы</span><span data-lang="en">Principles</span></a>
       </div>
   <div class="tools">
     <button type="button" class="icon-btn" data-lang-cycle aria-label="Cycle language">
@@ -191,13 +190,17 @@
         <span data-lang="ru">Это не потребительский бот с каталогом и корзиной. Клиенты — юрлица, и бот обязан хранить реквизиты: ИНН, МФО, расчётный счёт, юридический адрес. Эти данные нужны для выставления счетов и сверки. Клиент редактирует реквизиты сам через профиль — не через менеджера.</span>
         <span data-lang="en">This is not a consumer bot with a catalog and shopping cart. Clients are legal entities, and the bot must store their details: INN (tax ID), MFO (bank code), bank account, legal address. This data is required for invoicing and reconciliation. Clients edit their own details through the profile — not through a manager.</span>
       </p>
+
+      <h3><span data-lang="ru">Индивидуальные цены</span><span data-lang="en">Per-client pricing</span></h3>
       <p>
-        <span data-lang="ru"><strong>Индивидуальные цены.</strong> Кафе «Восток» покупает хлеб по 8 000 сум, а ООО «Green Food» — по 7 500, потому что берёт больше. Модель <code>ClientPrice</code> хранит пару (клиент, продукт) → цена. Админ назначает через бот: <code>/set_price @client Хлеб белый 7500</code>. Если для клиента нет записи — применяется базовая цена из каталога.</span>
-        <span data-lang="en"><strong>Per-client pricing.</strong> Cafe "Vostok" buys bread at 8,000 sum, while "Green Food" LLC pays 7,500 because they order larger volumes. The <code>ClientPrice</code> model stores a (client, product) → price pair. Admin sets it via bot: <code>/set_price @client White bread 7500</code>. If no record exists for the client — the base catalog price applies.</span>
+        <span data-lang="ru">Кафе «Восток» покупает хлеб по <strong class="num">8 000 сум</strong>, а ООО «Green Food» — по <strong class="num">7 500</strong>, потому что берёт больше. Модель <code>ClientPrice</code> хранит пару (клиент, продукт) → цена. Админ назначает через бот: <code>/set_price @client Хлеб белый 7500</code>. Если для клиента нет записи — применяется базовая цена из каталога.</span>
+        <span data-lang="en">Cafe "Vostok" buys bread at <strong class="num">8,000 sum</strong>, while "Green Food" LLC pays <strong class="num">7,500</strong> because they order larger volumes. The <code>ClientPrice</code> model stores a (client, product) → price pair. Admin sets it via bot: <code>/set_price @client White bread 7500</code>. If no record exists for the client — the base catalog price applies.</span>
       </p>
+
+      <h3><span data-lang="ru">Утренние отчёты</span><span data-lang="en">Morning reports</span></h3>
       <p>
-        <span data-lang="ru"><strong>Утренние отчёты.</strong> APScheduler запускает задачу каждый день в 08:00 Asia/Tashkent. Админ получает сводку: сколько заказов на сегодня, общая сумма, список позиций по продуктам. Пекарь видит, что печь, до начала смены.</span>
-        <span data-lang="en"><strong>Morning reports.</strong> APScheduler fires a task every day at 08:00 Asia/Tashkent. The admin receives a summary: how many orders for today, total amount, product breakdown. The baker sees what to bake before the shift starts.</span>
+        <span data-lang="ru">APScheduler запускает задачу каждый день в <strong class="num">08:00</strong> Asia/Tashkent. Админ получает сводку: сколько заказов на сегодня, общая сумма, список позиций по продуктам. Пекарь видит, что печь, до начала смены.</span>
+        <span data-lang="en">APScheduler fires a task every day at <strong class="num">08:00</strong> Asia/Tashkent. The admin receives a summary: how many orders for today, total amount, product breakdown. The baker sees what to bake before the shift starts.</span>
       </p>
 
       <h2 id="numbers"><span class="num">§ 04</span><span data-lang="ru">Цифры</span><span data-lang="en">Numbers</span></h2>
@@ -227,12 +230,12 @@
         <span data-lang="en"><strong>(a)</strong> A B2B bot must support legal entities from day one. Tax ID, bank code, bank account — this is not "we'll add it later," it's the foundation. Without these details the client can't receive an invoice, and the business can't process payment.</span>
       </p>
       <p>
-        <span data-lang="ru"><strong>(б)</strong> Индивидуальные цены запрашивают всегда. Даже если заказчик говорит «у нас один прайс для всех» — через неделю появляется VIP-клиент с особыми условиями. <code>ClientPrice</code> как отдельная модель с фолбэком на базовую цену — минимальное решение, которое закрывает 100% случаев.</span>
-        <span data-lang="en"><strong>(b)</strong> Per-client pricing is always requested. Even when the client says "we have one price for everyone" — a week later a VIP customer with special terms appears. <code>ClientPrice</code> as a separate model with a fallback to the base price is the minimal solution that covers 100% of cases.</span>
+        <span data-lang="ru"><strong>(б)</strong> Индивидуальные цены запрашивают всегда. Даже если заказчик говорит «у нас один прайс для всех» — через неделю появляется VIP-клиент с особыми условиями. <code>ClientPrice</code> как отдельная модель с фолбэком на базовую цену — минимальное решение, которое закрывает <strong class="num">100% случаев</strong>.</span>
+        <span data-lang="en"><strong>(b)</strong> Per-client pricing is always requested. Even when the client says "we have one price for everyone" — a week later a VIP customer with special terms appears. <code>ClientPrice</code> as a separate model with a fallback to the base price is the minimal solution that covers <strong class="num">100% of cases</strong>.</span>
       </p>
       <p>
-        <span data-lang="ru"><strong>(в)</strong> Автоматический утренний отчёт в 08:00 экономит час менеджера каждый день. Не нужно собирать заказы вручную, не нужно звонить пекарю — сводка уже в чате. Для команды из трёх человек это 30 часов в месяц.</span>
-        <span data-lang="en"><strong>(c)</strong> An automated morning report at 08:00 saves the manager an hour every day. No need to collect orders manually, no need to call the baker — the summary is already in the chat. For a three-person team, that's 30 hours a month.</span>
+        <span data-lang="ru"><strong>(в)</strong> Автоматический утренний отчёт в 08:00 экономит час менеджера каждый день. Не нужно собирать заказы вручную, не нужно звонить пекарю — сводка уже в чате. Для команды из трёх человек это <strong class="num">30 часов в месяц</strong>.</span>
+        <span data-lang="en"><strong>(c)</strong> An automated morning report at 08:00 saves the manager an hour every day. No need to collect orders manually, no need to call the baker — the summary is already in the chat. For a three-person team, that's <strong class="num">30 hours a month</strong>.</span>
       </p>
 
     </article>
@@ -272,7 +275,6 @@
       <div class="links">
         <a href="https://github.com/RiobVo">GitHub</a>
         <a href="https://t.me/plssog">Telegram</a>
-        <a href="https://linkedin.com/in/%D1%8D%D0%BB%D1%91%D1%80-%D1%8E%D1%81%D1%83%D0%BF%D0%BE%D0%B2-2bb989411">LinkedIn</a>
               </div>
     </div>
     <div class="colophon">© 2026</div>

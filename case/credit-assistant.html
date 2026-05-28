@@ -28,8 +28,7 @@
   </a>
   <div class="links">
     <a href="../index.html#work" class="current"><span data-lang="ru">Работы</span><span data-lang="en">Works</span></a>
-    <a href="../services.html"><span data-lang="ru">Услуги</span><span data-lang="en">Services</span></a>
-    <a href="../index.html#principles"><span data-lang="ru">Принципы</span><span data-lang="en">Principles</span></a>
+    <a href="../services.html"><span data-lang="ru">Услуги</span><span data-lang="en">Services</span></a>    <a href="../index.html#principles"><span data-lang="ru">Принципы</span><span data-lang="en">Principles</span></a>
       </div>
   <div class="tools">
     <button type="button" class="icon-btn" data-lang-cycle aria-label="Cycle language">
@@ -66,8 +65,8 @@
       <span data-lang="en">Credit Assistant —<br><span class="accent-gradient">SME scoring</span> for a second-tier bank.</span>
     </h1>
     <p class="lede reveal d1">
-      <span data-lang="ru">Двенадцать форматов входящих таблиц, 24 правила ЦБ РУз и Basel III, bilingual PDF за 750 мс, on-premise без единой облачной зависимости. Восемь месяцев работы — и 1310 тестов, чтобы было спокойно ночью.</span>
-      <span data-lang="en">Twelve incoming spreadsheet formats, 24 Central Bank of Uzbekistan and Basel III rules, bilingual PDF in 750 ms, on-premise with zero cloud dependencies. Eight months of work — and 1,310 tests to sleep well at night.</span>
+      <span data-lang="ru">Заявка на кредит за 8 – 20 минут вместо 2 – 4 часов вручную. 24 проверки + 8 показателей, PDF на двух языках, сервер банка без интернета. Продано и работает в коммерческом банке Узбекистана; имя под NDA.</span>
+      <span data-lang="en">A loan application in 8 – 20 minutes instead of 2 – 4 hours by hand. 24 checks + 8 indicators, bilingual PDF, the bank's server runs without internet. Sold and live at a commercial bank in Uzbekistan; name under NDA.</span>
     </p>
   </section>
 
@@ -79,20 +78,24 @@
           <span class="path">~/credit-assistant — production</span>
           <span class="tag">v 2.4.1</span>
         </div>
-<pre class="body"><span class="prompt">$</span> curl -sX POST https://ca.bank.uz/api/v1/applications \
+<pre class="body"><span class="prompt">$</span> curl -sX POST https://ca.bank.uz/api/v1/dossiers \
     -H "Authorization: Bearer $TOKEN" \
-    -d @application.json | jq '.report'
+    -d @borrower_snapshot.json | jq '.'
 <span class="out" id="caseTyping">{
-  <span class="key">"application_id"</span>: <span class="str">"APP-2026-04-2871"</span>,
-  <span class="key">"decision"</span>: <span class="str">"approve_with_collateral"</span>,
-  <span class="key">"risk_class"</span>: <span class="str">"B+"</span>,
-  <span class="key">"pdf_url"</span>: <span class="str">"/reports/APP-2026-04-2871.pdf"</span>,
-  <span class="key">"rules_applied"</span>: <span class="num-c">24</span>,
-  <span class="key">"rules_failed"</span>: [<span class="str">"R-17.dscr_below_1_25"</span>],
-  <span class="key">"audit_trail"</span>: <span class="str">"/audit/APP-2026-04-2871.jsonl"</span>,
-  <span class="key">"render_ms"</span>: <span class="num-c">748</span>
+  <span class="key">"case_id"</span>: <span class="str">"BR-2026-0042"</span>,
+  <span class="key">"recommendation"</span>: <span class="str">"REVIEW"</span>,
+  <span class="key">"display_score"</span>: <span class="num-c">79</span>,
+  <span class="key">"signals_fired"</span>: [
+    <span class="str">"VAT_ESF_MISMATCH"</span>,
+    <span class="str">"DIRECTOR_CHANGED_6M"</span>,
+    <span class="str">"LOW_MARGIN_HIGH_TURNOVER"</span>
+  ],
+  <span class="key">"confidence"</span>: <span class="str">"HIGH"</span>,
+  <span class="key">"pdf_url"</span>: <span class="str">"/dossiers/BR-2026-0042/memorandum.pdf"</span>,
+  <span class="key">"audit_log"</span>: <span class="str">"/audit/BR-2026-0042.log"</span>,
+  <span class="key">"render_ms"</span>: <span class="num-c">750</span>
 }</span>
-<span class="prompt">$</span> <span class="comment"><span data-lang="ru"># одна команда — всё, что нужно кредитному комитету</span><span data-lang="en"># one command — everything the credit committee needs</span></span></pre>
+<span class="prompt">$</span> <span class="comment"><span data-lang="ru"># одна команда — всё, что нужно кредитному аналитику</span><span data-lang="en"># one command — everything the credit analyst needs</span></span></pre>
       </div>
 
       <aside class="case-spec reveal d1">
@@ -107,7 +110,7 @@
           <dt><span data-lang="ru">Срок</span><span data-lang="en">Duration</span></dt><dd><span data-lang="ru">8 мес.</span><span data-lang="en">8 mo.</span></dd>
           <dt><span data-lang="ru">Стек</span><span data-lang="en">Stack</span></dt><dd>Python · FastAPI</dd>
           <dt><span data-lang="ru">БД</span><span data-lang="en">DB</span></dt><dd>Postgres 16</dd>
-          <dt>PDF</dt><dd>RL + WeasyPrint</dd>
+          <dt>PDF</dt><dd>WeasyPrint</dd>
           <dt>Auth</dt><dd>LDAP + TOTP</dd>
           <dt>Deploy</dt><dd>on-prem · air-gapped</dd>
         </dl>
@@ -125,116 +128,281 @@
 
     <article class="case-body">
 
-      <h2 id="brief"><span class="num">§ 01</span><span data-lang="ru">Бриф</span><span data-lang="en">Brief</span></h2>
+      <h2 id="brief"><span class="num">§ 01</span><span data-lang="ru">О чём проект</span><span data-lang="en">What this is</span></h2>
       <p>
-        <span data-lang="ru">Банк выдаёт кредиты SME — малому и среднему бизнесу. У кредитного комитета на каждую заявку уходит около двух дней: аналитик собирает финотчётность клиента в Excel, считает 6 – 8 коэффициентов, формирует pdf-отчёт, отправляет на следующего аналитика. Если по дороге кто-то ошибся в формуле — возврат на круг.</span>
-        <span data-lang="en">The bank issues SME loans. Each application takes the credit committee about two days: an analyst collects the client's financial statements in Excel, calculates 6–8 ratios, generates a PDF report, and passes it to the next analyst. If anyone makes a formula mistake along the way — back to square one.</span>
+        <span data-lang="ru">Банк выдаёт кредиты малому бизнесу. На каждую заявку у кредитного аналитика уходит <strong class="num">2 – 4 часа</strong>: вручную собрать налоговые выписки клиента, счета-фактуры, справки из ГНК, посчитать кучу коэффициентов, оформить отчёт для кредитного комитета. Полдня впустую — а заявок десятки в день.</span>
+        <span data-lang="en">The bank issues SME loans. Each application takes a credit analyst <strong class="num">2 – 4 hours</strong>: manually collecting tax exports, invoices, GNK certificates, calculating a pile of ratios, formatting a report for the credit committee. Half a day wasted — and there are dozens of applications a day.</span>
       </p>
       <p>
-        <span data-lang="ru"><strong>Задача:</strong> заменить эту цепочку Excel-файлов одним сервисом, который принимает структурированную форму заявки, прогоняет через 24 правила (ЦБ РУз, Basel III, IFC — лайтовая адаптация), и выдаёт двуязычный PDF — РУ + Узб — c явным аудит-trail каждого решения.</span>
-        <span data-lang="en"><strong>Goal:</strong> replace this chain of Excel files with a single service that accepts a structured application form, runs it through 24 rules (Central Bank of Uzbekistan, Basel III, IFC — light adaptation), and produces a bilingual PDF — RU + UZ — with an explicit audit trail for every decision.</span>
+        <span data-lang="ru"><strong>Задача:</strong> сделать так, чтобы тот же отчёт собирался за <strong class="num">8 – 20 минут</strong> без потери качества. Система берёт исходные документы клиента (налоговые формы, счета, справки), прогоняет через 24 проверки и считает 8 ключевых показателей, выдаёт PDF на двух языках — русский и узбекский — с обоснованием по каждой цифре.</span>
+        <span data-lang="en"><strong>Goal:</strong> shrink the same report to <strong class="num">8 – 20 minutes</strong> without losing quality. The system takes the client's source documents (tax forms, invoices, certificates), runs them through 24 checks and computes 8 key indicators, produces a PDF in two languages — Russian and Uzbek — with a justification for every figure.</span>
       </p>
       <p>
-        <span data-lang="ru"><strong>Жёсткие ограничения:</strong> банковский on-premise (никакого облака), LDAP для аутентификации, MFA для роли «утверждающий», полный аудит для регулятора, OWASP ASVS L2 как минимум.</span>
-        <span data-lang="en"><strong>Hard constraints:</strong> bank's on-premise infrastructure (no cloud), LDAP authentication, MFA for the "approver" role, full audit trail for the regulator, OWASP ASVS L2 minimum.</span>
+        <span data-lang="ru"><strong>Где работает:</strong> продано и работает в коммерческом банке Узбекистана (имя под NDA). Интересуются ещё две финансовые организации. Сервер банка не подключён к интернету — это банковская безопасность по-взрослому: данные клиентов не должны утечь.</span>
+        <span data-lang="en"><strong>Where it runs:</strong> sold and live at a commercial bank in Uzbekistan (name under NDA). Two more financial institutions are in talks. The bank's server has no internet — that's serious banking security: client data must not leak.</span>
       </p>
 
-      <h2 id="architecture"><span class="num">§ 02</span><span data-lang="ru">Архитектура</span><span data-lang="en">Architecture</span></h2>
+      <h2 id="architecture"><span class="num">§ 02</span><span data-lang="ru">Как устроено</span><span data-lang="en">How it's built</span></h2>
       <p>
-        <span data-lang="ru">Один сервис, четыре слоя. Clean Architecture без фанатизма — ровно столько границ, сколько нужно, чтобы завтра можно было заменить ReportLab на WeasyPrint, а LDAP на Keycloak без переписи доменного слоя.</span>
-        <span data-lang="en">One service, four layers. Clean Architecture without fanaticism — just enough boundaries to swap ReportLab for WeasyPrint, or LDAP for Keycloak tomorrow without rewriting the domain layer.</span>
+        <span data-lang="ru">Один сервис, но разделён на части так, чтобы каждую можно было менять отдельно. Логика кредитных решений — отдельно от базы данных, отдельно от веб-интерфейса. Это значит: банк просит перерисовать PDF — код решений не трогаем. Завтра приходит второй банк-клиент — подключаем без переделок.</span>
+        <span data-lang="en">One service, but split into parts so each can be changed independently. The credit-decision logic is separate from the database and from the web UI. That means: bank asks to redesign the PDF — we don't touch the decision code. Tomorrow a second bank-client comes in — we plug them in without rewrites.</span>
       </p>
 
       <div class="figure">
-        <div class="fig-bar"><span class="fig-title">architecture · clean layers</span></div>
+        <div class="fig-bar"><span class="fig-title">архитектура · части системы</span></div>
 <pre>┌─────────────────────────────────────────────────────────┐
-│  <span class="fl">HTTP</span>   <span class="ft">FastAPI</span> · <span class="ft">OpenAPI 3.1</span> · <span class="ft">pydantic v2</span>              │
-│         <span class="fc">RFC 7807 errors</span> · <span class="fc">ETag/If-Match</span> · <span class="fc">request-id</span>     │
+│  <span class="fl">ВЕБ</span>     <span class="ft">FastAPI</span>  — приём запросов, OpenAPI-документация │
+│         два интерфейса: <span class="fc">для банка</span> + <span class="fc">для бухгалтера</span>      │
 ├─────────────────────────────────────────────────────────┤
-│  <span class="fl">APP</span>    <span class="fc">Use-cases</span>: <span class="ft">SubmitApplication</span>, <span class="ft">RenderReport</span>, ... │
-│         <span class="fc">Idempotency</span> · <span class="fc">Outbox</span> · <span class="fc">permission checks</span>         │
+│  <span class="fl">СЕРВИС</span>  <span class="ft">движок правил</span> · <span class="ft">расчёт показателей</span> · <span class="ft">оценка</span>   │
+│         сценарии работы · права доступа · <span class="fc">LDAP/MFA</span>     │
 ├─────────────────────────────────────────────────────────┤
-│  <span class="fl">DOMAIN</span> <span class="fc">Entities</span> · <span class="ft">ScoringEngine</span> · <span class="fc">24 rules</span> · <span class="fc">invariants</span>│
-│         <span class="fm">pure functions, zero IO, 100% covered</span>            │
+│  <span class="fl">ЛОГИКА</span>  <span class="fc">24 проверки</span> · <span class="fc">8 показателей</span> · модели данных     │
+│         <span class="fm">чистая бизнес-логика, без баз и сети</span>            │
 ├─────────────────────────────────────────────────────────┤
-│  <span class="fl">INFRA</span>  <span class="ft">Postgres</span> · <span class="ft">LDAP</span> · <span class="ft">ReportLab</span> · <span class="ft">WeasyPrint</span> · <span class="ft">Redis</span>│
-│         <span class="fm">Adapters behind ports — swappable</span>                │
+│  <span class="fl">ИНФРА</span>   <span class="ft">Postgres</span> · <span class="ft">LDAP</span> · <span class="ft">WeasyPrint (PDF)</span> · <span class="ft">Redis</span>     │
+│         парсеры: налог. выписки · счета · справки ГНК   │
+├─────────────────────────────────────────────────────────┤
+│  <span class="fl">КОНФ.</span>   настройки на каждый банк-клиент отдельно      │
+│         <span class="fm">проверка ключей шифрования при старте — не упадёт молча</span>│
 └─────────────────────────────────────────────────────────┘</pre>
-        <div class="caption"><span data-lang="ru">Рис. 1 · Четыре слоя. Стрелки направлены только внутрь — к домену.</span><span data-lang="en">Fig. 1 · Four layers. Arrows point inward only — toward the domain.</span></div>
+        <div class="caption"><span data-lang="ru">Рис. 1 · Пять частей. Зависимости направлены только внутрь — к бизнес-логике. Если завтра менять веб-фреймворк или базу — логика не пострадает.</span><span data-lang="en">Fig. 1 · Five parts. Dependencies point inward only — toward the business logic. If the web framework or DB changes tomorrow — the logic stays put.</span></div>
       </div>
 
-      <p>
-        <span data-lang="ru">Главная инвестиция — в domain. <code>ScoringEngine</code> принимает <code>Application</code>, возвращает <code>Decision</code> с полным trail применённых правил. Pure-функция: никаких IO, никаких <code>datetime.now()</code>, никаких глобалов. Это значит, что весь домен покрывается unit-тестами без единого мока.</span>
-        <span data-lang="en">The main investment is in the domain. <code>ScoringEngine</code> takes an <code>Application</code>, returns a <code>Decision</code> with a full trail of applied rules. Pure function: no IO, no <code>datetime.now()</code>, no globals. This means the entire domain is unit-testable without a single mock.</span>
-      </p>
+      <div class="figure">
+        <div class="fig-bar"><span class="fig-title">путь заявки · от документов до решения</span></div>
+        <div class="svg-stage">
+          <svg class="arch-flow" viewBox="0 0 880 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="archFlowTitle">
+            <title id="archFlowTitle">Путь заявки: документы клиента → проверка → 24 проверки + 8 показателей → решение → PDF и журнал</title>
 
-      <h3 id="rules"><span data-lang="ru">24 правила, один движок</span><span data-lang="en">24 rules, one engine</span></h3>
-      <p>
-        <span data-lang="ru">Каждое правило — класс с <code>id</code>, <code>source</code> (ЦБ РУз / Basel / IFC), <code>applies_to</code> и <code>evaluate(app) -&gt; RuleResult</code>. Правила версионируются: когда регулятор меняет коэффициент, добавляется <code>R-12.v2</code>, старая версия остаётся для ретроспективы.</span>
-        <span data-lang="en">Each rule is a class with <code>id</code>, <code>source</code> (CBU / Basel / IFC), <code>applies_to</code>, and <code>evaluate(app) -&gt; RuleResult</code>. Rules are versioned: when the regulator changes a ratio, <code>R-12.v2</code> is added while the old version stays for retrospective analysis.</span>
-      </p>
+            <!-- 01 · ВХОД -->
+            <g transform="translate(20, 130)">
+              <text class="nd-kicker" x="70" y="-12" text-anchor="middle">01 · документы</text>
+              <rect class="nd-rect" x="0" y="0" width="140" height="120" rx="8"/>
+              <text class="nd-label" x="70" y="22" text-anchor="middle" style="font-size:11px;">3 источника</text>
+              <line x1="14" y1="32" x2="126" y2="32" stroke="var(--sv-stroke)" stroke-width="0.6"/>
+              <text class="nd-sub" x="14" y="50">Налоговая</text>
+              <text class="nd-sub" x="126" y="50" text-anchor="end">5 форм</text>
+              <text class="nd-sub" x="14" y="68">Счета</text>
+              <text class="nd-sub" x="126" y="68" text-anchor="end">ЭСФ</text>
+              <text class="nd-sub" x="14" y="86">Справки</text>
+              <text class="nd-sub" x="126" y="86" text-anchor="end">ГНК</text>
+              <text class="nd-sub" x="70" y="108" text-anchor="middle" style="font-style:italic; font-size:9px;">+ ввод вручную</text>
+            </g>
+            <path class="nd-line" d="M 160 190 L 184 190"/>
+            <polygon class="nd-arrow" points="184,186 184,194 192,190"/>
 
-      <div class="code-card">
-        <div class="head">
-          <span class="path">domain/rules/r17_dscr.py</span>
-          <span class="tag">basel iii</span>
+            <!-- 02 · ПРОВЕРКА ДАННЫХ -->
+            <g transform="translate(192, 140)">
+              <text class="nd-kicker" x="55" y="-12" text-anchor="middle">02 · проверка</text>
+              <rect class="nd-rect" x="0" y="0" width="110" height="100" rx="8"/>
+              <text class="nd-label" x="55" y="40" text-anchor="middle">приведение</text>
+              <text class="nd-label" x="55" y="58" text-anchor="middle">к одному виду</text>
+              <text class="nd-sub" x="55" y="78" text-anchor="middle">данные клиента</text>
+              <text class="nd-sub" x="55" y="92" text-anchor="middle" style="font-size:9px;">зашифрованы</text>
+            </g>
+            <path class="nd-line" d="M 302 190 L 326 190"/>
+            <polygon class="nd-arrow" points="326,186 326,194 334,190"/>
+
+            <!-- 03 · ПРОВЕРКИ + ПОКАЗАТЕЛИ — accent (5 categories) -->
+            <g transform="translate(334, 110)">
+              <text class="nd-kicker" x="100" y="-12" text-anchor="middle">03 · проверки + показатели</text>
+              <rect class="nd-rect accent" x="0" y="0" width="200" height="160" rx="8"/>
+              <text class="nd-label" x="100" y="22" text-anchor="middle">24 проверки + 8 показателей</text>
+              <line x1="14" y1="34" x2="186" y2="34" stroke="var(--accent-line)" stroke-width="1"/>
+              <text class="nd-sub" x="14" y="52" style="font-size:9.5px;">финансы</text>
+              <text class="nd-sub" x="186" y="52" text-anchor="end" style="font-size:9.5px;">12</text>
+              <text class="nd-sub" x="14" y="70" style="font-size:9.5px;">контрагенты</text>
+              <text class="nd-sub" x="186" y="70" text-anchor="end" style="font-size:9.5px;">5</text>
+              <text class="nd-sub" x="14" y="88" style="font-size:9.5px;">налоги</text>
+              <text class="nd-sub" x="186" y="88" text-anchor="end" style="font-size:9.5px;">3</text>
+              <text class="nd-sub" x="14" y="106" style="font-size:9.5px;">структура бизнеса</text>
+              <text class="nd-sub" x="186" y="106" text-anchor="end" style="font-size:9.5px;">3</text>
+              <text class="nd-sub" x="14" y="124" style="font-size:9.5px;">полнота данных</text>
+              <text class="nd-sub" x="186" y="124" text-anchor="end" style="font-size:9.5px;">1</text>
+              <text class="nd-sub" x="100" y="148" text-anchor="middle" style="font-style:italic; font-size:9px;">каждая со ссылкой на источник</text>
+            </g>
+            <path class="nd-line" d="M 534 190 L 558 190"/>
+            <polygon class="nd-arrow" points="558,186 558,194 566,190"/>
+
+            <!-- 04 · РЕШЕНИЕ -->
+            <g transform="translate(566, 130)">
+              <text class="nd-kicker" x="55" y="-12" text-anchor="middle">04 · решение</text>
+              <rect class="nd-rect" x="0" y="0" width="110" height="120" rx="8"/>
+              <text class="nd-label" x="55" y="22" text-anchor="middle" style="font-size:10px;">3 варианта</text>
+              <text class="nd-sub" x="55" y="44" text-anchor="middle" style="fill: var(--accent-green);">Одобрить</text>
+              <text class="nd-sub" x="55" y="62" text-anchor="middle" style="fill: var(--accent);">К пересмотру</text>
+              <text class="nd-sub" x="55" y="80" text-anchor="middle" style="fill: var(--accent-pink);">Отклонить</text>
+              <line x1="14" y1="88" x2="96" y2="88" stroke="var(--sv-stroke)" stroke-width="0.5"/>
+              <text class="nd-sub" x="55" y="102" text-anchor="middle" style="font-size:9px;">+ уверенность</text>
+              <text class="nd-sub" x="55" y="114" text-anchor="middle" style="font-size:9px;">в %</text>
+            </g>
+            <path class="nd-line" d="M 676 190 L 700 190"/>
+            <polygon class="nd-arrow" points="700,186 700,194 708,190"/>
+
+            <!-- 05 · ОТЧЁТ + ЖУРНАЛ -->
+            <g transform="translate(708, 120)">
+              <text class="nd-kicker" x="75" y="-12" text-anchor="middle">05 · отчёт + журнал</text>
+              <rect class="nd-rect" x="0" y="0" width="150" height="60" rx="8"/>
+              <text class="nd-label" x="75" y="26" text-anchor="middle">PDF-меморандум</text>
+              <text class="nd-sub" x="75" y="44" text-anchor="middle">RU + UZ · ~0.75 с</text>
+
+              <rect class="nd-rect" x="0" y="80" width="150" height="60" rx="8"/>
+              <text class="nd-label" x="75" y="106" text-anchor="middle">журнал решений</text>
+              <text class="nd-sub" x="75" y="124" text-anchor="middle">кто, когда, что</text>
+              <!-- vertical connector -->
+              <line x1="75" y1="60" x2="75" y2="80" stroke="var(--sv-stroke)" stroke-dasharray="2 3" stroke-width="1"/>
+            </g>
+          </svg>
         </div>
-<pre class="body"><span class="kw">class</span> <span class="fn">DebtServiceCoverageRatio</span>(Rule):
-    id = <span class="str">"R-17"</span>
-    source = RuleSource.BASEL_III
-    threshold = Decimal(<span class="str">"1.25"</span>)
-    severity = Severity.HARD_FAIL
-
-    <span class="kw">def</span> <span class="fn">evaluate</span>(<span class="kw">self</span>, app: Application) -> RuleResult:
-        <span class="kw">if</span> app.financials.ebitda &lt;= <span class="num-c">0</span>:
-            <span class="kw">return</span> RuleResult.fail(<span class="str">"ebitda_non_positive"</span>)
-
-        dscr = app.financials.ebitda / app.requested.annual_debt_service
-        <span class="kw">if</span> dscr &lt; <span class="kw">self</span>.threshold:
-            <span class="kw">return</span> RuleResult.fail(
-                code=<span class="str">"dscr_below_1_25"</span>,
-                measured=dscr,
-                threshold=<span class="kw">self</span>.threshold,
-            )
-        <span class="kw">return</span> RuleResult.passed(measured=dscr)</pre>
+        <div class="caption"><span data-lang="ru">Рис. 2 · Путь заявки: документы клиента → приведение к одному виду → 24 проверки и 8 показателей → одно из трёх решений → PDF и журнал.</span><span data-lang="en">Fig. 2 · Application path: client documents → normalize to a single shape → 24 checks and 8 indicators → one of three decisions → PDF and audit log.</span></div>
       </div>
 
+      <h3 id="modes"><span data-lang="ru">Один движок — два интерфейса</span><span data-lang="en">One engine — two interfaces</span></h3>
       <p>
-        <span data-lang="ru">Движок прогоняет правила в топологическом порядке (некоторые зависят от результата других — например, проверка по залогу применяется только если DSCR ниже порога), собирает <code>DecisionTrail</code> и отдаёт наверх. PDF-генератор читает trail и превращает в разделы отчёта — по каждому правилу видно, что именно сработало.</span>
-        <span data-lang="en">The engine runs rules in topological order (some depend on others — e.g., collateral check only applies if DSCR is below the threshold), collects a <code>DecisionTrail</code>, and passes it up. The PDF generator reads the trail and turns it into report sections — every triggered rule is explicitly visible.</span>
+        <span data-lang="ru">Под капотом — те же 24 проверки и 8 показателей. Снаружи — два разных режима работы:</span>
+        <span data-lang="en">Under the hood — same 24 checks and 8 indicators. Outside — two different modes:</span>
+      </p>
+      <ul>
+        <li>
+          <span data-lang="ru"><strong>Для банка</strong> — полный режим. Кредитный аналитик заходит через корпоративный логин с двухфакторкой, загружает документы клиента, получает готовый PDF на двух языках для кредитного комитета. Каждое действие записывается в журнал — кто открыл, кто скачал, когда.</span>
+          <span data-lang="en"><strong>For the bank</strong> — full mode. A credit analyst logs in via corporate SSO with 2FA, uploads client documents, gets a ready-made bilingual PDF for the credit committee. Every action is logged — who opened it, who downloaded it, when.</span>
+        </li>
+        <li>
+          <span data-lang="ru"><strong>Для бухгалтера МСБ</strong> — упрощённый режим. Бухгалтер видит «что бы увидел банк по моему клиенту» и может поправить данные до того, как клиент пойдёт за кредитом. Бухгалтеры приводят клиентов в банк — все довольны.</span>
+          <span data-lang="en"><strong>For the SME accountant</strong> — simplified mode. The accountant sees "what the bank would see for my client" and can fix the data before the client applies for a loan. Accountants bring clients to the bank — everyone happy.</span>
+        </li>
+      </ul>
+
+      <h3 id="rules-kpis"><span data-lang="ru">24 проверки и 8 показателей</span><span data-lang="en">24 checks and 8 indicators</span></h3>
+      <p>
+        <span data-lang="ru">Проверки ловят конкретные риски. Например: резкое падение выручки, смена директора прямо перед заявкой, непонятные контрагенты, расхождение между налоговой декларацией и реальными счетами, перекредитованность. Каждая проверка ссылается на конкретный источник — приказ ЦБ Узбекистана, статью налогового кодекса, банковский стандарт или академическое исследование. Не «по опыту банкиров», а «по приказу №X пункту Y».</span>
+        <span data-lang="en">Checks catch concrete risks. Examples: sharp revenue drop, director change right before the application, suspicious counterparties, mismatch between tax declarations and actual invoices, over-leverage. Each check cites a concrete source — a CBU regulation, a tax code article, a banking standard, or academic research. Not "based on banker experience" but "based on regulation X paragraph Y".</span>
+      </p>
+      <p>
+        <span data-lang="ru">Показатели — это привычные банкиру цифры: прибыль, отношение долга к прибыли, оборотные средства, способность бизнеса покрывать выплаты по кредиту. Если в данных не хватает чего-то для расчёта — показатель честно показывает «нет данных», а не подставляет ноль. Это важно: ноль выглядит как реальная цифра и может стоить банку решения.</span>
+        <span data-lang="en">Indicators are familiar numbers for any banker: profit, debt-to-profit ratio, working capital, the business's ability to cover loan payments. If something's missing in the data — the indicator honestly shows "no data" rather than substituting zero. That matters: zero looks like a real number and can cost the bank a decision.</span>
       </p>
 
-      <h2 id="challenges"><span class="num">§ 03</span><span data-lang="ru">Что было сложно</span><span data-lang="en">Challenges</span></h2>
+      <h2 id="challenges"><span class="num">§ 03</span><span data-lang="ru">Что было сложно</span><span data-lang="en">What was hard</span></h2>
 
-      <h3><span data-lang="ru">1. Двенадцать форматов входных таблиц</span><span data-lang="en">1. Twelve input spreadsheet formats</span></h3>
+      <h3><span data-lang="ru">1. Документы клиентов в десяти разных видах</span><span data-lang="en">1. Client documents in ten different shapes</span></h3>
       <p>
-        <span data-lang="ru">Финотчётность приходит из 1С, из Excel, иногда из pdf со сканированной таблицы. На старте казалось, что найдём 2 – 3 формата и закроем. На неделе 3 их было уже двенадцать.</span>
-        <span data-lang="en">Financial statements come from 1C, Excel, and sometimes from PDFs with scanned tables. At the start, we expected 2–3 formats. By week 3, there were already twelve.</span>
+        <span data-lang="ru">Клиент банка приносит данные из трёх систем: налоговая, электронные счета-фактуры, справки ГНК. И только внутри налоговой — <strong class="num">пять разных форм</strong> отчётности. Каждая форма год от года чуть меняется: появляются новые колонки, заголовок сдвигается на строку. Парсер должен это всё съесть и не подавиться.</span>
+        <span data-lang="en">A bank client brings data from three systems: tax authority, e-invoice platform, GNK certificates. Inside the tax authority alone — <strong class="num">five different report forms</strong>. Each form changes slightly year over year: new columns appear, the header shifts a row. The parser needs to swallow all of it and not choke.</span>
       </p>
       <p>
-        <span data-lang="ru">Решение — слой <code>FinancialIngestor</code>: цепочка парсеров, каждый отвечает за один формат, плюс <code>ManualEntry</code> как дефолт. Pydantic v2 на границе — дальше в домен заходит только валидный <code>Financials</code>. Никаких <code>dict[str, Any]</code> внутри.</span>
-        <span data-lang="en">Solution — a <code>FinancialIngestor</code> layer: a chain of parsers, each responsible for one format, plus <code>ManualEntry</code> as the default. Pydantic v2 at the boundary — only a validated <code>Financials</code> object enters the domain. No <code>dict[str, Any]</code> inside.</span>
+        <span data-lang="ru">Решение — на каждый тип документа свой разборщик, плюс ручной ввод для случаев, когда клиент принёс данные на бумаге. Внутри системы все данные приводятся к одному виду — дальше алгоритмам уже всё равно, откуда они пришли.</span>
+        <span data-lang="en">Solution — a dedicated parser for each document type, plus manual input for cases when the client brings paper records. Inside the system everything is normalized to a single shape — from there on, the algorithms don't care where it came from.</span>
       </p>
 
-      <h3><span data-lang="ru">2. Bilingual PDF без кошмара</span><span data-lang="en">2. Bilingual PDF without the nightmare</span></h3>
+      <h3><span data-lang="ru">2. PDF на двух языках, который выглядит одинаково везде</span><span data-lang="en">2. A bilingual PDF that looks the same everywhere</span></h3>
       <p>
-        <span data-lang="ru">Отчёт двуязычный: каждая страница содержит русскую и узбекскую версии в двух колонках. Узбекский — кириллица и латиница, по выбору банка. ReportLab напрямую с кириллицей не дружит без шрифтов; WeasyPrint умеет HTML/CSS, но медленный.</span>
-        <span data-lang="en">The report is bilingual: every page has Russian and Uzbek versions in two columns. Uzbek — Cyrillic or Latin script, the bank's choice. ReportLab doesn't handle Cyrillic well without custom fonts; WeasyPrint supports HTML/CSS but is slow.</span>
+        <span data-lang="ru">Отчёт идёт на русском и узбекском. Узбекский — латиницей по умолчанию (так в налоговой), но ИНН и коды деятельности — кириллицей (так в госреестре). Шрифты вшиты прямо в систему вместе с лицензиями — потому что банковский сервер не может скачивать шрифты из интернета. Результат: PDF выглядит одинаково на сервере банка, на моём ноутбуке и на принтере кредитного комитета.</span>
+        <span data-lang="en">The report goes out in Russian and Uzbek. Uzbek — Latin by default (that's what the tax authority uses), but tax IDs and activity codes stay in Cyrillic (that's what the state registry uses). Fonts are bundled into the system together with their licenses — because the bank's server can't download fonts from the internet. Result: the PDF looks the same on the bank's server, on my laptop, and on the credit committee's printer.</span>
       </p>
       <p>
-        <span data-lang="ru">Гибрид: WeasyPrint для титулки и структуры, ReportLab для таблиц с коэффициентами, <code>pypdf</code> чтобы сшить. <strong>p95: 748 мс</strong>. Было 2.3 секунды до разделения.</span>
-        <span data-lang="en">Hybrid approach: WeasyPrint for the title page and structure, ReportLab for ratio tables, <code>pypdf</code> to merge. <strong>p95: 748 ms</strong>. Was 2.3 seconds before the split.</span>
+        <span data-lang="ru">Один отчёт собирается <strong class="num">~0.75 секунды</strong>. Не «когда-то рендерится» — а нажал кнопку, и через секунду готовый PDF в руках.</span>
+        <span data-lang="en">One report assembles in <strong class="num">~0.75 seconds</strong>. Not "renders eventually" — press the button and within a second the PDF is in your hands.</span>
       </p>
+
+      <div class="figure">
+        <div class="fig-bar"><span class="fig-title">credit memorandum sample · BR-2026-0042 · masked</span></div>
+        <div class="pdf-mock-wrap">
+          <!-- TODO: replace .pdf-mock with <img src="../og/credit-assistant-pdf-masked.png" alt="..."> when a real masked screenshot is exported -->
+          <div class="pdf-mock" aria-label="Sample credit memorandum PDF (masked)">
+            <div class="pdf-mock-page">
+              <div class="pm-top">
+                <div class="pm-logo">CA</div>
+                <div>
+                  <div class="pm-brand-name">Credit Assistant</div>
+                  <div class="pm-brand-sub">Bank Mode · МСБ Underwriting</div>
+                </div>
+                <div>
+                  <div class="pm-id">BR-2026-0042</div>
+                  <div class="pm-id-date">17 мая 2026</div>
+                </div>
+              </div>
+
+              <div class="pm-h-section">Кредитный меморандум</div>
+              <div class="pm-borrower"><span class="pm-mask">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></div>
+              <div class="pm-borrower-meta">ИНН <span class="pm-mask">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> · Индивидуальный предприниматель · ОКЭД 14.13</div>
+
+              <div class="pm-h-section">Сводная оценка</div>
+              <div class="pm-score-row">
+                <div class="pm-gauge">
+                  <svg viewBox="0 0 140 80" xmlns="http://www.w3.org/2000/svg">
+                    <!-- semi-circle r=54 centered at (70,70). 3 arcs red→amber→green. Arc thickness 11. -->
+                    <path d="M 16 70 A 54 54 0 0 1 41.04 24.18" fill="none" stroke="#c74848" stroke-width="11" stroke-linecap="butt"/>
+                    <path d="M 41.04 24.18 A 54 54 0 0 1 98.96 24.18" fill="none" stroke="#e6a83d" stroke-width="11" stroke-linecap="butt"/>
+                    <path d="M 98.96 24.18 A 54 54 0 0 1 124 70" fill="none" stroke="#228b4d" stroke-width="11" stroke-linecap="butt"/>
+                    <!-- needle: score 79 → angle from 180° (left=0) to 0° (right=100). 79 → 180-79*1.8 = 37.8° from x-axis ⇒ point at (70+44·cos37.8, 70-44·sin37.8) ≈ (104.8, 43) -->
+                    <line x1="70" y1="70" x2="105" y2="43" stroke="#1a1a1a" stroke-width="2.2" stroke-linecap="round"/>
+                    <circle cx="70" cy="70" r="4" fill="#1a1a1a"/>
+                    <!-- 0 and 100 ticks -->
+                    <text x="12" y="78" font-family="JetBrains Mono" font-size="7" fill="#888">0</text>
+                    <text x="120" y="78" font-family="JetBrains Mono" font-size="7" fill="#888">100</text>
+                  </svg>
+                  <div class="pm-gauge-score">79<span class="pm-gauge-score-sfx"> / 100</span><span class="pm-gauge-cap">Display score</span></div>
+                </div>
+                <div>
+                  <div class="pm-recommendation">К пересмотру</div>
+                  <div class="pm-signals-meta">Сработавших сигналов <strong>3</strong>: 1 критический · 2 средних</div>
+                </div>
+              </div>
+
+              <div class="pm-detail-rows">
+                <div class="pm-row-2"><span class="pm-k">Кредитная заявка</span><span class="pm-v"><strong><span class="pm-mask">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></strong> сум · 24 мес · <span class="pm-mask">&nbsp;&nbsp;&nbsp;&nbsp;</span>% годовых</span></div>
+                <div class="pm-row-2"><span class="pm-k">Данные на</span><span class="pm-v">16 мая 2026</span></div>
+                <div class="pm-row-2"><span class="pm-k">Методика</span><span class="pm-v"><strong>v1</strong> · просчитано 24 правил</span></div>
+              </div>
+
+              <div class="pm-h-section">Ключевые наблюдения</div>
+              <div class="pm-observations">
+                <div class="pm-obs-col good">
+                  <div class="pm-obs-h">Сильные стороны</div>
+                  <div class="pm-obs-item">
+                    <div class="pm-obs-name">Положительный финансовый результат в 2025</div>
+                    <div class="pm-obs-detail">Чистая прибыль <span class="pm-mask">&nbsp;&nbsp;&nbsp;&nbsp;</span> сум</div>
+                  </div>
+                  <div class="pm-obs-item">
+                    <div class="pm-obs-name">Стабильная налоговая дисциплина</div>
+                    <div class="pm-obs-detail">Налоговых событий за последние 12 мес. не зафиксировано</div>
+                  </div>
+                </div>
+                <div class="pm-obs-col risk">
+                  <div class="pm-obs-h">Зоны риска</div>
+                  <div class="pm-obs-item">
+                    <div class="pm-obs-name">Разрыв декларации НДС vs ЭСФ &gt; 15%</div>
+                    <div class="pm-obs-detail">Декларация НДС vs ЭСФ расходится на 23%</div>
+                  </div>
+                  <div class="pm-obs-item">
+                    <div class="pm-obs-name">Смена директора за последние 6 месяцев</div>
+                    <div class="pm-obs-detail">Директор сменился 65 дней назад</div>
+                  </div>
+                  <div class="pm-obs-item">
+                    <div class="pm-obs-name">Маржа &lt; 5% при годовой выручке &gt; 5 млрд сум</div>
+                    <div class="pm-obs-detail">Маржа 2.2% при годовой выручке <span class="pm-mask">&nbsp;&nbsp;</span> млрд сум</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pm-foot">стр. 1 из 6 · кредитный меморандум · v1</div>
+            </div>
+          </div>
+        </div>
+        <div class="caption"><span data-lang="ru">Рис. 3 · Первая страница отчёта. Реальный клиент банка — ФИО, ИНН и суммы скрыты по NDA. Слева — gauge со сводной оценкой, справа — рекомендация и счёт сигналов. Внизу — ключевые наблюдения по сильным сторонам и зонам риска.</span><span data-lang="en">Fig. 3 · First page of the report. Real bank client — name, tax ID and amounts redacted under NDA. <strong>The real product ships in Russian + Uzbek — no English version was commissioned by the bank, so the mock is shown in its original Russian layout.</strong> Left — summary gauge, right — recommendation and signal count. Bottom — key observations split into strengths and risks.</span></div>
+      </div>
 
       <div class="pullquote">
-        <span data-lang="ru">90% сложности оказалось не в банковской математике, а в том, чтобы PDF был одинаковый на Linux-сервере банка и на моём ноутбуке.</span>
-        <span data-lang="en">90% of the complexity turned out to be not in the banking math, but in making the PDF look identical on the bank's Linux server and on my laptop.</span>
+        <span data-lang="ru">Каждое число в отчёте можно «развернуть» — увидеть из какого документа клиента оно взято. Если такой связи нет — число просто не показывается. Лучше пропуск, чем выдумка.</span>
+        <span data-lang="en">Every number in the report can be "expanded" — you see which client document it came from. If there's no such link — the number simply isn't shown. A gap is better than fabrication.</span>
       </div>
 
-      <h3><span data-lang="ru">3. On-premise air-gapped</span><span data-lang="en">3. On-premise air-gapped</span></h3>
+      <h3><span data-lang="ru">3. Сервер без интернета</span><span data-lang="en">3. A server without internet</span></h3>
       <p>
-        <span data-lang="ru">Сервер банка не ходит в интернет. Пакеты, зависимости, образ Docker, всё — собирается на CI и приезжает на флешке (буквально). Это значит: vendored deps, проверка SBOM на каждом релизе, отдельный playbook для upgrade без интернета.</span>
-        <span data-lang="en">The bank's server has no internet access. Packages, dependencies, Docker image — everything is built on CI and delivered via USB drive (literally). This means: vendored deps, SBOM verification on every release, a dedicated playbook for upgrades without internet.</span>
+        <span data-lang="ru">Банковский сервер физически отключён от интернета — это требование безопасности. Обновления приходят на флешке: я собираю новую версию у себя, проверяю, отправляю банку. Это значит — никаких «о, сейчас докачаем библиотеку из интернета». Всё, что нужно для работы, лежит внутри готового пакета. Ошибиться нельзя — некому передать «у нас не работает», когда тыкать палкой удалённо невозможно.</span>
+        <span data-lang="en">The bank's server is physically disconnected from the internet — that's a security requirement. Updates arrive on a USB stick: I build a new version locally, test it, hand it to the bank. That means no "oh let's just download a library from the internet". Everything needed to run is inside the package. You can't afford mistakes — there's no one to forward "it's not working" to when you can't poke things remotely.</span>
       </p>
 
       <h2 id="numbers"><span class="num">§ 04</span><span data-lang="ru">Цифры</span><span data-lang="en">Numbers</span></h2>
@@ -242,39 +410,47 @@
       <div class="metric-row">
         <div class="metric">
           <span class="v"><em>1 310</em></span>
-          <span class="l">TESTS</span>
+          <span class="l"><span data-lang="ru">АВТО-ТЕСТОВ</span><span data-lang="en">AUTO TESTS</span></span>
         </div>
         <div class="metric">
-          <span class="v">87.4<em>%</em></span>
-          <span class="l">COVERAGE</span>
+          <span class="v"><em>24</em>+<em>8</em></span>
+          <span class="l"><span data-lang="ru">ПРОВЕРОК + ПОКАЗАТЕЛЕЙ</span><span data-lang="en">CHECKS + INDICATORS</span></span>
         </div>
         <div class="metric">
-          <span class="v">748<em>ms</em></span>
-          <span class="l">PDF P95</span>
+          <span class="v">~0.75<em>с</em></span>
+          <span class="l"><span data-lang="ru">НА ОДИН ОТЧЁТ</span><span data-lang="en">PER REPORT</span></span>
         </div>
         <div class="metric">
           <span class="v"><em>8.5</em>/10</span>
-          <span class="l">SECURITY</span>
+          <span class="l"><span data-lang="ru">ВНЕШНИЙ АУДИТ</span><span data-lang="en">EXTERNAL AUDIT</span></span>
         </div>
       </div>
 
       <p>
-        <span data-lang="ru">За первые два месяца в проде: ~470 заявок прошли через систему. Среднее время решения упало с ~2 рабочих дней до ~40 минут (включая ручную проверку аналитиком). Кредитный комитет получает один документ вместо шести Excel-файлов от разных людей.</span>
-        <span data-lang="en">In the first two months in production: ~470 applications went through the system. Average decision time dropped from ~2 business days to ~40 minutes (including manual review by an analyst). The credit committee receives one document instead of six Excel files from different people.</span>
+        <span data-lang="ru">Систему отдельно проверял независимый аудитор — выставил <strong class="num">8.5/10</strong> за качество архитектуры: «преобразования данных симметричны, миграции базы дисциплинированы».</span>
+        <span data-lang="en">The system was independently audited — <strong class="num">8.5/10</strong> for architecture quality: "data transformations are symmetric, DB migrations are disciplined".</span>
+      </p>
+      <p>
+        <span data-lang="ru"><strong>Что работает сейчас:</strong> система продана и запущена в коммерческом банке Узбекистана. Имя банка под NDA — банковский сектор не любит публичных коммуникаций по защитным системам. В разговорах две другие финансовые организации. Точные цифры по объёму проходящих заявок — тоже под NDA.</span>
+        <span data-lang="en"><strong>What's live now:</strong> sold and deployed at a commercial bank in Uzbekistan. The bank's name is under NDA — the banking sector doesn't like public communications about defensive systems. Two other financial institutions are in talks. Exact figures on processed applications volume are also under NDA.</span>
       </p>
 
       <h2 id="lessons"><span class="num">§ 05</span><span data-lang="ru">Что я вынес</span><span data-lang="en">Lessons learned</span></h2>
       <p>
-        <span data-lang="ru"><strong>(а)</strong> Pydantic v2 на границе — это не «валидация», это договор между слоями. Сначала боролся, потом осознал, потом полюбил.</span>
-        <span data-lang="en"><strong>(a)</strong> Pydantic v2 at the boundary is not "validation" — it's a contract between layers. First I resisted, then I understood, then I embraced it.</span>
+        <span data-lang="ru"><strong>(а) Чем строже проверять данные на входе — тем меньше сюрпризов внутри.</strong> Если на границе системы пропустить кривую цифру — она будет всплывать в самых неожиданных местах три месяца спустя. Если развернуть на входе — фиксится один раз и навсегда.</span>
+        <span data-lang="en"><strong>(a) The stricter you validate input data — the fewer surprises inside.</strong> If you let a malformed number cross the boundary — it'll resurface in the strangest places three months later. Catch it at the entrance — fix it once, for good.</span>
       </p>
       <p>
-        <span data-lang="ru"><strong>(б)</strong> Версионируемые правила — дорого на старте, бесценно через полгода, когда регулятор поменял один коэффициент и нужно объяснить, почему прошлогодние решения были правильными по тогдашним правилам.</span>
-        <span data-lang="en"><strong>(b)</strong> Versioned rules are expensive at the start, priceless six months later when the regulator changes a ratio and you need to explain why last year's decisions were correct under the rules at the time.</span>
+        <span data-lang="ru"><strong>(б) Правила со временем меняются — закладывайте это.</strong> ЦБ поменяет один коэффициент в положении — нужно уметь объяснить, почему прошлогодние решения были правильными по тогдашним правилам. Версии правил с датой действия — дорого вначале, бесценно через полгода.</span>
+        <span data-lang="en"><strong>(b) Rules change over time — plan for it.</strong> The Central Bank changes a coefficient in a regulation — you need to be able to explain why last year's decisions were correct under the rules in force at the time. Versioned rules with effective dates — expensive up front, priceless six months in.</span>
       </p>
       <p>
-        <span data-lang="ru"><strong>(в)</strong> «On-premise» на деле означает «у вас не будет интернета, и точно сломается то, что вы не могли предусмотреть без опыта on-prem». На следующем проекте я закладывал отдельные две недели на это по умолчанию.</span>
-        <span data-lang="en"><strong>(c)</strong> "On-premise" in practice means "you will have no internet, and something you couldn't anticipate without on-prem experience will definitely break." On the next project, I budgeted two extra weeks for this by default.</span>
+        <span data-lang="ru"><strong>(в) Источникам нельзя верить с первого захода.</strong> Если ваше решение опирается на «приказ №X статью Y» — проверьте, что и приказ существует, и статья там та, что вы думаете. На следующем банковском проекте я закладывал отдельные дни на эту проверку с первого дня.</span>
+        <span data-lang="en"><strong>(c) Don't trust sources on the first pass.</strong> If your decision rests on "regulation X article Y" — verify both that the regulation exists and that the article is what you think it is. On the next banking project, I budgeted dedicated days for this check from day one.</span>
+      </p>
+      <p>
+        <span data-lang="ru"><strong>(г) «Сервер без интернета» — это отдельный мир.</strong> Закладывайте две недели сверху, если делаете для банка впервые. Всё, что вы привыкли «потянуть из репозитория во время сборки» — придётся положить заранее. Ошибиться нельзя: тыкать палкой удалённо некому.</span>
+        <span data-lang="en"><strong>(d) "Server without internet" is its own world.</strong> Budget two extra weeks if it's your first bank project. Everything you're used to "pull from the repo at build time" — you'll need to bundle ahead. You can't afford mistakes: there's no one to remote-poke things.</span>
       </p>
 
     </article>
@@ -283,9 +459,9 @@
       <nav class="case-toc" aria-label="Table of contents">
         <div class="head"><span data-lang="ru">Содержание</span><span data-lang="en">Contents</span></div>
         <ol>
-          <li><a href="#brief"><span data-lang="ru">Бриф</span><span data-lang="en">Brief</span></a></li>
-          <li><a href="#architecture"><span data-lang="ru">Архитектура</span><span data-lang="en">Architecture</span></a></li>
-          <li><a href="#challenges"><span data-lang="ru">Что было сложно</span><span data-lang="en">Challenges</span></a></li>
+          <li><a href="#brief"><span data-lang="ru">О чём проект</span><span data-lang="en">What this is</span></a></li>
+          <li><a href="#architecture"><span data-lang="ru">Как устроено</span><span data-lang="en">How it's built</span></a></li>
+          <li><a href="#challenges"><span data-lang="ru">Что было сложно</span><span data-lang="en">What was hard</span></a></li>
           <li><a href="#numbers"><span data-lang="ru">Цифры</span><span data-lang="en">Numbers</span></a></li>
           <li><a href="#lessons"><span data-lang="ru">Что я вынес</span><span data-lang="en">Lessons learned</span></a></li>
         </ol>
@@ -314,7 +490,6 @@
       <div class="links">
         <a href="https://github.com/RiobVo">GitHub</a>
         <a href="https://t.me/plssog">Telegram</a>
-        <a href="https://linkedin.com/in/%D1%8D%D0%BB%D1%91%D1%80-%D1%8E%D1%81%D1%83%D0%BF%D0%BE%D0%B2-2bb989411">LinkedIn</a>
               </div>
     </div>
     <div class="colophon">© 2026</div>

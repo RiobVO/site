@@ -28,8 +28,7 @@
   </a>
   <div class="links">
     <a href="../index.html#work" class="current"><span data-lang="ru">Работы</span><span data-lang="en">Works</span></a>
-    <a href="../services.html"><span data-lang="ru">Услуги</span><span data-lang="en">Services</span></a>
-    <a href="../index.html#principles"><span data-lang="ru">Принципы</span><span data-lang="en">Principles</span></a>
+    <a href="../services.html"><span data-lang="ru">Услуги</span><span data-lang="en">Services</span></a>    <a href="../index.html#principles"><span data-lang="ru">Принципы</span><span data-lang="en">Principles</span></a>
       </div>
   <div class="tools">
     <button type="button" class="icon-btn" data-lang-cycle aria-label="Cycle language">
@@ -133,12 +132,12 @@
         <span data-lang="en">A typical beauty salon in Tashkent handles bookings via WhatsApp and phone calls. The receptionist juggles a paper ledger, three chats, and memory. The result is predictable: double-bookings for the same master, lost clients who never got a reply, and no-shows without reminders.</span>
       </p>
       <p>
-        <span data-lang="ru"><strong>Проблемы ручной записи:</strong> клиент пишет в WhatsApp — ответ через 2 часа, когда слот уже занят. Два мастера записаны на одно время. Клиент не приходит, потому что забыл — час простоя стоит салону 150–200 тыс. сум.</span>
-        <span data-lang="en"><strong>Manual booking problems:</strong> a client texts WhatsApp — gets a reply 2 hours later when the slot is already taken. Two masters booked at the same time. A client doesn't show up because they forgot — an idle hour costs the salon 150–200k UZS.</span>
+        <span data-lang="ru"><strong>Проблемы ручной записи:</strong> клиент пишет в WhatsApp — ответ через 2 часа, когда слот уже занят. Два мастера записаны на одно время. Клиент не приходит, потому что забыл — час простоя стоит салону <strong class="num">150–200 тыс. сум</strong>.</span>
+        <span data-lang="en"><strong>Manual booking problems:</strong> a client texts WhatsApp — gets a reply 2 hours later when the slot is already taken. Two masters booked at the same time. A client doesn't show up because they forgot — an idle hour costs the salon <strong class="num">150–200k UZS</strong>.</span>
       </p>
       <p>
-        <span data-lang="ru"><strong>Задача:</strong> бот, который позволяет клиенту записаться за 30 секунд без звонков и ожидания, а администратору — управлять расписанием без Excel и бумаги. Telegram — потому что в Узбекистане это мессенджер номер один.</span>
-        <span data-lang="en"><strong>Goal:</strong> a bot that lets clients book in 30 seconds without calls or waiting, and lets admins manage the schedule without Excel or paper. Telegram — because it's the number one messenger in Uzbekistan.</span>
+        <span data-lang="ru"><strong>Задача:</strong> бот, который позволяет клиенту записаться за <strong class="num">30 секунд</strong> без звонков и ожидания, а администратору — управлять расписанием без Excel и бумаги. Telegram — потому что в Узбекистане это мессенджер номер один.</span>
+        <span data-lang="en"><strong>Goal:</strong> a bot that lets clients book in <strong class="num">30 seconds</strong> without calls or waiting, and lets admins manage the schedule without Excel or paper. Telegram — because it's the number one messenger in Uzbekistan.</span>
       </p>
 
       <h2 id="architecture"><span class="num">§ 02</span><span data-lang="ru">Архитектура</span><span data-lang="en">Architecture</span></h2>
@@ -181,8 +180,8 @@
 
       <h2 id="licensing"><span class="num">§ 03</span><span data-lang="ru">Модель лицензирования</span><span data-lang="en">Licensing model</span></h2>
       <p>
-        <span data-lang="ru">Каждый салон получает годовую лицензию. Ключ подписан Ed25519 — offline-верификация без обращения к серверу лицензий. Grace-период 90 дней: если лицензия истекла, бот продолжает работать, но показывает предупреждение администратору. Это честный подход — салон не теряет данные и записи клиентов.</span>
-        <span data-lang="en">Each salon gets an annual license. The key is signed with Ed25519 — offline verification with no license server calls. 90-day grace period: if the license expires, the bot keeps running but shows a warning to the admin. A fair approach — the salon doesn't lose data or client bookings.</span>
+        <span data-lang="ru">Каждый салон получает годовую лицензию. Ключ подписан Ed25519 — offline-верификация без обращения к серверу лицензий. Grace-период <strong class="num">90 дней</strong>: если лицензия истекла, бот продолжает работать, но показывает предупреждение администратору. Это честный подход — салон не теряет данные и записи клиентов.</span>
+        <span data-lang="en">Each salon gets an annual license. The key is signed with Ed25519 — offline verification with no license server calls. <strong class="num">90-day</strong> grace period: if the license expires, the bot keeps running but shows a warning to the admin. A fair approach — the salon doesn't lose data or client bookings.</span>
       </p>
 
       <div class="code-card">
@@ -235,8 +234,8 @@
       </div>
 
       <p>
-        <span data-lang="ru">Автобэкап каждые 6 часов: APScheduler копирует SQLite-файл и отправляет в приватный Telegram-канал. Восстановление — скачать файл и положить на место. Никаких внешних сервисов, никаких S3-бакетов.</span>
-        <span data-lang="en">Auto-backup every 6 hours: APScheduler copies the SQLite file and sends it to a private Telegram channel. Recovery — download the file and drop it in place. No external services, no S3 buckets.</span>
+        <span data-lang="ru">Автобэкап <strong class="num">каждые 6 часов</strong>: APScheduler копирует SQLite-файл и отправляет в приватный Telegram-канал. Восстановление — скачать файл и положить на место. Никаких внешних сервисов, никаких S3-бакетов.</span>
+        <span data-lang="en">Auto-backup <strong class="num">every 6 hours</strong>: APScheduler copies the SQLite file and sends it to a private Telegram channel. Recovery — download the file and drop it in place. No external services, no S3 buckets.</span>
       </p>
 
       <h2 id="lessons"><span class="num">§ 05</span><span data-lang="ru">Что я вынес</span><span data-lang="en">Lessons learned</span></h2>
@@ -245,8 +244,8 @@
         <span data-lang="en"><strong>(a)</strong> Salon UX is not SaaS UX. A master checks their phone for 10 seconds between clients. Any screen with more than three buttons is a failure. Inline keyboards are kept maximally flat: one row of choices, one confirm button. Every extra tap is a lost booking.</span>
       </p>
       <p>
-        <span data-lang="ru"><strong>(б)</strong> Self-hosted бьёт SaaS для единичных салонов. Владелец не хочет ежемесячную подписку на платформу и не хочет, чтобы его клиентская база жила на чужом сервере. VPS за $5/мес + годовая лицензия — модель, которую понимают и принимают.</span>
-        <span data-lang="en"><strong>(b)</strong> Self-hosted beats SaaS for individual salons. The owner doesn't want a monthly platform subscription and doesn't want their client base living on someone else's server. A $5/mo VPS + annual license — a model they understand and accept.</span>
+        <span data-lang="ru"><strong>(б)</strong> Self-hosted бьёт SaaS для единичных салонов. Владелец не хочет ежемесячную подписку на платформу и не хочет, чтобы его клиентская база жила на чужом сервере. VPS за <strong class="num">$5/мес</strong> + годовая лицензия — модель, которую понимают и принимают.</span>
+        <span data-lang="en"><strong>(b)</strong> Self-hosted beats SaaS for individual salons. The owner doesn't want a monthly platform subscription and doesn't want their client base living on someone else's server. A <strong class="num">$5/mo</strong> VPS + annual license — a model they understand and accept.</span>
       </p>
       <p>
         <span data-lang="ru"><strong>(в)</strong> Лицензирование — не ограничение, а фича продукта. Ed25519-ключ решает три задачи: монетизация, защита от клонирования, и доверие (салон может проверить, что код не изменён). Grace-период снимает страх «бот отключится и я потеряю записи».</span>
@@ -290,7 +289,6 @@
       <div class="links">
         <a href="https://github.com/RiobVo">GitHub</a>
         <a href="https://t.me/plssog">Telegram</a>
-        <a href="https://linkedin.com/in/%D1%8D%D0%BB%D1%91%D1%80-%D1%8E%D1%81%D1%83%D0%BF%D0%BE%D0%B2-2bb989411">LinkedIn</a>
               </div>
     </div>
     <div class="colophon">© 2026</div>

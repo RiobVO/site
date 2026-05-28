@@ -50,8 +50,7 @@
   </a>
   <div class="links">
     <a href="index.html#work" class="current"><span data-lang="ru">Работы</span><span data-lang="en">Works</span></a>
-    <a href="services.html"><span data-lang="ru">Услуги</span><span data-lang="en">Services</span></a>
-    <a href="index.html#principles"><span data-lang="ru">Принципы</span><span data-lang="en">Principles</span></a>
+    <a href="services.html"><span data-lang="ru">Услуги</span><span data-lang="en">Services</span></a>    <a href="index.html#principles"><span data-lang="ru">Принципы</span><span data-lang="en">Principles</span></a>
       </div>
   <div class="tools">
     <button type="button" class="icon-btn" data-lang-cycle aria-label="Cycle language">
@@ -107,7 +106,7 @@
             <span class="t-val">--rules 24 --tests 1310</span>
           </div>
           <div class="term-line t-output" data-delay="1100">
-            <span class="t-ok">✓</span> coverage <span class="t-metric">87.4%</span> · pdf <span class="t-metric">750ms</span> · audit <span class="t-metric">8.5/10</span>
+            <span class="t-ok">✓</span> checks <span class="t-metric">24+8</span> · pdf <span class="t-metric">750ms</span> · audit <span class="t-metric">8.5/10</span>
             <a href="case/credit-assistant.html" class="t-link"><span data-lang="ru">→ кейс</span><span data-lang="en">→ case</span></a>
           </div>
           <div class="term-line" data-delay="2200">
@@ -143,12 +142,12 @@
     </div>
 
     <div class="ctas reveal d5">
-      <a href="#work" class="btn primary">
-        <span data-lang="ru">Смотреть кейсы</span><span data-lang="en">View cases</span>
-        <span class="arrow">→</span>
-      </a>
-      <a href="https://t.me/plssog" class="btn secondary">
+      <a href="https://t.me/plssog" class="btn primary">
         <span data-lang="ru">Обсудить проект</span><span data-lang="en">Discuss a project</span>
+        <span class="arrow">↗</span>
+      </a>
+      <a href="services.html" class="btn secondary">
+        <span data-lang="ru">Запросить аудит</span><span data-lang="en">Request audit</span>
         <span class="arrow">↗</span>
       </a>
     </div>
@@ -158,7 +157,7 @@
   <section class="spread" id="featured">
     <div class="section-head reveal">
       <span class="kicker"><span data-lang="ru">В продакшене</span><span data-lang="en">In production</span></span>
-      <h2 class="headline"><span data-lang="ru">Код в продакшене, <span class="accent-gradient">не в презентации.</span></span><span data-lang="en">Code in production, <span class="accent-gradient">not in a pitch deck.</span></span></h2>
+      <h2 class="headline"><span data-lang="ru">Запущено <span class="accent-gradient">и работает.</span></span><span data-lang="en">Shipped <span class="accent-gradient">and running.</span></span></h2>
     </div>
 
     <div class="feature-block reveal">
@@ -166,10 +165,10 @@
         <span class="kicker no-bar" style="color: var(--accent-cyan);">Fintech · NDA bank · live</span>
         <h3><span data-lang="ru">Credit Assistant — SME-скоринг с двуязычным PDF за&nbsp;750&nbsp;мс.</span><span data-lang="en">Credit Assistant — SME scoring with bilingual PDF in&nbsp;750&nbsp;ms.</span></h3>
         <p>
-          <span data-lang="ru">Платформа автоматизирует кредитное решение по малому бизнесу: 24 правила, привязанных к ЦБ РУз, Basel III и стандартам IFC, превращают разрозненную финансовую отчётность в bilingual PDF.</span><span data-lang="en">The platform automates SME credit decisions: 24 rules tied to the Central Bank of Uzbekistan, Basel III and IFC standards turn fragmented financial reports into a bilingual PDF.</span>
+          <span data-lang="ru">Платформа автоматизирует кредитное решение по малому бизнесу: 24 проверки в 5 категориях плюс 8 финансовых показателей превращают разрозненную отчётность в bilingual PDF.</span><span data-lang="en">The platform automates SME credit decisions: 24 checks across 5 categories plus 8 financial indicators turn fragmented reports into a bilingual PDF.</span>
         </p>
         <p>
-          <span data-lang="ru">On-premise, LDAP, MFA, без облака — потому что банки. 1310 тестов, 87.4% покрытие, 8.5/10 на внешнем security аудите.</span><span data-lang="en">On-premise, LDAP, MFA, no cloud — because banks. 1310 tests, 87.4% coverage, 8.5/10 on an external security audit.</span>
+          <span data-lang="ru">On-premise, LDAP, MFA, без облака — потому что банки. 1310 тестов, 8.5/10 на внешнем аудите архитектуры.</span><span data-lang="en">On-premise, LDAP, MFA, no cloud — because banks. 1310 tests, 8.5/10 on an external architecture audit.</span>
         </p>
         <div class="meta-row">
           <div class="stat">
@@ -177,12 +176,12 @@
             <span class="l">TESTS</span>
           </div>
           <div class="stat">
-            <span class="v">87.4<em>%</em></span>
-            <span class="l">COVERAGE</span>
+            <span class="v">24<em>+8</em></span>
+            <span class="l">CHECKS</span>
           </div>
           <div class="stat">
-            <span class="v">748<em>ms</em></span>
-            <span class="l">PDF P95</span>
+            <span class="v">750<em>ms</em></span>
+            <span class="l">PDF RENDER</span>
           </div>
           <div class="stat">
             <span class="v"><em>8.5</em>/10</span>
@@ -209,11 +208,11 @@
             </span>
             <div class="meta">
               <div class="name">Application</div>
-              <div class="sub">Finance data in 12 formats</div>
+              <div class="sub">3 sources · 5 tax forms</div>
             </div>
             <div class="stamp">
               <span class="step">STEP 01</span>
-              <span class="t">— ms</span>
+              <span class="t">3 src</span>
             </div>
           </div>
           <div class="pipe-link"><div class="vline"></div></div>
@@ -223,7 +222,7 @@
             </span>
             <div class="meta">
               <div class="name">Parse &amp; validate</div>
-              <div class="sub">12 formats → 1 typed model</div>
+              <div class="sub">3 sources → 1 typed model</div>
             </div>
             <div class="stamp">
               <span class="step">STEP 02</span>
@@ -237,7 +236,7 @@
             </span>
             <div class="meta">
               <div class="name">24 rules engine</div>
-              <div class="sub">Basel III · IFC · ЦБ РУз</div>
+              <div class="sub">5 categories · sourced rules</div>
             </div>
             <div class="stamp">
               <span class="step">STEP 03</span>
@@ -246,10 +245,10 @@
           </div>
           <div class="pipe-link"><div class="vline"></div></div>
           <div class="pipe-stage">
-            <span class="ico score">B+</span>
+            <span class="ico score">79</span>
             <div class="meta">
               <div class="name">Risk score · decision</div>
-              <div class="sub">23 / 24 passed · approve w/ collateral</div>
+              <div class="sub">display_score 79 · REVIEW</div>
             </div>
             <div class="stamp">
               <span class="step">STEP 04</span>
@@ -263,7 +262,7 @@
             </span>
             <div class="meta">
               <div class="name">Bilingual PDF</div>
-              <div class="sub">RU + UZ · ReportLab + WeasyPrint</div>
+              <div class="sub">RU + UZ · WeasyPrint</div>
             </div>
             <div class="stamp">
               <span class="step">STEP 05</span>
@@ -272,16 +271,16 @@
           </div>
           <div class="pipe-footer">
             <div class="cell">
-              <span class="v">748<em>ms</em></span>
-              <span class="l">P95 LATENCY</span>
+              <span class="v">~750<em>ms</em></span>
+              <span class="l">PDF RENDER</span>
             </div>
             <div class="cell">
-              <span class="v">99.4<em>%</em></span>
-              <span class="l">SUCCESS</span>
+              <span class="v">24<em>+8</em></span>
+              <span class="l">CHECKS</span>
             </div>
             <div class="cell">
-              <span class="v">0</span>
-              <span class="l">FAILED / 24H</span>
+              <span class="v">RU+UZ</span>
+              <span class="l">BILINGUAL PDF</span>
             </div>
           </div>
         </div>
@@ -583,8 +582,8 @@
               Telegram
               <span class="arrow">↗</span>
             </a>
-            <a href="mailto:eleru340@gmail.com" class="btn secondary">
-              eleru340@gmail.com
+            <a href="services.html" class="btn secondary">
+              <span data-lang="ru">Запросить аудит</span><span data-lang="en">Request audit</span>
               <span class="arrow">↗</span>
             </a>
           </div>
@@ -603,7 +602,6 @@
       <div class="links">
         <a href="https://github.com/RiobVo">GitHub</a>
         <a href="https://t.me/plssog">Telegram</a>
-        <a href="https://linkedin.com/in/%D1%8D%D0%BB%D1%91%D1%80-%D1%8E%D1%81%D1%83%D0%BF%D0%BE%D0%B2-2bb989411">LinkedIn</a>
               </div>
     </div>
     <div class="colophon">
