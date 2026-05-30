@@ -403,6 +403,10 @@ p.body, .body-text {
   .nav-burger { display: inline-flex; }
 }
 
+@media (max-width: 720px) {
+  .nav-pill, .nav-mobile-menu { backdrop-filter: none; background: rgba(26,26,26,0.98); }
+}
+
 /* ── Sections ──────────────────────────────────────── */
 section.spread {
   padding: 120px 0;
@@ -476,7 +480,7 @@ hr.line,
   flex-shrink: 0;
   opacity: 0.8;
 }
-[data-theme="light"] .code-card { background: #f5f3f0; border-color: rgba(0,0,0,0.10); }
+[data-theme="light"] .code-card { background: #f5f3f0; border-color: rgba(0,0,0,0.10); box-shadow: 0 40px 100px -30px rgba(0,0,0,0.35), 0 0 0 1px rgba(0,0,0,0.08); }
 [data-theme="light"] .code-card .head { background: #eceae6; }
 .code-card .head .path { color: var(--text-dim); }
 .code-card .head .tag {
