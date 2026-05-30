@@ -80,7 +80,7 @@ function bindChrome() {
     });
   }
 
-  // Lang cycle button (cycles ru → en → uz → ru)
+  // Lang cycle button (toggles ru ↔ en — no UZ)
   const langBtn = document.querySelector('[data-lang-cycle]');
   if (langBtn) {
     langBtn.addEventListener('click', () => {
