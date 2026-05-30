@@ -670,7 +670,6 @@
 
   <!-- ── CONTACT (engineering) ── -->
   <section class="cta engineering" id="contact">
-    <div class="shell">
       <div class="contact-panel reveal">
         <div class="cp-head">
           <span class="left"><span data-lang="ru">Открыт для проектов · 1 слот свободен</span><span data-lang="en">Open for projects · 1 slot available</span></span>
@@ -692,7 +691,6 @@
           </div>
         </div>
       </div>
-    </div>
   </section>
 
   <!-- ── FOOTER ── -->
@@ -785,7 +783,7 @@
     WS_PROJECTS.forEach(function(p, i) {
       var branch = i === WS_PROJECTS.length - 1 ? '└──' : '├──';
       var cls = i === 0 ? ' active' : '';
-      treeHtml += '<li class="ws-tree-item' + cls + '" data-project="' + p.id + '">' +
+      treeHtml += '<li class="ws-tree-item' + cls + '" role="button" tabindex="0" data-project="' + p.id + '">' +
         '<span class="ws-branch">' + branch + '</span>' +
         '<span class="ws-dot ' + (p.status === 'live' ? 'live' : 'ref') + '"></span>' +
         '<span class="ws-name">' + p.name + '/</span></li>';
@@ -832,7 +830,7 @@
     updateStatus(WS_PROJECTS[0].id);
 
     tree.querySelectorAll('.ws-tree-item').forEach(function(item) {
-      item.addEventListener('click', function() {
+      function select() {
         var id = item.dataset.project;
         tree.querySelectorAll('.ws-tree-item').forEach(function(el) { el.classList.toggle('active', el.dataset.project === id); });
         detail.querySelectorAll('.ws-view').forEach(function(el) {
@@ -840,10 +838,15 @@
           else el.classList.remove('active');
         });
         updateStatus(id);
+      }
+      item.addEventListener('click', select);
+      item.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(); }
       });
     });
 
-    document.addEventListener('keydown', function(e) {
+    // ArrowUp/Down листает дерево только когда фокус внутри него — не перехватывает скролл страницы (#23).
+    tree.addEventListener('keydown', function(e) {
       if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return;
       var activeItem = tree.querySelector('.ws-tree-item.active');
       if (!activeItem) return;
@@ -851,7 +854,9 @@
       var next;
       if (e.key === 'ArrowDown') next = idx < WS_PROJECTS.length - 1 ? idx + 1 : 0;
       else next = idx > 0 ? idx - 1 : WS_PROJECTS.length - 1;
-      tree.querySelectorAll('.ws-tree-item')[next].click();
+      var nextItem = tree.querySelectorAll('.ws-tree-item')[next];
+      nextItem.click();
+      nextItem.focus();
       e.preventDefault();
     });
   }
@@ -863,76 +868,53 @@
     b.classList.toggle('active', b.getAttribute('data-lang') === lang);
   });
 
-  // Interactive principles cards
+  // Interactive principles cards — клавиатура + троттл glow + отключение на тач (#23/#69)
+  const coarsePtr = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
   document.querySelectorAll('.principle-cell').forEach(cell => {
-    cell.addEventListener('mousemove', (e) => {
-      const r = cell.getBoundingClientRect();
-      cell.style.setProperty('--mx', (e.clientX - r.left) + 'px');
-      cell.style.setProperty('--my', (e.clientY - r.top) + 'px');
-    });
-    cell.addEventListener('click', () => {
-      cell.classList.toggle('open');
-    });
-  });
-
-  // Process timeline — hover transfers .active
-  const ptSteps = document.querySelectorAll('.process-timeline .pt-step');
-  ptSteps.forEach(step => {
-    step.addEventListener('mouseenter', () => {
-      ptSteps.forEach(s => s.classList.remove('active'));
-      step.classList.add('active');
-    });
-  });
-
-  // Bidirectional scroll reveal — fades in entering, fades out leaving
-  if ('IntersectionObserver' in window && ptSteps.length) {
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('in');
-          e.target.classList.remove('out');
-        } else {
-          // Only fade out if we've scrolled PAST it (above the viewport)
-          // not if we haven't scrolled to it yet (below the viewport)
-          const rect = e.boundingClientRect;
-          if (rect.bottom < 0) {
-            e.target.classList.remove('in');
-            e.target.classList.add('out');
-          } else {
-            e.target.classList.remove('in');
-            e.target.classList.remove('out');
-          }
-        }
+    cell.setAttribute('role', 'button');
+    cell.setAttribute('tabindex', '0');
+    cell.setAttribute('aria-expanded', 'false');
+    if (!coarsePtr) {
+      let praf = 0, px = 0, py = 0;
+      cell.addEventListener('mousemove', (e) => {
+        const r = cell.getBoundingClientRect();
+        px = e.clientX - r.left; py = e.clientY - r.top;
+        if (praf) return;
+        praf = requestAnimationFrame(() => { praf = 0; cell.style.setProperty('--mx', px + 'px'); cell.style.setProperty('--my', py + 'px'); });
       });
-    }, { threshold: [0, 0.2, 0.5], rootMargin: '-15% 0px -15% 0px' });
+    }
+    const toggle = () => { cell.setAttribute('aria-expanded', String(cell.classList.toggle('open'))); };
+    cell.addEventListener('click', toggle);
+    cell.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+    });
+  });
 
+  // Process timeline — hover/focus transfers .active (#23 focus support)
+  const ptSteps = document.querySelectorAll('.process-timeline .pt-step');
+  const setPtActive = (step) => ptSteps.forEach(s => s.classList.toggle('active', s === step));
+  ptSteps.forEach(step => {
+    step.addEventListener('mouseenter', () => setPtActive(step));
+    step.addEventListener('focusin', () => setPtActive(step));
+  });
+
+  // One-shot reveal + IO-driven active step — без blur и без scroll/getBoundingClientRect (#42)
+  if ('IntersectionObserver' in window && ptSteps.length) {
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); revealObs.unobserve(e.target); }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
     ptSteps.forEach((step, i) => {
       step.style.transitionDelay = (i % 2 === 0 ? 0 : 0.05) + 's';
-      obs.observe(step);
+      revealObs.observe(step);
     });
 
-    // Scroll-driven active step (whichever is closest to viewport center)
-    let raf = 0;
-    const updateActive = () => {
-      raf = 0;
-      const center = window.innerHeight / 2;
-      let closest = null;
-      let closestDist = Infinity;
-      ptSteps.forEach(s => {
-        const r = s.getBoundingClientRect();
-        const c = r.top + r.height / 2;
-        const d = Math.abs(c - center);
-        if (d < closestDist && r.top < window.innerHeight && r.bottom > 0) {
-          closestDist = d;
-          closest = s;
-        }
-      });
-      ptSteps.forEach(s => s.classList.toggle('active', s === closest));
-    };
-    window.addEventListener('scroll', () => {
-      if (!raf) raf = requestAnimationFrame(updateActive);
-    }, { passive: true });
-    updateActive();
+    // Активный шаг = пересекающий центральную полосу вьюпорта; чистый IO, без scroll-листенера.
+    const activeObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) setPtActive(e.target); });
+    }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+    ptSteps.forEach(step => activeObs.observe(step));
   } else {
     ptSteps.forEach(s => s.classList.add('in'));
   }
