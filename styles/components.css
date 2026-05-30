@@ -3684,3 +3684,13 @@ html:not(.js) .t-dots { display: none; }
   .integrations-viz svg.lines path { animation: none !important; }
   .integrations-viz .core-orbit { display: none; }
 }
+
+
+/* Mid-page CTA strip + ценовой якорь (#31/#44/#76) */
+.mid-cta { text-align: center; padding: 8px 0 28px; }
+.mid-cta p { color: var(--text-dim); margin: 0 0 18px; font-size: 1.05rem; }
+.mid-cta-row, .price-anchor .pa-row { display: flex; gap: 14px; justify-content: center; align-items: center; flex-wrap: wrap; }
+.price-anchor { padding: 24px 0 4px; }
+.price-anchor .pa-item { color: var(--text); font-size: 0.95rem; }
+.price-anchor .pa-num { color: var(--accent-text); font-weight: 600; }
+.price-anchor .pa-link { color: var(--accent-text); font-weight: 600; white-space: nowrap; }
