@@ -114,29 +114,27 @@ Real product (public repo: https://github.com/RiobVO/credit-assistant) — SME l
 
 ## AUDIT.md — work log
 
-`AUDIT.md` (repo root, NOT deployed — see `.assetsignore`) is the 77-item site audit. Items are checked off `[x]` as done. Before working a P1/P2 item, check AUDIT.md for its current state to avoid redoing. Done so far: P0 #1,#2,#3,#4,#5,#6; P1 #10,#11,#18,#21. #8/#9 marked N/A (audit.html deleted).
+`AUDIT.md` (repo root, **gitignored + NOT deployed**) is the 77-item site audit. Items are checked off `[x]` with a one-line note as done. **Status: 75/77 closed.** Only **#16** (about-me block — needs photo/bio) and **#28** (8.5/10 audit attribution — needs decision) remain; both require user input. N/A: #8, #9, #45, #49 (all referenced the deleted audit.html).
+
+## Key facts (post-audit state)
+
+- **Deploy domain:** `site.versage1998.workers.dev` (Cloudflare Workers Assets). It is **baked into** og:url / canonical / sitemap.xml / robots.txt / JSON-LD `url`. On a custom domain → one find-replace across `*.html` + `sitemap.xml` + `robots.txt` + `_headers`.
+- **Fonts self-hosted:** `styles/fonts/*.woff2` (JetBrains Mono 400/500/600, all unicode-ranges) + `@font-face` in `base.css`. NO Google Fonts CDN — the site loads **zero third-party resources**. Do NOT re-add `googleapis`/`gstatic` links.
+- **`_headers`** (repo root) ships CSP/HSTS/X-Content-Type-Options/Referrer-Policy/frame-ancestors + long-cache for fonts. Verified only on deploy (`curl -I`).
+- **Gitignored:** `AUDIT.md`, `.claude/` (never tracked). Public repo history was rewritten to purge NDA tokens — **never put NDA data in any tracked file** (CLAUDE.md is public).
+- **Home additions this audit:** mid-page CTA (after principles, links to `#process`), pre-contact price anchor, email fallback button, 6-step process (added "Договор · 50% предоплата"). Visible — eyeball before/after deploy.
 
 ## TODO
 
-- [ ] **Commit** — large working tree of audit fixes (P0 + P1 batch), audit.html deletion, testimonials. Not yet committed.
-- [ ] **Deploy to Cloudflare** — `.assetsignore` created (excludes `*.md`, `.git/`, `wrangler.jsonc`). After deploy verify `curl -I .../CLAUDE.md` → 404, `.../AUDIT.md` → 404, `.../.git/config` → 404.
-- [ ] **OG images absolute URLs** (AUDIT #7) — after domain known, og:image/twitter:image → `https://<domain>/og/*.png` across all 10 HTML; add og:url. (audit.png no longer needed — page deleted.)
-- [ ] Sync `index.html` featured-block + hero terminal teaser numbers with credit-assistant case (drop unverified `coverage 87.4%`)
-- [ ] Real masked PDF preview screenshot (800×1000) — replace `.pdf-mock` CSS block with `<img>` once exported
-- [ ] `docs/compliance/security-architecture.md:251,349` in credit-assistant repo — clean leftover `[норматив]` before making case public
-- [ ] Remaining P1 in AUDIT.md: #16 (about-me block, needs photo/bio), #28 (8.5/10 attribution, needs decision), #7/#25/#26/#27 (og/JSON-LD/sitemap/nav — technical, no content needed)
+- [ ] **Deploy to Cloudflare** — `npx wrangler deploy`. Verify: `curl -I .../CLAUDE.md` → 404, `.../AUDIT.md` → 404, `.../.git/config` → 404; `.../sitemap.xml` + `.../robots.txt` + `.../_headers` → 200; CSP/HSTS present in response headers.
+- [ ] **#16 about-me block** — needs photo (or stylised portrait) + 1–2 lines bio (backend, fintech/logistics, Tashkent, N yrs). Then build on index/services.
+- [ ] **#28 «8.5/10» attribution** — needs decision: name auditor / soften to "checklist score, N items" / drop the metric tile.
+- [ ] **Custom domain** — sed-swap `site.versage1998.workers.dev` everywhere once a real domain is bought.
+- [ ] `docs/compliance/security-architecture.md:251,349` in credit-assistant repo — clean leftover `[норматив]` before making that case public.
+- [ ] (Optional) Real masked PDF preview screenshot (800×1000) to replace the `.pdf-mock` CSS block.
 
-### Done (this session)
-- [x] ~~P0 #1 audit-in-funnel~~ → superseded: **audit.html DELETED**, all CTAs → `services.html#03`, "Аудит" nav item removed
-- [x] ~~P0 #2 no-JS fallback~~ — `.js` gate, RU fallback, noscript workstation, reduced-motion reset, IO fallbacks
-- [x] ~~P0 #3 social proof~~ — 5 real testimonials carousel on index (dark-premium, scroll-snap)
-- [x] ~~P0 #4 flagship repo link~~ — github.com/RiobVO/credit-assistant in spec card + § 04
-- [x] ~~P0 #5 case CTAs~~ — `.case-cta` block in all 6 cases
-- [x] ~~P0 #6 deploy leak~~ — `.assetsignore` (excludes md/git/wrangler)
-- [x] ~~P1 #10 hero offer~~ — rewritten with segment + benefit + bank proof
-- [x] ~~P1 #11 audit tone~~ — was on audit.html (now deleted)
-- [x] ~~P1 #18 light contrast~~ — `--accent-text` token (`#B85020` on light, AA)
-- [x] ~~P1 #21 SEO~~ — index title/description with Ташкент/Узбекистан
-- [x] ~~Phase 2 (B+ rebuild) — Credit Assistant case~~ — plain language, real facts, PDF mock
-- [x] ~~Phase 3 — Scan-anchors~~ — `strong.num` highlight across 5 cases
-- [x] ~~LinkedIn / Phone in CV~~ · ~~Case study CSS~~ · ~~Metrics section~~ · ~~Dead CSS cleanup~~
+### Done — audit essentially complete (75/77)
+- **Security:** NDA leak closed both vectors — `.assetsignore` (deploy) + git history rewritten & force-pushed (public repo, NDA purged); `_headers` (CSP/HSTS); self-hosted fonts → zero third-party requests.
+- **SEO/social:** absolute og + og:url + canonical + og:locale + twitter:description; JSON-LD (Person/ProfessionalService/CreativeWork); robots.txt + sitemap.xml; unified nav across all pages.
+- **A11y/perf:** skip-links + `id=main`, `:focus-visible`, keyboard nav (tree/principles/Escape, scoped arrows), ARIA, 40/44px touch targets, rAF-throttle + touch-skip on pointer effects, off-screen + reduced-motion animation pause, one-shot timeline observer (no blur/scroll thrash).
+- **Content:** plain-language home/featured/terminal, business-outcome case metrics, risk-reversal guarantee + FAQ, NDA reframed as trust signal, unified case headings (О чём проект / Как устроено), price anchor, mid-page CTA, email fallback, HTML-entity email, six-step process.
