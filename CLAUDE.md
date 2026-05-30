@@ -15,21 +15,31 @@ python -m http.server 8000
 
 ## Pages
 
-- **index.html** — Home: hero terminal with typing animation, featured Credit Assistant with pipeline diagram, CLI project browser (workstation), principles, process timeline, integrations, contact
-- **services.html** — Pricing: three tiers (Consultation, Development, Audit). `§ 03 · Аудит` tier links to `audit.html` for full landing
-- **audit.html** — Audit landing: hero + 5-step scope (workflow style) + report format with sample problem-map code-card + price tier + 3-field mailto form (stack / pain / contact) + Telegram fallback
+- **index.html** — Home: hero terminal with typing animation, featured Credit Assistant with pipeline diagram, CLI project browser (workstation), **testimonials carousel** (5 real reviews), principles, process timeline, integrations, contact
+- **services.html** — Pricing: three tiers (Consultation, Development, Audit). `§ 02` has `id="02"`, `§ 03 · Аудит` has `id="03"` (deep-link targets). Audit is sold here as a tier — NO separate landing page anymore.
 - **cv.html** — Resume with print stylesheet
 - **404.html** — Error page
-- **case/*.html** — 6 case studies: credit-assistant, container-bot, serviceflow, support-bot, manicure-bot, pekarna-bot
+- **case/*.html** — 6 case studies: credit-assistant, container-bot, serviceflow, support-bot, manicure-bot, pekarna-bot. Each ends with a `.case-cta` block (Telegram + contextual link: bots → `services.html#02`, code-quality cases → `services.html#03`).
+
+**⚠️ audit.html DELETED** (client decision): the dedicated audit landing was removed — the audit service lives only as `§ 03` tier on services.html. All "Запросить аудит"/"Аудит кода" CTAs point to `services.html#03`. Do NOT recreate audit.html. The "Аудит" nav item was also removed (nav is Работы · Услуги · Принципы; CV only on cv.html).
 
 ## Architecture
 
 Three CSS files, one JS file, shared across all pages:
 
-- **styles/base.css** — CSS custom properties (design tokens), typography, buttons, nav, layout, reveal animations, code-card styles. All colors defined as `--accent`, `--bg`, `--text-*`, `--line-*` variables in `:root` and `[data-theme="light"]`.
-- **styles/components.css** — Page-specific components: hero terminal, workstation CLI browser, pipeline diagram, tier cards, workflow, FAQ, case study layouts (spec card, metrics, pullquote, case-nav), CTA, footer, process timeline, integrations.
+- **styles/base.css** — CSS custom properties (design tokens), typography, buttons, nav, layout, reveal animations, code-card styles. All colors defined as `--accent`, `--bg`, `--text-*`, `--line-*` variables in `:root` and `[data-theme="light"]`. **`--accent-text`** = text-safe accent: `#E07A41` on dark, darkened `#B85020` on light (4.78:1 WCAG AA) — used in `.kicker::before`, `.accent-gradient`, link colors. Decorative `--accent` stays bright on both themes.
+- **styles/components.css** — Page-specific components: hero terminal, workstation CLI browser, pipeline diagram, tier cards, workflow, FAQ, case study layouts (spec card, metrics, pullquote, case-nav), **testimonials carousel** (`.testimonials`/`.t-track`/`.proof-quote`), **`.case-cta`** (end-of-case CTA block), CTA, footer, process timeline, integrations.
 - **styles/print.css** — CV print/PDF optimization (A4, no color).
-- **scripts/chrome.js** — Theme toggle (`elyor.theme` in localStorage), language cycle RU↔EN (`elyor.lang`), IntersectionObserver for `.reveal` elements, FAQ smooth accordion, cursor-following glow on `.tier` and `.work-card`, hero terminal typing animation, case study code-card typing animation (`initCaseTyping`).
+- **scripts/chrome.js** — Theme toggle (`elyor.theme` in localStorage), language cycle RU↔EN (`elyor.lang`), IntersectionObserver for `.reveal` elements, FAQ smooth accordion, cursor-following glow on `.tier` and `.work-card`, hero terminal typing animation, case study code-card typing animation (`initCaseTyping`), **testimonials carousel** (`initTestimonials`). **First line sets `document.documentElement.classList.add('js')`** for the progressive-enhancement gate.
+
+## Progressive enhancement (no-JS)
+
+`chrome.js` adds `.js` to `<html>` on load. CSS gates hidden states on it so the page is never blank without JS:
+- `html:not(.js) .reveal { opacity:1 }` and `html:not(.js) .term-line { opacity:1 }` — content visible without JS.
+- `html:not(.js) [data-lang="ru"] { display:revert }` — without JS, RU shows by default (else `[data-lang]:not(.active)` would hide ALL text).
+- `prefers-reduced-motion` resets `.reveal`/`.term-line` opacity.
+- Workstation has a `<noscript>` fallback list; testimonials carousel degrades to native scroll.
+- Do NOT add `defer` to chrome.js without an anti-FOUC inline (theme/lang apply synchronously).
 
 ## Design system
 
@@ -46,15 +56,28 @@ Three CSS files, one JS file, shared across all pages:
 
 - **Hero terminal** (`#hero-term`): typing animation with per-character typewriter effect, 3D tilt on mouse, ambient glow. Commands deploy each project.
 - **Workstation CLI browser** (`.workstation`): file tree left, project detail right. JS-generated from `WS_PROJECTS` array. Cascade animation on project switch.
+- **Testimonials carousel** (`.testimonials[data-carousel]`, index.html only, before #contact): native CSS scroll-snap, 3 cards/row (2 on tablet, 1 on mobile). JS (`initTestimonials`) adds dot indicators + 5s autoplay with ping-pong direction (no jump-loop), pauses on hover, respects reduced-motion. Cards (`.proof-quote`): ★★★★★ stars, quote, avatar-initial + name + role. Dark-premium: top accent edge, watermark quote, hover lift+glow, equal height (`align-items:stretch` + centered quote). 5 reviews — see "Testimonials" below.
 - **Case study typing** (`#caseTyping`): last output in each case's code-card types character by character on scroll, with blinking `|` cursor that stays.
 - **Case spec card** (`.case-spec`): interactive rows with hover highlight, values turn orange on hover.
 - **Case nav**: simple prev/next with orange underline animation on hover.
+
+## Testimonials (5 real reviews — index.html only)
+
+All real, client-provided. Do NOT fabricate reviews or pass invented text as someone's voice (client rejected fakes; for fintech audience a fake = trust death). Bank (credit-assistant bank mode) stays anonymous under NDA — public voices are the client/accountant mode.
+
+1. Ихтиёр Окбоев — главбух ООО «Qadr don non savdo», Ташкент → pekarna-bot
+2. Саидамирхужа — Terminal Grand → container-bot
+3. Баходир Фозилов — финансист → credit-assistant (text personally confirmed)
+4. Покупатель решения (anon) — скоринг МСБ → credit-assistant
+5. Команда заказчика (anon) — таск-трекер ServiceFlow, NO case link (case is positioned as open reference, not a client project — linking would contradict)
+
+Possible 6th: Ихтиёр about credit-assistant as accountant — awaiting his real words. Reviews were on services.html too but removed (client decision — no duplication).
 
 ## i18n
 
 Bilingual RU↔EN. Content blocks wrapped in `<span data-lang="ru">` and `<span data-lang="en">`. CSS hides non-active: `[data-lang]:not(.active) { display: none; }`. JS cycles RU↔EN via `[data-lang-cycle]` button. No UZ.
 
-Dynamic content (workstation CLI browser) must call `applyLang()` or manually toggle `.active` on created `data-lang` spans after DOM insertion.
+Dynamic content (workstation CLI browser) must call `applyLang()` or manually toggle `.active` on created `data-lang` spans after DOM insertion. Testimonials use static `data-lang` spans (no JS re-apply needed). Anonymous review authors/roles are bilingual `data-lang` pairs; named authors (Ихтиёр, Саидамирхужа, Баходир) are language-neutral.
 
 ## Contacts
 
@@ -89,21 +112,31 @@ Real product (public repo: https://github.com/RiobVO/credit-assistant) — SME l
 - **PDF mock (Рис. 3)** replicates the real product layout (user-provided screenshot): blue brand (#265dbd), CA badge, Кредитный меморандум header, gauge with red→amber→green arcs and needle at 79, large "К пересмотру" orange recommendation, Ключевые наблюдения section with two columns (Сильные стороны green border + Зоны риска red border). EN caption explains: "Real product ships in RU + UZ — no English version was commissioned by the bank".
 - **TOC sections** (after Phase B+ rebuild): § 01 О чём проект · § 02 Как устроено · § 03 Что было сложно · § 04 Цифры · § 05 Что я вынес. NO § Verification methodology.
 
+## AUDIT.md — work log
+
+`AUDIT.md` (repo root, NOT deployed — see `.assetsignore`) is the 77-item site audit. Items are checked off `[x]` as done. Before working a P1/P2 item, check AUDIT.md for its current state to avoid redoing. Done so far: P0 #1,#2,#3,#4,#5,#6; P1 #10,#11,#18,#21. #8/#9 marked N/A (audit.html deleted).
+
 ## TODO
 
-- [ ] Git: commit Phases 1-3 (audit page, credit-assistant rebuild, scan-anchors) — currently all in working tree
-- [ ] `og/audit.png` (1200×800) — TODO placeholder in `audit.html`. Style: dark `#1a1a1a`, orange `#E07A41` accent, "Technical Audit" text. Generate by analogue with other `og/*.png`
-- [ ] Sync `index.html` featured-block teaser numbers with credit-assistant case (currently shows `1310 tests · 87.4% coverage · 8.5/10` — coverage% was removed from case as unverified)
-- [ ] Hero terminal on `index.html` line `coverage 87.4%` — same: drop or replace
-- [ ] Deploy to Cloudflare Pages
-- [ ] OG images: URLs are relative (`og/home.png`). After deploy, update to absolute URLs (`https://domain.com/og/home.png`) in all og:image and twitter:image meta tags across all 11 HTML files (incl. `audit.html`)
-- [ ] Real masked PDF preview screenshot (800×1000) — replace `.pdf-mock` CSS block with `<img src="../og/credit-assistant-pdf-masked.png">` once exported from the actual product
-- [ ] `docs/compliance/security-architecture.md:251,349` in credit-assistant repo — clean leftover `[норматив]` mentions in HTML comments BEFORE making the case study public (audit flag)
-- [x] ~~Phase 1 — Audit page + dual CTA~~ — `audit.html` created, nav updated across 10 pages, hero + #contact dual CTA on index, services tier-3 CTA → audit
-- [x] ~~Phase 2 (B+ rebuild) — Credit Assistant case~~ — rewritten in plain language, real facts from repo, PDF mock replicates real product layout, AI verification section removed per user
-- [x] ~~Phase 3 — Scan-anchors~~ — `strong.num` highlight on numbers across 5 cases (credit, pekarna, container, manicure, support); inline-bold → H3 in pekarna §03
-- [x] ~~LinkedIn URL~~ — removed from CV, hidden from nav
-- [x] ~~Phone in CV~~ — updated to real number
-- [x] ~~Case study CSS improvements~~ — typing animation, metrics scroll-reveal, figure redesign done
-- [x] ~~Metrics section~~ — console dashboard style with gauge bars
-- [x] ~~Dead CSS cleanup~~ — removed ~1100 lines of unused components
+- [ ] **Commit** — large working tree of audit fixes (P0 + P1 batch), audit.html deletion, testimonials. Not yet committed.
+- [ ] **Deploy to Cloudflare** — `.assetsignore` created (excludes `*.md`, `.git/`, `wrangler.jsonc`). After deploy verify `curl -I .../CLAUDE.md` → 404, `.../AUDIT.md` → 404, `.../.git/config` → 404.
+- [ ] **OG images absolute URLs** (AUDIT #7) — after domain known, og:image/twitter:image → `https://<domain>/og/*.png` across all 10 HTML; add og:url. (audit.png no longer needed — page deleted.)
+- [ ] Sync `index.html` featured-block + hero terminal teaser numbers with credit-assistant case (drop unverified `coverage 87.4%`)
+- [ ] Real masked PDF preview screenshot (800×1000) — replace `.pdf-mock` CSS block with `<img>` once exported
+- [ ] `docs/compliance/security-architecture.md:251,349` in credit-assistant repo — clean leftover `[норматив]` before making case public
+- [ ] Remaining P1 in AUDIT.md: #16 (about-me block, needs photo/bio), #28 (8.5/10 attribution, needs decision), #7/#25/#26/#27 (og/JSON-LD/sitemap/nav — technical, no content needed)
+
+### Done (this session)
+- [x] ~~P0 #1 audit-in-funnel~~ → superseded: **audit.html DELETED**, all CTAs → `services.html#03`, "Аудит" nav item removed
+- [x] ~~P0 #2 no-JS fallback~~ — `.js` gate, RU fallback, noscript workstation, reduced-motion reset, IO fallbacks
+- [x] ~~P0 #3 social proof~~ — 5 real testimonials carousel on index (dark-premium, scroll-snap)
+- [x] ~~P0 #4 flagship repo link~~ — github.com/RiobVO/credit-assistant in spec card + § 04
+- [x] ~~P0 #5 case CTAs~~ — `.case-cta` block in all 6 cases
+- [x] ~~P0 #6 deploy leak~~ — `.assetsignore` (excludes md/git/wrangler)
+- [x] ~~P1 #10 hero offer~~ — rewritten with segment + benefit + bank proof
+- [x] ~~P1 #11 audit tone~~ — was on audit.html (now deleted)
+- [x] ~~P1 #18 light contrast~~ — `--accent-text` token (`#B85020` on light, AA)
+- [x] ~~P1 #21 SEO~~ — index title/description with Ташкент/Узбекистан
+- [x] ~~Phase 2 (B+ rebuild) — Credit Assistant case~~ — plain language, real facts, PDF mock
+- [x] ~~Phase 3 — Scan-anchors~~ — `strong.num` highlight across 5 cases
+- [x] ~~LinkedIn / Phone in CV~~ · ~~Case study CSS~~ · ~~Metrics section~~ · ~~Dead CSS cleanup~~

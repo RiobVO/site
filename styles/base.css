@@ -24,6 +24,8 @@
 
   /* Accents — Boris orange */
   --accent:       #E07A41;
+  /* Акцент для ТЕКСТА: на тёмной теме = --accent; на светлой затемняется до AA (см. light). */
+  --accent-text:  #E07A41;
   --accent-soft:  rgba(224,122,65,0.12);
   --accent-line:  rgba(224,122,65,0.30);
   --accent-pink:  #f0a06a;
@@ -57,6 +59,8 @@
   --accent-soft:  rgba(224,122,65,0.10);
   --accent-line:  rgba(224,122,65,0.30);
   --shadow-card:  0 1px 0 rgba(255,255,255,0.8) inset, 0 8px 30px -12px rgba(0,0,0,0.08);
+  /* Затемнённый оранжевый для текста: 4.78:1 на #fafafa, 4.99:1 на #ffffff — проходит WCAG AA. */
+  --accent-text:  #B85020;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -131,7 +135,7 @@ body {
 }
 .kicker::before {
   content: '/';
-  color: var(--accent);
+  color: var(--accent-text);
   font-weight: 400;
 }
 .kicker.no-bar::before { display: none; }
@@ -150,7 +154,7 @@ h1.display .gradient,
 }
 h1.display .accent-gradient,
 .accent-gradient {
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 h2.headline, .headline {
@@ -535,17 +539,24 @@ hr.line,
 .reveal.d5 { transition-delay: 0.40s; }
 .reveal.d6 { transition-delay: 0.48s; }
 
+/* Без JS (.js не выставлен скриптом) контент виден сразу — иначе вся страница пустая. */
+html:not(.js) .reveal { opacity: 1; transform: none; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
     transition-duration: 0.001ms !important;
   }
+  /* Гасим стартовые состояния анимаций — контент виден сразу, без скрытого opacity. */
+  .reveal, .term-line { opacity: 1 !important; transform: none !important; }
 }
 
 ::selection { background: var(--accent); color: #fff; }
 
 /* i18n */
 [data-lang]:not(.active) { display: none; }
+/* Без JS язык не переключается (.active не выставляется) — показываем RU по умолчанию. */
+html:not(.js) [data-lang="ru"] { display: revert; }
 
 /* Focus styles */
 a:focus-visible, button:focus-visible, summary:focus-visible {
