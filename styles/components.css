@@ -134,8 +134,18 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+@media (max-width: 900px) {
+  .term-body { font-size: 0.78rem; }
+  .term-line {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+  }
+}
 @media (max-width: 600px) {
   .term-line { white-space: normal; }
+  .term-body { min-height: 0; }
+  .t-link { font-size: 0.95em; padding: 4px 2px; }
 }
 .term-line.t-visible { opacity: 1; }
 .term-line.t-typing { opacity: 1; }
@@ -169,11 +179,11 @@ html:not(.js) .term-line { opacity: 1; }
   font-weight: 600;
 }
 .t-link {
-  color: #444;
+  color: #8a8f98;
   text-decoration: none;
   margin-left: 0.8em;
   font-size: 0.85em;
-  border-bottom: 1px dashed #333;
+  border-bottom: 1px dashed #555;
   transition: color 0.2s, border-color 0.2s;
 }
 .t-link:hover {
@@ -372,6 +382,13 @@ html:not(.js) .term-line { opacity: 1; }
   text-transform: uppercase;
   letter-spacing: 0.08em;
   margin-top: 6px;
+}
+@media (max-width: 600px) {
+  .pipeline { padding: 18px; }
+  .pipe-footer { gap: 12px; }
+  .pipe-stage { gap: 10px; }
+  .pipe-stage .stamp .step { display: none; }
+  .pipe-stage .ico { width: 30px; height: 30px; }
 }
 
 /* ─────────  PIPELINE RUN — one-shot reveal on scroll  ───────── */
@@ -1444,6 +1461,10 @@ html:not(.js) .term-line { opacity: 1; }
   transform: scale(1.02) translateY(-3px);
   box-shadow: 0 30px 80px -20px rgba(224,122,65,0.25);
 }
+@media (max-width: 960px) {
+  .tier.featured { transform: none; }
+  .tier.featured:hover { transform: translateY(-3px); }
+}
 .tier.featured::before {
   all: unset;
   content: 'Recommended';
@@ -1482,7 +1503,7 @@ html:not(.js) .term-line { opacity: 1; }
   color: var(--text-muted);
   line-height: 1.5;
   margin-bottom: 22px;
-  min-height: 3em;
+  min-height: 4.5em;
 }
 .tier .price-row {
   display: flex;
