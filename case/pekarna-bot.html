@@ -148,7 +148,7 @@
 
     <article class="case-body">
 
-      <h2 id="brief"><span class="num">§ 01</span><span data-lang="ru">Бриф</span><span data-lang="en">Brief</span></h2>
+      <h2 id="brief"><span class="num">§ 01</span><span data-lang="ru">О чём проект</span><span data-lang="en">What this is</span></h2>
       <p>
         <span data-lang="ru">Пекарня продаёт хлеб, самсу и выпечку оптом — кафе, рестораны, магазины. Заказы принимаются по телефону и в WhatsApp. Менеджер записывает в тетрадку, потом перебивает в Excel. К утру пекарь получает сводку на бумажке.</span>
         <span data-lang="en">The bakery sells bread, samsa, and pastries wholesale — to cafes, restaurants, and shops. Orders come in via phone calls and WhatsApp. A manager writes them down in a notebook, then re-enters into Excel. By morning the baker gets a summary on a piece of paper.</span>
@@ -162,7 +162,7 @@
         <span data-lang="en"><strong>Goal:</strong> a Telegram bot where clients place orders themselves, and the admin sees a summary and manages statuses. No website, no app — everything in the messenger.</span>
       </p>
 
-      <h2 id="architecture"><span class="num">§ 02</span><span data-lang="ru">Архитектура</span><span data-lang="en">Architecture</span></h2>
+      <h2 id="architecture"><span class="num">§ 02</span><span data-lang="ru">Как устроено</span><span data-lang="en">How it's built</span></h2>
       <p>
         <span data-lang="ru">FSM-подход для обоих потоков. Регистрация клиента — трёхшаговый сценарий: контактные данные → название организации → телефон. Оформление заказа — выбор продуктов, количество, комментарий, тип доставки и дата. Каждый шаг валидируется сразу, ошибка — понятное сообщение и повтор.</span>
         <span data-lang="en">FSM approach for both flows. Client registration is a three-step scenario: contact details → organization name → phone. Order placement: product selection, quantity, comment, delivery type and date. Each step is validated immediately — error means a clear message and retry.</span>
@@ -268,8 +268,8 @@
       <nav class="case-toc">
         <div class="head"><span data-lang="ru">Содержание</span><span data-lang="en">Contents</span></div>
         <ol>
-          <li><a href="#brief"><span data-lang="ru">Бриф</span><span data-lang="en">Brief</span></a></li>
-          <li><a href="#architecture"><span data-lang="ru">Архитектура</span><span data-lang="en">Architecture</span></a></li>
+          <li><a href="#brief"><span data-lang="ru">О чём проект</span><span data-lang="en">What this is</span></a></li>
+          <li><a href="#architecture"><span data-lang="ru">Как устроено</span><span data-lang="en">How it's built</span></a></li>
           <li><a href="#b2b"><span data-lang="ru">B2B-специфика</span><span data-lang="en">B2B specifics</span></a></li>
           <li><a href="#numbers"><span data-lang="ru">Цифры</span><span data-lang="en">Numbers</span></a></li>
           <li><a href="#lessons"><span data-lang="ru">Что я вынес</span><span data-lang="en">Lessons learned</span></a></li>

@@ -150,7 +150,7 @@
 
     <article class="case-body">
 
-      <h2 id="brief"><span class="num">§ 01</span><span data-lang="ru">Бриф</span><span data-lang="en">Brief</span></h2>
+      <h2 id="brief"><span class="num">§ 01</span><span data-lang="ru">О чём проект</span><span data-lang="en">What this is</span></h2>
       <p>
         <span data-lang="ru">Типичный бьюти-салон в Ташкенте ведёт запись через WhatsApp и телефонные звонки. Администратор жонглирует бумажным журналом, тремя чатами и памятью. Результат предсказуем: двойные записи на одного мастера, потерянные клиенты, которые не дождались ответа, и no-show без напоминаний.</span>
         <span data-lang="en">A typical beauty salon in Tashkent handles bookings via WhatsApp and phone calls. The receptionist juggles a paper ledger, three chats, and memory. The result is predictable: double-bookings for the same master, lost clients who never got a reply, and no-shows without reminders.</span>
@@ -164,7 +164,7 @@
         <span data-lang="en"><strong>Goal:</strong> a bot that lets clients book in <strong class="num">30 seconds</strong> without calls or waiting, and lets admins manage the schedule without Excel or paper. Telegram — because it's the number one messenger in Uzbekistan.</span>
       </p>
 
-      <h2 id="architecture"><span class="num">§ 02</span><span data-lang="ru">Архитектура</span><span data-lang="en">Architecture</span></h2>
+      <h2 id="architecture"><span class="num">§ 02</span><span data-lang="ru">Как устроено</span><span data-lang="en">How it's built</span></h2>
       <p>
         <span data-lang="ru">FSM-первый дизайн. Запись — это стейт-машина из шести шагов: услуга → дополнения → мастер → дата → время → подтверждение. Каждый шаг валидирует входные данные и проверяет доступность слота в реальном времени. Aiogram 3 FSM идеально ложится на этот поток.</span>
         <span data-lang="en">FSM-first design. A booking is a state machine of six steps: service → add-ons → master → date → time → confirmation. Each step validates input and checks slot availability in real time. Aiogram 3 FSM maps perfectly to this flow.</span>
@@ -282,8 +282,8 @@
       <nav class="case-toc">
         <div class="head"><span data-lang="ru">Содержание</span><span data-lang="en">Contents</span></div>
         <ol>
-          <li><a href="#brief"><span data-lang="ru">Бриф</span><span data-lang="en">Brief</span></a></li>
-          <li><a href="#architecture"><span data-lang="ru">Архитектура</span><span data-lang="en">Architecture</span></a></li>
+          <li><a href="#brief"><span data-lang="ru">О чём проект</span><span data-lang="en">What this is</span></a></li>
+          <li><a href="#architecture"><span data-lang="ru">Как устроено</span><span data-lang="en">How it's built</span></a></li>
           <li><a href="#licensing"><span data-lang="ru">Лицензирование</span><span data-lang="en">Licensing</span></a></li>
           <li><a href="#numbers"><span data-lang="ru">Цифры</span><span data-lang="en">Numbers</span></a></li>
           <li><a href="#lessons"><span data-lang="ru">Что я вынес</span><span data-lang="en">Lessons learned</span></a></li>

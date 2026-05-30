@@ -145,7 +145,7 @@
 
     <article class="case-body">
 
-      <h2 id="why"><span class="num">§ 01</span><span data-lang="ru">Зачем</span><span data-lang="en">Why</span></h2>
+      <h2 id="why"><span class="num">§ 01</span><span data-lang="ru">О чём проект</span><span data-lang="en">What this is</span></h2>
       <p>
         <span data-lang="ru">За несколько коммерческих проектов я заметил, что объясняю одни и те же вещи: «почему Repository, а не Active Record», «зачем outbox, если есть транзакция», «как сделать идемпотентный POST». Объяснять на продакшен-коде нельзя — NDA. На примерах из книги — тоже плохо, они слишком стерильны.</span>
         <span data-lang="en">After several commercial projects, I noticed I keep explaining the same things: "why Repository and not Active Record," "why outbox when there's a transaction," "how to make an idempotent POST." Explaining with production code is off-limits — NDA. Book examples don't work either — too sterile.</span>
@@ -155,7 +155,7 @@
         <span data-lang="en">ServiceFlow is a helpdesk backend written in enough detail to demonstrate everything I consider important. Simple enough that the domain doesn't obscure the patterns.</span>
       </p>
 
-      <h2 id="what"><span class="num">§ 02</span><span data-lang="ru">Что внутри</span><span data-lang="en">What's inside</span></h2>
+      <h2 id="what"><span class="num">§ 02</span><span data-lang="ru">Как устроено</span><span data-lang="en">How it's built</span></h2>
       <ul>
         <li><span data-lang="ru"><strong>Repository + UoW</strong> — чистый домен, тестируемый без БД.</span><span data-lang="en"><strong>Repository + UoW</strong> — clean domain, testable without a database.</span></li>
         <li><span data-lang="ru"><strong>Доменный FSM</strong> — переходы статусов тикета как явная машина, не набор if'ов.</span><span data-lang="en"><strong>Domain FSM</strong> — ticket status transitions as an explicit state machine, not a bunch of ifs.</span></li>
@@ -210,8 +210,8 @@
       <nav class="case-toc">
         <div class="head"><span data-lang="ru">Содержание</span><span data-lang="en">Contents</span></div>
         <ol>
-          <li><a href="#why"><span data-lang="ru">Зачем</span><span data-lang="en">Why</span></a></li>
-          <li><a href="#what"><span data-lang="ru">Что внутри</span><span data-lang="en">What's inside</span></a></li>
+          <li><a href="#why"><span data-lang="ru">О чём проект</span><span data-lang="en">What this is</span></a></li>
+          <li><a href="#what"><span data-lang="ru">Как устроено</span><span data-lang="en">How it's built</span></a></li>
           <li><a href="#layout"><span data-lang="ru">Структура</span><span data-lang="en">Structure</span></a></li>
           <li><a href="#links"><span data-lang="ru">Где посмотреть</span><span data-lang="en">Where to look</span></a></li>
         </ol>
