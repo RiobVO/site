@@ -568,3 +568,6 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
   outline-offset: 3px;
   border-radius: 6px;
 }
+
+/* nav CTA crowds the pill on phones — contact via hero button and #contact (#58) */
+@media (max-width: 760px) { .nav-pill .cta { display: none; } }
