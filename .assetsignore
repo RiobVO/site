@@ -1,0 +1,9 @@
+# Cloudflare Workers Assets — что НЕ раздаётся публично.
+# assets.directory = "." раздаёт весь корень, поэтому исключаем
+# внутренние документы (содержат NDA-данные), историю git и конфиги.
+.git/
+.gitignore
+.assetsignore
+*.md
+wrangler.jsonc
+node_modules/

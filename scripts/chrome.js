@@ -8,6 +8,11 @@
 /** @typedef {'dark' | 'light'} Theme */
 /** @typedef {'ru' | 'en'} Lang */
 
+// Прогрессивное улучшение: помечаем, что JS активен. CSS прячет .reveal/.term-line
+// (и переключает язык) только при наличии .js — если скрипт не загрузился или
+// отключён, контент остаётся видимым, а не пустым.
+document.documentElement.classList.add('js');
+
 const STORAGE_THEME = 'elyor.theme';
 const STORAGE_LANG = 'elyor.lang';
 
@@ -111,6 +116,12 @@ function initScrollReveal() {
   const els = document.querySelectorAll('.reveal');
   if (!els.length) return;
 
+  // Нет IntersectionObserver (старый браузер) → показываем всё сразу, без анимации.
+  if (!('IntersectionObserver' in window)) {
+    els.forEach((el) => el.classList.add('in-view'));
+    return;
+  }
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
@@ -174,6 +185,12 @@ function initHeroTerminal() {
 
   const lines = /** @type {HTMLElement[]} */ (Array.from(termBody.querySelectorAll('.term-line')));
   if (!lines.length) return;
+
+  // Нет IntersectionObserver → показываем все строки статикой, без набора текста.
+  if (!('IntersectionObserver' in window)) {
+    lines.forEach((l) => l.classList.add('t-visible'));
+    return;
+  }
 
   /**
    * @param {HTMLElement} el
@@ -462,9 +479,113 @@ function initMobileNav() {
   });
 }
 
+/**
+ * Карусель отзывов поверх нативного scroll-snap: листание свайпом/трекпадом
+ * работает без JS. JS добавляет точки-индикаторы (по «страницам» — сколько
+ * карточек влезает в ряд) и автопрокрутку с паузой на наведение.
+ * reduced-motion → без автопрокрутки. Точки синхронизируются со скроллом.
+ */
+function initTestimonials() {
+  document.querySelectorAll('[data-carousel]').forEach((root) => {
+    const track = root.querySelector('.t-track');
+    const dotsWrap = root.querySelector('.t-dots');
+    if (!track || !dotsWrap) return;
+    const cards = Array.from(track.children);
+    if (cards.length < 2) return;
+
+    const reduce = window.matchMedia
+      && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Собственный индекс активной «страницы» — единственный источник правды.
+    // Автоход НЕ считывает scrollLeft (он промежуточный во время анимации),
+    // а ведёт page сам. Направление dir даёт ping-pong вместо рывка-петли.
+    let page = 0;
+    let dir = 1;
+    let dots = [];
+    let programmatic = false;   // флаг: скролл инициирован нами, не пользователем
+    let settleTimer = 0;
+
+    // Сколько карточек видно одновременно → число «страниц» для точек.
+    function pageCount() {
+      const per = Math.max(1, Math.round(track.clientWidth / cards[0].offsetWidth));
+      return Math.max(1, cards.length - per + 1);
+    }
+
+    function buildDots() {
+      const n = pageCount();
+      if (page > n - 1) page = n - 1;
+      dotsWrap.innerHTML = '';
+      dots = Array.from({ length: n }, (_, i) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.setAttribute('aria-label', 'Отзыв ' + (i + 1));
+        b.addEventListener('click', () => { goTo(i); restart(); });
+        dotsWrap.appendChild(b);
+        return b;
+      });
+      paintDots();
+    }
+
+    function paintDots() {
+      dots.forEach((d, i) => d.classList.toggle('active', i === page));
+    }
+
+    function goTo(i) {
+      page = Math.max(0, Math.min(i, dots.length - 1));
+      programmatic = true;
+      track.scrollTo({ left: cards[page].offsetLeft - track.offsetLeft, behavior: 'smooth' });
+      paintDots();
+      // снимаем флаг, когда плавный скролл заведомо завершился
+      clearTimeout(settleTimer);
+      settleTimer = setTimeout(() => { programmatic = false; }, 700);
+    }
+
+    // Пользовательский свайп/скролл: подхватываем позицию в page (но не во
+    // время нашей же программной анимации, иначе автоход сбивается).
+    let raf = 0;
+    track.addEventListener('scroll', () => {
+      if (programmatic || raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        const x = track.scrollLeft;
+        let best = 0, bestD = Infinity;
+        cards.forEach((c, i) => {
+          const d = Math.abs((c.offsetLeft - track.offsetLeft) - x);
+          if (d < bestD) { bestD = d; best = i; }
+        });
+        page = Math.min(best, dots.length - 1);
+        dir = page === 0 ? 1 : (page === dots.length - 1 ? -1 : dir);
+        paintDots();
+      });
+    }, { passive: true });
+
+    let timer = 0;
+    function tick() {
+      if (dots.length < 2) return;
+      if (page + dir > dots.length - 1 || page + dir < 0) dir = -dir;  // ping-pong
+      goTo(page + dir);
+    }
+    function start() { if (!reduce) { stop(); timer = setInterval(tick, 5000); } }
+    function stop() { clearInterval(timer); }
+    function restart() { stop(); start(); }
+
+    root.addEventListener('mouseenter', stop);
+    root.addEventListener('mouseleave', start);
+    let rt = 0;
+    window.addEventListener('resize', () => {
+      clearTimeout(rt);
+      rt = setTimeout(buildDots, 150);
+    });
+
+    buildDots();
+    start();
+  });
+}
+
 function initAll() {
   bindChrome();
   initMobileNav();
+  initTestimonials();
   initScrollReveal();
   initFaqAnimation();
   initCardHover();

@@ -13,3 +13,7 @@ photo_*.jpg
 !.dev.vars.example
 .env*
 !.env.example
+
+# internal work-log (NDA references) and local tooling — never publish
+AUDIT.md
+.claude/
