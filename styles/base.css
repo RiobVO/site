@@ -19,8 +19,8 @@
   /* Type — Boris-style neutral */
   --text:         #e5e5e5;
   --text-muted:   #888888;
-  --text-dim:     #666666;
-  --text-faint:   #444444;
+  --text-dim:     #8a8a8a;
+  --text-faint:   #707070;
 
   /* Accents — Boris orange */
   --accent:       #E07A41;
