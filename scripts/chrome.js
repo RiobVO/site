@@ -620,6 +620,32 @@ function initTestimonials() {
   });
 }
 
+/**
+ * Integrations-viz: на reduced-motion полностью останавливаем SMIL-пакеты,
+ * иначе ставим все анимации на паузу, когда блок вне экрана (CPU/батарея). (#41/#67)
+ */
+function initIntegrationsViz() {
+  const viz = document.querySelector('.integrations-viz');
+  if (!viz) return;
+  const svg = /** @type {any} */ (viz.querySelector('svg.lines'));
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) {
+    if (svg && svg.pauseAnimations) svg.pauseAnimations();
+    return;
+  }
+  if (!('IntersectionObserver' in window)) return;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      viz.classList.toggle('viz-paused', !e.isIntersecting);
+      if (svg) {
+        if (e.isIntersecting && svg.unpauseAnimations) svg.unpauseAnimations();
+        else if (svg.pauseAnimations) svg.pauseAnimations();
+      }
+    });
+  }, { threshold: 0 });
+  io.observe(viz);
+}
+
 function initAll() {
   bindChrome();
   initMobileNav();
@@ -632,6 +658,7 @@ function initAll() {
   initPipelineRun();
   initWorkflowRun();
   initFaqReveal();
+  initIntegrationsViz();
 }
 
 if (document.readyState === 'loading') {

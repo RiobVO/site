@@ -2913,10 +2913,9 @@ html:not(.js) .t-dots { display: none; }
 
 .integrations-viz svg.lines .packet {
   fill: var(--accent);
-  filter: drop-shadow(0 0 6px var(--accent));
 }
-.integrations-viz svg.lines .packet.pink { fill: var(--accent-pink); filter: drop-shadow(0 0 6px var(--accent-pink)); }
-.integrations-viz svg.lines .packet.green { fill: var(--accent-green); filter: drop-shadow(0 0 6px var(--accent-green)); }
+.integrations-viz svg.lines .packet.pink { fill: var(--accent-pink); }
+.integrations-viz svg.lines .packet.green { fill: var(--accent-green); }
 
 .integrations-viz .core {
   animation: coreFloat 6s ease-in-out infinite;
@@ -3668,4 +3667,20 @@ html:not(.js) .t-dots { display: none; }
   .pm-obs-h { font-size: 7px; }
   .pm-obs-name { font-size: 7.5px; }
   .pm-obs-detail { font-size: 6.5px; }
+}
+
+
+/* Пауза анимаций integrations-viz вне экрана — экономия CPU/батареи (#67) */
+.integrations-viz.viz-paused,
+.integrations-viz.viz-paused * { animation-play-state: paused !important; }
+
+/* reduced-motion: гасим все циклы integrations, включая core-pulse/core-orbit (#41) */
+@media (prefers-reduced-motion: reduce) {
+  .integrations-viz .core,
+  .integrations-viz .core::after,
+  .integrations-viz .core-pulse,
+  .integrations-viz .core-orbit span,
+  .integrations-viz .pill .bd,
+  .integrations-viz svg.lines path { animation: none !important; }
+  .integrations-viz .core-orbit { display: none; }
 }
