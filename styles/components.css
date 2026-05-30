@@ -2927,9 +2927,9 @@ html:not(.js) .t-dots { display: none; }
   0%, 100% { opacity: 0.5; transform: scale(1); }
   50% { opacity: 0.85; transform: scale(1.1); }
 }
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(76,183,130,0.16); }
+  50% { box-shadow: 0 0 0 6px rgba(76,183,130,0.05); }
 }
 
 .integrations-viz .pill {
