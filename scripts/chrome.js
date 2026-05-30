@@ -69,6 +69,10 @@ function applyLang(lang) {
   // Update the visible lang label in the nav, if present
   const label = document.querySelector('[data-lang-label]');
   if (label) label.textContent = lang.toUpperCase();
+
+  // Сообщаем скринридеру, на какой язык переключит кнопка (контент меняется целиком).
+  const cycle = document.querySelector('[data-lang-cycle]');
+  if (cycle) cycle.setAttribute('aria-label', lang === 'ru' ? 'Switch to English' : 'Переключить на русский');
 }
 
 function bindChrome() {
@@ -167,13 +171,20 @@ function initFaqAnimation() {
 }
 
 function initCardHover() {
+  // Тач-устройства не имеют hover — не вешаем mousemove (экономим repaint/батарею).
+  if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) return;
   document.querySelectorAll('.work-card').forEach((card) => {
+    let raf = 0, mx = 0, my = 0;
     card.addEventListener('mousemove', (e) => {
       const rect = card.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width) * 100;
-      const y = ((e.clientY - rect.top) / rect.height) * 100;
-      card.style.setProperty('--glow-x', x + '%');
-      card.style.setProperty('--glow-y', y + '%');
+      mx = ((e.clientX - rect.left) / rect.width) * 100;
+      my = ((e.clientY - rect.top) / rect.height) * 100;
+      if (raf) return; // rAF-троттл: не больше одной записи стиля на кадр
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        card.style.setProperty('--glow-x', mx + '%');
+        card.style.setProperty('--glow-y', my + '%');
+      });
     });
   });
 }
@@ -279,15 +290,20 @@ function initHeroTerminal() {
 
   observer.observe(termBody);
 
-  if (termCard) {
+  const coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+  if (termCard && !coarse) {
     const wrap = termCard.parentElement;
     if (wrap) {
+      let traf = 0, tx = 0, ty = 0;
       wrap.addEventListener('mousemove', (e) => {
         const rect = wrap.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width - 0.5;
-        const y = (e.clientY - rect.top) / rect.height - 0.5;
-        termCard.style.transform =
-          `rotateY(${x * 6}deg) rotateX(${-y * 4}deg)`;
+        tx = (e.clientX - rect.left) / rect.width - 0.5;
+        ty = (e.clientY - rect.top) / rect.height - 0.5;
+        if (traf) return; // rAF-троттл tilt
+        traf = requestAnimationFrame(() => {
+          traf = 0;
+          termCard.style.transform = `rotateY(${tx * 6}deg) rotateX(${-ty * 4}deg)`;
+        });
       });
       wrap.addEventListener('mouseleave', () => {
         termCard.style.transform = 'rotateY(0) rotateX(0)';
@@ -452,18 +468,32 @@ function initMobileNav() {
   burger.type = 'button';
   burger.className = 'nav-burger';
   burger.setAttribute('aria-label', 'Menu');
-  burger.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>';
+  burger.setAttribute('aria-expanded', 'false');
+  burger.setAttribute('aria-controls', 'nav-mobile-menu');
+  burger.innerHTML = '<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>';
 
   const tools = nav.querySelector('.tools');
   if (tools) tools.before(burger);
 
   const menu = document.createElement('div');
   menu.className = 'nav-mobile-menu';
+  menu.id = 'nav-mobile-menu';
   Array.from(links.querySelectorAll('a')).forEach((a) => {
-    const clone = a.cloneNode(true);
-    menu.appendChild(clone);
+    menu.appendChild(a.cloneNode(true));
   });
+  // Клон главного CTA — чтобы на телефоне был прямой контакт прямо из меню (#24).
+  const cta = nav.querySelector('.cta');
+  if (cta) {
+    const ctaClone = /** @type {HTMLElement} */ (cta.cloneNode(true));
+    ctaClone.classList.add('mobile-cta');
+    menu.appendChild(ctaClone);
+  }
   document.body.appendChild(menu);
+
+  function closeMenu() {
+    menu.classList.remove('open');
+    burger.setAttribute('aria-expanded', 'false');
+  }
 
   burger.addEventListener('click', (e) => {
     e.stopPropagation();
@@ -471,10 +501,18 @@ function initMobileNav() {
     burger.setAttribute('aria-expanded', String(open));
   });
 
+  // Тап по пункту/CTA закрывает меню — иначе оно перекрывает контент (#24).
+  menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', closeMenu));
+
   document.addEventListener('click', (e) => {
-    if (!menu.contains(/** @type {Node} */(e.target)) && e.target !== burger) {
-      menu.classList.remove('open');
-      burger.setAttribute('aria-expanded', 'false');
+    if (!menu.contains(/** @type {Node} */(e.target)) && e.target !== burger) closeMenu();
+  });
+
+  // Escape закрывает меню и возвращает фокус на бургер (#56).
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && menu.classList.contains('open')) {
+      closeMenu();
+      burger.focus();
     }
   });
 }
