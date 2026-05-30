@@ -571,3 +571,24 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 
 /* nav CTA crowds the pill on phones — contact via hero button and #contact (#58) */
 @media (max-width: 760px) { .nav-pill .cta { display: none; } }
+
+/* === Доступность и тач: skip-link, focus-visible, тач-цели (#23/#24/#55/#57) === */
+.skip-link {
+  position: absolute; left: -9999px; top: 0; z-index: 100;
+  background: var(--accent); color: #fff; padding: 10px 18px;
+  font-weight: 600; border-radius: 0 0 8px 0;
+}
+.skip-link:focus { left: 0; }
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.ws-tree-item:focus-visible, .principle-cell:focus-visible { border-radius: 4px; }
+
+@media (max-width: 760px) {
+  .nav-burger, .icon-btn { width: 40px; height: 40px; }
+  .nav-mobile-menu a { padding: 13px 16px; }
+  .nav-mobile-menu .cta { display: flex; justify-content: center; margin-top: 8px; }
+}
+
+@media (hover: none) {
+  .principle-cell .pc-cta { color: var(--accent-text); }
+}
