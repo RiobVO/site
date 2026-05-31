@@ -171,8 +171,9 @@ function initFaqAnimation() {
 }
 
 function initCardHover() {
-  // Тач-устройства не имеют hover — не вешаем mousemove (экономим repaint/батарею).
-  if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) return;
+  // Тач-устройства (нет hover) и reduced-motion — не вешаем mousemove: ни glow, ни движения.
+  if (window.matchMedia && (window.matchMedia('(pointer: coarse)').matches
+      || window.matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
   document.querySelectorAll('.work-card').forEach((card) => {
     let raf = 0, mx = 0, my = 0;
     card.addEventListener('mousemove', (e) => {
@@ -196,6 +197,12 @@ function initHeroTerminal() {
 
   const lines = /** @type {HTMLElement[]} */ (Array.from(termBody.querySelectorAll('.term-line')));
   if (!lines.length) return;
+
+  // reduced-motion: показываем все строки статикой и не вешаем 3D-tilt — никакого движения.
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    lines.forEach((l) => l.classList.add('t-visible'));
+    return;
+  }
 
   // Нет IntersectionObserver → показываем все строки статикой, без набора текста.
   if (!('IntersectionObserver' in window)) {
@@ -315,6 +322,9 @@ function initHeroTerminal() {
 function initCaseTyping() {
   const el = document.getElementById('caseTyping');
   if (!el) return;
+
+  // reduced-motion: оставляем итоговый вывод как есть, без посимвольного набора и курсора.
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   const fullText = el.textContent;
   el.textContent = '';

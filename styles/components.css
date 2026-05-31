@@ -287,7 +287,7 @@ html:not(.js) .term-line { opacity: 1; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--accent);
+  color: var(--accent-text);
 }
 .pipe-stage .ico svg { width: 16px; height: 16px; }
 .pipe-stage .ico.score {
@@ -331,7 +331,7 @@ html:not(.js) .term-line { opacity: 1; }
   letter-spacing: 0.04em;
 }
 .pipe-stage .stamp .t {
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 .pipe-link {
@@ -366,7 +366,7 @@ html:not(.js) .term-line { opacity: 1; }
   font-size: 20px;
   font-weight: 600;
   letter-spacing: -0.02em;
-  color: var(--accent);
+  color: var(--accent-text);
   display: block;
   line-height: 1;
 }
@@ -465,7 +465,7 @@ html:not(.js) .term-line { opacity: 1; }
   display: block;
 }
 .feature-block .copy .meta-row .stat .v {
-  color: var(--accent);
+  color: var(--accent-text);
 }
 .feature-block .copy .meta-row .stat .v em {
   color: inherit;
@@ -482,6 +482,17 @@ html:not(.js) .term-line { opacity: 1; }
   display: flex;
   gap: 10px;
 }
+/* Проверяемые пруфы рядом с «8.5/10»: открытый код + тесты репозитория (B1). */
+.feature-block .copy .feature-proof {
+  margin-top: 16px;
+  font-size: 12.5px;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.feature-block .copy .feature-proof .fp-sep { color: var(--line-emph); }
 .feature-block .visual {
   position: relative;
 }
@@ -564,7 +575,7 @@ html:not(.js) .term-line { opacity: 1; }
 }
 .ws-tree-header::before {
   content: '/ ';
-  color: var(--accent);
+  color: var(--accent-text);
 }
 .ws-tree-root {
   padding: 0 16px;
@@ -596,7 +607,7 @@ html:not(.js) .term-line { opacity: 1; }
 }
 .ws-tree-item.active {
   background: var(--accent-soft);
-  color: var(--accent);
+  color: var(--accent-text);
 }
 .ws-branch {
   color: var(--text-faint);
@@ -715,7 +726,7 @@ html:not(.js) .term-line { opacity: 1; }
 .ws-proj-result {
   font-size: 12px;
   line-height: 1.5;
-  color: var(--accent);
+  color: var(--accent-text);
   margin-bottom: 16px;
   max-width: 560px;
   opacity: 0.8;
@@ -757,7 +768,7 @@ html:not(.js) .term-line { opacity: 1; }
 .ws-metric-val {
   font-size: 18px;
   font-weight: 700;
-  color: var(--accent);
+  color: var(--accent-text);
   line-height: 1.2;
   margin-bottom: 2px;
 }
@@ -928,7 +939,7 @@ html:not(.js) .term-line { opacity: 1; }
   border-radius: 8px;
   background: var(--accent-soft);
   border: 1px solid var(--accent-line);
-  color: var(--accent);
+  color: var(--accent-text);
   margin-bottom: 8px;
 }
 .principle-cell .icon svg { width: 14px; height: 14px; }
@@ -1027,12 +1038,12 @@ html:not(.js) .term-line { opacity: 1; }
   color: var(--text-dim);
   transition: color .2s;
 }
-.principle-cell:hover .pc-cta { color: var(--accent); }
+.principle-cell:hover .pc-cta { color: var(--accent-text); }
 .principle-cell .pc-cta .arr {
   display: inline-block;
   transition: transform .3s cubic-bezier(0.2,0.8,0.2,1);
 }
-.principle-cell.open .pc-cta { color: var(--accent); }
+.principle-cell.open .pc-cta { color: var(--accent-text); }
 .principle-cell.open .pc-cta .arr { transform: rotate(90deg); }
 
 /* ─── Process timeline (zigzag vertical with big serif numbers) ─── */
@@ -1182,7 +1193,7 @@ html:not(.js) .term-line { opacity: 1; }
   background: rgba(76,183,130,0.05);
 }
 .process-timeline .pt-status.now {
-  color: var(--accent);
+  color: var(--accent-text);
   border-color: rgba(224,144,96,0.45);
   background: rgba(224,144,96,0.06);
 }
@@ -1442,7 +1453,7 @@ html:not(.js) .term-line { opacity: 1; }
 }
 .tier:hover::before { opacity: 1; }
 .tier:hover::after { transform: scaleX(1); }
-.tier:hover .tier-name { color: var(--accent); }
+.tier:hover .tier-name { color: var(--accent-text); }
 .tier.featured {
   border-color: var(--accent-line);
   border-top-color: var(--accent);
@@ -1469,7 +1480,7 @@ html:not(.js) .term-line { opacity: 1; }
   font-family: 'JetBrains Mono', monospace;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--accent);
+  color: var(--accent-text);
   background: var(--accent-soft);
   border: 1px solid var(--accent-line);
   padding: 2px 8px;
@@ -1551,7 +1562,7 @@ html:not(.js) .term-line { opacity: 1; }
   width: 14px; height: 14px;
   flex-shrink: 0;
   margin-top: 4px;
-  color: var(--accent);
+  color: var(--accent-text);
 }
 .tier ul li.no { color: var(--text-faint); }
 .tier ul li.no svg { color: var(--text-faint); }
@@ -1599,7 +1610,7 @@ html:not(.js) .term-line { opacity: 1; }
 .workflow .step .num {
   font-family: 'JetBrains Mono', monospace;
   font-size: 12px;
-  color: var(--accent);
+  color: var(--accent-text);
   letter-spacing: 0.04em;
 }
 .workflow .step .content h4 {
@@ -1627,11 +1638,11 @@ html:not(.js) .term-line { opacity: 1; }
 .step-ico.active {
   background: var(--accent-soft);
   border-color: var(--accent-line);
-  color: var(--accent);
+  color: var(--accent-text);
 }
 .workflow .step:hover .step-ico {
   border-color: var(--accent-line);
-  color: var(--accent);
+  color: var(--accent-text);
 }
 .workflow .step .content p {
   font-size: 14.5px;
@@ -1714,7 +1725,7 @@ html:not(.js) .term-line { opacity: 1; }
   content: counter(faq, decimal-leading-zero);
   font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
-  color: var(--accent);
+  color: var(--accent-text);
   letter-spacing: 0.04em;
   flex-shrink: 0;
   width: 24px;
@@ -1731,9 +1742,9 @@ html:not(.js) .term-line { opacity: 1; }
 }
 .faq details[open] summary::after {
   transform: rotate(45deg);
-  color: var(--accent);
+  color: var(--accent-text);
 }
-.faq details summary:hover { color: var(--accent); }
+.faq details summary:hover { color: var(--accent-text); }
 .faq details .a {
   padding: 0 24px 20px 24px;
   color: var(--text-muted);
@@ -1769,7 +1780,7 @@ html:not(.js) .term-line { opacity: 1; }
   transition: color .15s, border-color .15s;
 }
 .inline-link:hover {
-  color: var(--accent);
+  color: var(--accent-text);
   border-bottom-color: currentColor;
 }
 
@@ -1835,7 +1846,7 @@ html:not(.js) .term-line { opacity: 1; }
   background: rgba(224,122,65,0.04);
 }
 .case-spec dd:hover {
-  color: var(--accent);
+  color: var(--accent-text);
 }
 .case-spec dt:last-of-type,
 .case-spec dd:last-of-type {
@@ -1914,7 +1925,7 @@ html:not(.js) .term-line { opacity: 1; }
   flex-shrink: 0;
 }
 .case-toc li a:hover {
-  color: var(--accent);
+  color: var(--accent-text);
   background: var(--accent-soft);
 }
 
@@ -1941,7 +1952,7 @@ html:not(.js) .term-line { opacity: 1; }
 .case-body h2 .num {
   font-family: 'JetBrains Mono', monospace;
   font-size: 13px;
-  color: var(--accent);
+  color: var(--accent-text);
   margin-right: 12px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -2072,7 +2083,7 @@ html:not(.js) .term-line { opacity: 1; }
   border-top-color: rgba(0,0,0,0.06);
   background: rgba(0,0,0,0.02);
 }
-.case-body .figure .fl { color: var(--accent); font-weight: 600; }
+.case-body .figure .fl { color: var(--accent-text); font-weight: 600; }
 .case-body .figure .ft { color: #a3c585; }
 .case-body .figure .fc { color: #e5e5e5; font-weight: 500; }
 .case-body .figure .fw { color: #d4a93a; }
@@ -2136,6 +2147,9 @@ html:not(.js) .term-line { opacity: 1; }
   transition: background 0.3s;
 }
 .case-body .metric:last-child { border-right: none; }
+/* Метрика-ссылка «1 310 тестов» → tests/ в репозитории (B1): без подчёркивания, цвет наследуется. */
+.case-body a.metric { text-decoration: none; color: inherit; cursor: pointer; }
+.case-body a.metric:hover .l { color: var(--accent-text); }
 @media (max-width: 720px) {
   .case-body .metric:nth-child(2) { border-right: none; }
   .case-body .metric:nth-child(3),
@@ -2192,7 +2206,7 @@ html:not(.js) .term-line { opacity: 1; }
   font-style: normal;
 }
 .case-body .metric:nth-child(1) .v em { color: var(--accent-green); }
-.case-body .metric:nth-child(2) .v em { color: var(--accent); }
+.case-body .metric:nth-child(2) .v em { color: var(--accent-text); }
 .case-body .metric:nth-child(3) .v em { color: #e09060; }
 .case-body .metric:nth-child(4) .v em { color: var(--accent-green); }
 .case-body .metric .l {
@@ -2298,7 +2312,7 @@ html:not(.js) .term-line { opacity: 1; }
 .proof-quote:hover::before { opacity: 1; }
 
 .proof-quote .t-stars {
-  color: var(--accent);
+  color: var(--accent-text);
   font-size: 13px;
   letter-spacing: 2px;
   margin-bottom: 12px;
@@ -2470,7 +2484,7 @@ html:not(.js) .t-dots { display: none; }
   letter-spacing: 0.06em;
   transition: color 0.2s;
 }
-.case-nav a:hover .label { color: var(--accent); }
+.case-nav a:hover .label { color: var(--accent-text); }
 .case-nav a .title-line {
   font-size: 22px;
   font-weight: 600;
@@ -2478,7 +2492,7 @@ html:not(.js) .t-dots { display: none; }
   color: var(--text);
   transition: color 0.2s;
 }
-.case-nav a:hover .title-line { color: var(--accent); }
+.case-nav a:hover .title-line { color: var(--accent-text); }
 .case-nav a.next { text-align: right; align-items: flex-end; }
 
 /* ─────────  404  ───────── */
@@ -2501,7 +2515,7 @@ html:not(.js) .t-dots { display: none; }
   display: inline-block;
   text-align: left;
 }
-.error-page .glyph .num { color: var(--accent); font-size: 36px; display: block; line-height: 1; margin-bottom: 4px; }
+.error-page .glyph .num { color: var(--accent-text); font-size: 36px; display: block; line-height: 1; margin-bottom: 4px; }
 .error-page h1 {
   font-family: 'JetBrains Mono', monospace;
   font-size: clamp(28px, 5vw, 56px);
@@ -2755,7 +2769,7 @@ html:not(.js) .t-dots { display: none; }
 .rule-row .rule-id {
   font-family: 'JetBrains Mono', monospace;
   font-size: 12px;
-  color: var(--accent);
+  color: var(--accent-text);
   letter-spacing: 0.05em;
   font-weight: 500;
   display: inline-flex;
@@ -2816,7 +2830,7 @@ html:not(.js) .t-dots { display: none; }
 }
 .rule-row .impl-tag.accent {
   border-color: var(--accent-line);
-  color: var(--accent);
+  color: var(--accent-text);
   background: var(--accent-soft);
 }
 
@@ -3114,13 +3128,13 @@ html:not(.js) .t-dots { display: none; }
   transform: translateY(-1px);
 }
 .contact-panel .cp-ch:hover::after { opacity: 1; }
-.contact-panel .cp-ch:hover .cp-arr { transform: translateX(3px); color: var(--accent); }
+.contact-panel .cp-ch:hover .cp-arr { transform: translateX(3px); color: var(--accent-text); }
 .contact-panel .cp-ico {
   width: 36px; height: 36px;
   border-radius: 9px;
   background: var(--accent-soft);
   border: 1px solid var(--accent-line);
-  color: var(--accent);
+  color: var(--accent-text);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -3179,7 +3193,7 @@ html:not(.js) .t-dots { display: none; }
   color: var(--text);
   letter-spacing: -0.005em;
 }
-.contact-panel .cp-meta .v em { color: var(--accent); font-style: normal; }
+.contact-panel .cp-meta .v em { color: var(--accent-text); font-style: normal; }
 
 /* Tweak surrounding CTA section when in engineering mode */
 .cta.engineering { padding: 96px 0; text-align: left; }
@@ -3232,7 +3246,7 @@ html:not(.js) .t-dots { display: none; }
 .audit-report-list .r-tag {
   font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
-  color: var(--accent);
+  color: var(--accent-text);
   letter-spacing: 0.04em;
   padding-top: 3px;
 }
@@ -3264,7 +3278,7 @@ html:not(.js) .t-dots { display: none; }
   box-shadow: 0 0 12px rgba(224,122,65,0.4);
 }
 .audit-price-grid .tier:hover { border-color: var(--accent-line); }
-.audit-price-grid .tier:hover .tier-name { color: var(--accent); }
+.audit-price-grid .tier:hover .tier-name { color: var(--accent-text); }
 
 .audit-price-aside {
   padding: 28px 4px 0;
@@ -3404,7 +3418,7 @@ html:not(.js) .t-dots { display: none; }
 
 /* ─────────  Scan-anchor: highlight key numbers inside case body  ───────── */
 .case-body strong.num {
-  color: var(--accent);
+  color: var(--accent-text);
   font-weight: 600;
   white-space: nowrap;
 }
@@ -3472,7 +3486,7 @@ html:not(.js) .t-dots { display: none; }
   font-size: 10px;
 }
 .case-body .figure svg .nd-kicker {
-  fill: var(--accent);
+  fill: var(--accent-text);
   font-family: 'JetBrains Mono', monospace;
   font-size: 9px;
   letter-spacing: 0.06em;

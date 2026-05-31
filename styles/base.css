@@ -205,8 +205,8 @@
   --accent-soft:  rgba(224,122,65,0.10);
   --accent-line:  rgba(224,122,65,0.30);
   --shadow-card:  0 1px 0 rgba(255,255,255,0.8) inset, 0 8px 30px -12px rgba(0,0,0,0.08);
-  /* Затемнённый оранжевый для текста: 4.78:1 на #fafafa, 4.99:1 на #ffffff — проходит WCAG AA. */
-  --accent-text:  #B85020;
+  /* Затемнённый оранжевый для текста: 5.00:1 на #fafafa, 5.22:1 на #ffffff, 4.58:1 на #f0f0f0 (открытый FAQ / hover-карточки) — проходит WCAG AA на всех elevated-поверхностях. */
+  --accent-text:  #B44D1E;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -358,6 +358,9 @@ p.body, .body-text {
   background: #fff;
   transform: translateY(-1px);
 }
+/* В светлой теме primary — тёмная кнопка со светлым текстом (color:var(--bg)=#fafafa).
+   Базовый hover красит фон в #fff → светлый текст пропадает. Затемняем фон вместо осветления. */
+[data-theme="light"] .btn.primary:hover { background: #000; }
 .btn.secondary {
   background: rgba(255,255,255,0.06);
   color: var(--text);
@@ -654,7 +657,7 @@ hr.line,
   .code-card { font-size: 11px; }
   .code-card .body { padding: 14px 16px; }
 }
-.code-card .prompt { color: var(--accent); user-select: none; margin-right: 8px; }
+.code-card .prompt { color: var(--accent-text); user-select: none; margin-right: 8px; }
 .code-card .comment { color: var(--text-faint); font-style: italic; }
 .code-card .ok { color: var(--accent-green); }
 .typing-cursor {
@@ -666,7 +669,7 @@ hr.line,
 .code-card .warn { color: #d4a93a; }
 .code-card .key { color: #e58b5f; }
 .code-card .str { color: #a3c585; }
-.code-card .fn { color: var(--accent); }
+.code-card .fn { color: var(--accent-text); }
 .code-card .num-c { color: #d49a3a; }
 .code-card .kw { color: #c87a6c; font-style: italic; }
 .code-card .out { color: var(--text); }
@@ -710,7 +713,7 @@ html:not(.js) [data-lang="ru"] { display: revert; }
 
 /* Focus styles */
 a:focus-visible, button:focus-visible, summary:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--accent-text);
   outline-offset: 3px;
   border-radius: 6px;
 }
@@ -721,18 +724,20 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 /* === Доступность и тач: skip-link, focus-visible, тач-цели (#23/#24/#55/#57) === */
 .skip-link {
   position: absolute; left: -9999px; top: 0; z-index: 100;
-  background: var(--accent); color: #fff; padding: 10px 18px;
+  background: var(--accent); color: #1a1a1a; padding: 10px 18px;
   font-weight: 600; border-radius: 0 0 8px 0;
 }
 .skip-link:focus { left: 0; }
 
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--accent-text); outline-offset: 3px; }
 .ws-tree-item:focus-visible, .principle-cell:focus-visible { border-radius: 4px; }
 
 @media (max-width: 760px) {
   .nav-burger, .icon-btn { width: 40px; height: 40px; }
   .nav-mobile-menu a { padding: 13px 16px; }
   .nav-mobile-menu .cta { display: flex; justify-content: center; margin-top: 8px; }
+  /* Тач-цель ≥44px на мобиле: min-height перекрывает базовые height:38px (#A2/WCAG 2.5.5). */
+  .btn { min-height: 44px; }
 }
 
 @media (hover: none) {
