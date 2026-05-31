@@ -1015,6 +1015,31 @@
   } else {
     ptSteps.forEach(s => s.classList.add('in'));
   }
+
+  // Прогресс-линия таймлайна: заливается по мере прокрутки секции (rAF + IO-гейт, пауза вне экрана #42/#67)
+  const ptTimeline = document.querySelector('.process-timeline');
+  const reduceMo = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (ptTimeline && 'IntersectionObserver' in window && !reduceMo) {
+    const bar = document.createElement('div');
+    bar.className = 'pt-progress';
+    bar.setAttribute('aria-hidden', 'true');
+    ptTimeline.appendChild(bar);
+    let ticking = false;
+    const setProgress = () => {
+      ticking = false;
+      const r = ptTimeline.getBoundingClientRect();
+      const p = (window.innerHeight * 0.5 - r.top) / r.height;
+      ptTimeline.style.setProperty('--pt-progress', Math.max(0, Math.min(1, p)).toFixed(3));
+    };
+    const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(setProgress); } };
+    const visObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { window.addEventListener('scroll', onScroll, { passive: true }); setProgress(); }
+        else window.removeEventListener('scroll', onScroll);
+      });
+    }, { threshold: 0 });
+    visObs.observe(ptTimeline);
+  }
 })();
 </script>
 </body>

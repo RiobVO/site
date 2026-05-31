@@ -1063,6 +1063,21 @@ html:not(.js) .term-line { opacity: 1; }
   background: linear-gradient(180deg, transparent 0%, var(--line-emph) 6%, var(--line-emph) 94%, transparent 100%);
   z-index: 0;
 }
+/* Линия-прогресс: заливается акцентом по мере прокрутки секции (JS задаёт --pt-progress 0→1) */
+.process-timeline .pt-progress {
+  content: '';
+  position: absolute;
+  top: 80px;
+  bottom: 80px;
+  left: 50%;
+  width: 1px;
+  background: linear-gradient(180deg, transparent 0%, var(--accent) 6%, var(--accent) 94%, transparent 100%);
+  transform: scaleY(var(--pt-progress, 0));
+  transform-origin: top center;
+  z-index: 1;
+  pointer-events: none;
+  will-change: transform;
+}
 .process-timeline .pt-line { display: none; }
 .process-timeline .pt-grid {
   display: flex;
@@ -1130,13 +1145,6 @@ html:not(.js) .term-line { opacity: 1; }
   box-shadow:
     0 0 0 5px rgba(224,122,65,0.18),
     0 0 18px var(--accent);
-}
-.process-timeline .pt-step.active .pt-dot {
-  animation: ptPulse 2.6s ease-in-out infinite;
-}
-@keyframes ptPulse {
-  0%, 100% { box-shadow: 0 0 0 5px rgba(224,122,65,0.18), 0 0 14px var(--accent); }
-  50% { box-shadow: 0 0 0 10px rgba(224,122,65,0.06), 0 0 26px var(--accent); }
 }
 
 /* Content card — right side by default */
