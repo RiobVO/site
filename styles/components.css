@@ -2611,8 +2611,8 @@ path.nm-edge {
 }
 [data-theme="light"] path.nm-edge { stroke: rgba(176,77,30,0.28); }
 path.nm-edge.lit { stroke: var(--accent); stroke-width: 2; filter: drop-shadow(0 0 4px rgba(224,122,65,0.55)); }
-.nm-stage.tracing path.nm-edge:not(.lit) { opacity: 0.14; }
-.nm-stage.tracing path.nm-flow:not(.f-lit) { opacity: 0.08; }
+.nm-stage.tracing path.nm-edge:not(.lit) { opacity: 0.4; }
+.nm-stage.tracing path.nm-flow:not(.f-lit) { opacity: 0.28; }
 
 /* Поток энергии по проводу: видимый, со свечением — это «разговор систем» */
 path.nm-flow {
