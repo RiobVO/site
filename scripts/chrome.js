@@ -631,29 +631,161 @@ function initTestimonials() {
 }
 
 /**
- * Integrations-viz: на reduced-motion полностью останавливаем SMIL-пакеты,
- * иначе ставим все анимации на паузу, когда блок вне экрана (CPU/батарея). (#41/#67)
+ * Нод-граф «Интеграции»: прорисовка структуры на старте, hover-трассировка проводов,
+ * иллюстративный лог событий + вспышки-результаты у узлов, 3D-параллакс на мышь.
+ * Всё живое — за reduced-motion / pointer:coarse гейтами; вне экрана анимации и таймер
+ * лога на паузе (CPU/батарея, #41/#67). Без JS граф остаётся статично виден (.reveal),
+ * CSS/SMIL анимируют сами. Лог двуязычный — пересобираем под активный язык.
+ * Параллакс замирает на время трассировки узла (иначе сцена ездит под курсором → дребезг).
  */
-function initIntegrationsViz() {
-  const viz = document.querySelector('.integrations-viz');
-  if (!viz) return;
-  const svg = /** @type {any} */ (viz.querySelector('svg.lines'));
+function initNetmap() {
+  const nm = document.querySelector('.netmap');
+  if (!nm) return;
+  const stage = /** @type {HTMLElement | null} */ (nm.querySelector('.nm-stage'));
+  const logText = /** @type {HTMLElement | null} */ (nm.querySelector('.nm-log-text'));
+  if (!stage || !logText) return;
+
   const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+  const svg = /** @type {any} */ (nm.querySelector('.nm-edges'));
+
+  // Прорисовка структуры на старте: провода втягиваются, затем проявляются потоки.
+  if (!reduce) {
+    nm.classList.add('armed');
+    requestAnimationFrame(() => requestAnimationFrame(() => nm.classList.add('run')));
+  }
+
+  // Hover-трассировка: подсветить провода узла, всплыть чип-протокол, погасить остальное.
+  // На время трассировки гасим параллакс (через .tracing) и выпрямляем сцену — без дребезга.
+  nm.querySelectorAll('.nm-node[data-edges]').forEach((node) => {
+    const keys = (node.getAttribute('data-edges') || '').split(' ');
+    node.addEventListener('mouseenter', () => {
+      stage.classList.add('tracing');
+      stage.style.transform = '';
+      node.classList.add('act');
+      keys.forEach((k) => {
+        const edge = stage.querySelector('.nm-edge[data-key="' + k + '"]');
+        if (edge) edge.classList.add('lit');
+        const flow = stage.querySelector('.nm-flow[data-key="' + k + '"]');
+        if (flow) flow.classList.add('f-lit');
+        stage.querySelectorAll('.nm-tag[data-key="' + k + '"]').forEach((t) => t.classList.add('show'));
+      });
+    });
+    node.addEventListener('mouseleave', () => {
+      stage.classList.remove('tracing');
+      node.classList.remove('act');
+      stage.querySelectorAll('.nm-edge.lit').forEach((e) => e.classList.remove('lit'));
+      stage.querySelectorAll('.nm-flow.f-lit').forEach((f) => f.classList.remove('f-lit'));
+      stage.querySelectorAll('.nm-tag.show').forEach((t) => t.classList.remove('show'));
+    });
+  });
+
+  // Иллюстративный лог (НЕ реальные данные) + синхронная вспышка-результат у узла.
+  const LOG = [
+    { ru: '1С → синхронизация 1 240 строк',       en: '1C → syncing 1,240 rows',         node: 'e1', badge: '↑ 1 240' },
+    { ru: 'Bitrix24 → лид #4821 в воронку',        en: 'Bitrix24 → lead #4821 to pipeline', node: 'e2', badge: '+ lead' },
+    { ru: 'Bank API → платёж проведён',            en: 'Bank API → payment cleared',      node: 'e3', badge: '✓ ok' },
+    { ru: 'retry → Bank API (2/3) · восстановлено', en: 'retry → Bank API (2/3) · recovered', node: 'e3', badge: '↻ retry' },
+    { ru: 'Маркетплейс → 37 новых заказов',        en: 'Marketplace → 37 new orders',     node: 'e4', badge: '+ 37' },
+    { ru: 'Telegram → уведомление доставлено',     en: 'Telegram → alert delivered',      node: 'o1', badge: '✓ 42 ms' },
+    { ru: 'Email → отчёт 08:00 отправлен',         en: 'Email → 08:00 report sent',       node: 'o2', badge: '✓ sent' },
+    { ru: 'Dashboard → выгрузка .xlsx готова',     en: 'Dashboard → .xlsx export ready',  node: 'o3', badge: '✓ .xlsx' }
+  ];
+
+  function showLog(i) {
+    const e = LOG[i];
+    // Рендерим обе языковые версии и подсвечиваем активную (как динамика в applyLang).
+    logText.innerHTML =
+      '<span data-lang="ru">' + e.ru + ' · <span class="ok">ok</span></span>' +
+      '<span data-lang="en">' + e.en + ' · <span class="ok">ok</span></span>';
+    const lang = document.body.getAttribute('data-active-lang') || 'ru';
+    logText.querySelectorAll('[data-lang]').forEach((s) => {
+      s.classList.toggle('active', s.getAttribute('data-lang') === lang);
+    });
+    if (!reduce) {
+      logText.classList.remove('swap');
+      void logText.offsetWidth;
+      logText.classList.add('swap');
+    }
+    const node = stage.querySelector('.nm-node[data-node="' + e.node + '"]');
+    if (node) {
+      const flash = node.querySelector('.nm-flash');
+      if (flash) flash.textContent = e.badge;
+      if (!reduce) {
+        node.classList.remove('flash');
+        void node.offsetWidth;
+        node.classList.add('flash');
+      }
+    }
+    // Провод этого события вспыхивает синхронно (getBoundingClientRect — reflow для SVG).
+    if (!reduce) {
+      const edge = stage.querySelector('.nm-edge[data-key="' + e.node + '"]');
+      if (edge) {
+        edge.classList.remove('epulse');
+        edge.getBoundingClientRect();
+        edge.classList.add('epulse');
+      }
+    }
+  }
+
+  // reduced-motion: один статичный кадр лога, без таймера, параллакса и пауз.
   if (reduce) {
     if (svg && svg.pauseAnimations) svg.pauseAnimations();
+    showLog(5);
     return;
   }
-  if (!('IntersectionObserver' in window)) return;
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      viz.classList.toggle('viz-paused', !e.isIntersecting);
-      if (svg) {
-        if (e.isIntersecting && svg.unpauseAnimations) svg.unpauseAnimations();
-        else if (svg.pauseAnimations) svg.pauseAnimations();
-      }
+
+  let li = 0;
+  let timer = 0;
+  function start() {
+    if (timer) return;
+    timer = window.setInterval(() => { li = (li + 1) % LOG.length; showLog(li); }, 2300);
+  }
+  function stop() {
+    if (timer) { clearInterval(timer); timer = 0; }
+  }
+  showLog(0);
+
+  // Пауза лога + CSS-потоков + SMIL-пакетов, когда граф вне экрана (#67).
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          nm.classList.remove('nm-paused');
+          if (svg && svg.unpauseAnimations) svg.unpauseAnimations();
+          start();
+        } else {
+          nm.classList.add('nm-paused');
+          if (svg && svg.pauseAnimations) svg.pauseAnimations();
+          stop();
+        }
+      });
+    }, { threshold: 0 });
+    io.observe(nm);
+  } else {
+    start();
+  }
+
+  // 3D-параллакс на движение мыши (как hero-терминал) — только тонкий указатель,
+  // и только когда не идёт трассировка узла (иначе сцена дёргается под курсором).
+  if (!coarse) {
+    let raf = 0;
+    let rx = 0;
+    let ry = 0;
+    nm.addEventListener('mousemove', (ev) => {
+      if (stage.classList.contains('tracing')) return;
+      const r = stage.getBoundingClientRect();
+      rx = (ev.clientX - r.left) / r.width - 0.5;
+      ry = (ev.clientY - r.top) / r.height - 0.5;
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        if (stage.classList.contains('tracing')) return;
+        stage.style.transform = 'rotateY(' + (rx * 4) + 'deg) rotateX(' + (-ry * 3) + 'deg)';
+      });
     });
-  }, { threshold: 0 });
-  io.observe(viz);
+    nm.addEventListener('mouseleave', () => { stage.style.transform = ''; });
+  }
 }
 
 function initAll() {
@@ -668,7 +800,7 @@ function initAll() {
   initPipelineRun();
   initWorkflowRun();
   initFaqReveal();
-  initIntegrationsViz();
+  initNetmap();
 }
 
 if (document.readyState === 'loading') {

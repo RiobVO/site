@@ -2543,187 +2543,264 @@ html:not(.js) .t-dots { display: none; }
 
 
 
-/* ─── Integrations network ─── */
-.integrations-viz {
-  background: var(--bg-elev);
-  border: 1px solid var(--line-strong);
-  border-radius: 14px;
-  padding: 40px 36px;
-  position: relative;
-  min-height: 520px;
+/* ─── Integrations · нод-граф «карта системы» ─── */
+/* Секция шириной .shell: заголовок и копирайт по левому краю страницы (ритм соседних
+   секций, hairline-divider не рассинхронится). Граф уводим вправо в свободное поле через
+   capped negative margin (суммарно до ~1340px, запас 24px — без горизонтального скролла). */
+.int-grid {
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: minmax(300px, 380px) 1fr;
+  gap: 48px;
   align-items: center;
-  gap: 36px;
-  box-shadow: 0 20px 60px -20px rgba(0,0,0,0.5);
+  margin-right: calc(-1 * clamp(0px, (100vw - 1152px) / 2 - 24px, 188px));
 }
-.integrations-viz .col {
+/* 2 колонки только когда graph-ячейка вмещает min-width сцены (700px); ниже — 1 колонка,
+   граф на всю ширину (без обрезки на ноутбуках). */
+@media (max-width: 1180px) {
+  .int-grid { grid-template-columns: 1fr; gap: 28px; margin-right: 0; }
+}
+.int-grid .int-copy { font-size: 16px; line-height: 1.6; color: var(--text-muted); max-width: 46ch; }
+.int-grid .int-list { list-style: none; margin: 18px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.int-grid .int-list li { display: flex; align-items: flex-start; gap: 12px; padding: 6px 0; font-size: 15px; color: var(--text-muted); line-height: 1.5; }
+.int-grid .int-list li svg { flex-shrink: 0; margin-top: 4px; }
+
+/* Граф «парит» — без коробки, прозрачный фон */
+.netmap { position: relative; padding: 0; }
+
+.netmap .nm-bar {
   display: flex;
-  flex-direction: column;
-  gap: 16px;
-  position: relative;
-  z-index: 1;
-}
-.integrations-viz .col.right { align-items: flex-end; }
-.integrations-viz .pill {
-  padding: 12px 18px;
-  background: var(--bg-elev-2);
-  border: 1px solid var(--line-strong);
-  border-radius: 999px;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text);
-  display: inline-flex;
   align-items: center;
   gap: 10px;
-  white-space: nowrap;
+  padding-bottom: 16px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
 }
-.integrations-viz .pill .bd {
-  width: 8px; height: 8px;
+.netmap .nm-bar .live { display: inline-flex; align-items: center; gap: 7px; color: var(--accent-green-text); }
+.netmap .nm-bar .live::before {
+  content: '';
+  width: 6px; height: 6px;
   border-radius: 50%;
-  background: var(--accent);
+  background: var(--accent-green);
+  box-shadow: 0 0 0 3px rgba(76,183,130,0.16);
 }
-.integrations-viz .pill .bd.green { background: var(--accent-green); }
-.integrations-viz .pill .bd.purple { background: var(--accent-pink); }
-.integrations-viz .core-shell {
+.netmap .nm-bar .right { margin-left: auto; color: var(--text-faint); }
+
+/* overflow:hidden — 3D-наклон не выдаёт полосы прокрутки на десктопе */
+.nm-stage-scroll { overflow: hidden; perspective: 1400px; }
+.nm-stage {
   position: relative;
-  display: grid;
-  place-items: center;
-  width: max-content;
-  margin: 0 auto;
-  z-index: 2;
+  width: 100%;
+  min-width: 700px;
+  aspect-ratio: 1000 / 560;
+  transform-style: preserve-3d;
+  transition: transform .18s ease-out;
+}
+.nm-edges { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+/* Провода — герой графа: тёплый «кабель» в покое (не серый — связь читается сразу) */
+path.nm-edge {
+  fill: none;
+  stroke: rgba(224,122,65,0.20);
+  stroke-width: 1.1;
+  transition: stroke .25s ease, stroke-width .25s ease, opacity .25s ease;
+}
+[data-theme="light"] path.nm-edge { stroke: rgba(176,77,30,0.28); }
+path.nm-edge.lit { stroke: var(--accent); stroke-width: 2; filter: drop-shadow(0 0 4px rgba(224,122,65,0.55)); }
+.nm-stage.tracing path.nm-edge:not(.lit) { opacity: 0.14; }
+.nm-stage.tracing path.nm-flow:not(.f-lit) { opacity: 0.08; }
+
+/* Поток энергии по проводу: видимый, со свечением — это «разговор систем» */
+path.nm-flow {
+  fill: none;
+  stroke: url(#nm-grad);
+  stroke-width: 1.7;
+  stroke-dasharray: 4 7;
+  filter: drop-shadow(0 0 2.5px rgba(224,122,65,0.45));
+  animation: nmdash 3.6s linear infinite;
+}
+.nm-flow.s2 { animation-duration: 4.4s; }
+.nm-flow.s3 { animation-duration: 4.0s; }
+.nm-flow.s4 { animation-duration: 4.8s; animation-direction: reverse; }
+@keyframes nmdash { to { stroke-dashoffset: -120; } }
+/* Пакеты — кометы со свечением, чтобы «данные едут» было видно */
+.nm-packet { fill: var(--accent); filter: drop-shadow(0 0 3px rgba(224,122,65,0.8)); }
+
+/* Событие лога физически бежит по своей связи: провод вспыхивает синхронно со вспышкой узла */
+path.nm-edge.epulse { animation: edgePulse 1.7s ease; }
+@keyframes edgePulse {
+  20% { stroke: var(--accent); stroke-width: 2.6; filter: drop-shadow(0 0 6px rgba(224,122,65,0.75)); }
 }
 
-.integrations-viz .core-pulse {
+/* Прорисовка структуры на старте (JS вешает .armed → .run) */
+.netmap.armed path.nm-edge { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.netmap.armed.run path.nm-edge { stroke-dashoffset: 0; transition: stroke-dashoffset .95s cubic-bezier(.2,.8,.2,1); }
+.netmap.armed path.nm-flow, .netmap.armed .nm-packet { opacity: 0; }
+.netmap.armed.run path.nm-flow { opacity: 1; transition: opacity .5s ease .65s; }
+.netmap.armed.run .nm-packet { opacity: 1; transition: opacity .5s ease .9s; }
+
+/* Пауза анимаций вне экрана — экономия CPU/батареи */
+.netmap.nm-paused path.nm-flow,
+.netmap.nm-paused .nm-core .nm-run,
+.netmap.nm-paused .nm-core::before { animation-play-state: paused; }
+
+.nm-node {
   position: absolute;
-  top: 50%; left: 50%;
-  width: 100%; height: 100%;
   transform: translate(-50%, -50%);
-  border: 1.5px solid rgba(224,122,65,0.5);
-  border-radius: 18px;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  padding: 9px 13px;
+  min-width: 150px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease;
+  z-index: 2;
+}
+[data-theme="light"] .nm-node { background: #ffffff; border-color: rgba(0,0,0,0.08); box-shadow: 0 8px 20px -12px rgba(0,0,0,0.22); }
+.nm-node:hover {
+  border-color: var(--accent-line);
+  transform: translate(-50%, -50%) translateY(-2px);
+  box-shadow: 0 16px 34px -16px rgba(0,0,0,0.6);
+}
+[data-theme="light"] .nm-node:hover { box-shadow: 0 18px 36px -16px rgba(224,122,65,0.28); }
+.nm-node .nm-top { display: flex; align-items: center; gap: 8px; }
+.nm-node .nm-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; transition: box-shadow .25s ease; }
+.nm-node .nm-dot.in  { background: var(--accent); box-shadow: 0 0 5px rgba(224,122,65,0.6); }
+.nm-node .nm-dot.out { background: var(--accent-green); box-shadow: 0 0 5px rgba(76,183,130,0.55); }
+.nm-node.act .nm-dot.in  { box-shadow: 0 0 0 4px var(--accent-soft); }
+.nm-node.act .nm-dot.out { box-shadow: 0 0 0 4px rgba(76,183,130,0.18); }
+.nm-node .nm-name { font-weight: 500; font-size: 13px; letter-spacing: -0.01em; color: var(--text); }
+.nm-node .nm-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 0.02em;
+  padding-left: 15px;
+}
+/* Вспышка-результат у узла */
+.nm-flash {
+  position: absolute;
+  top: -10px; right: -6px;
+  z-index: 5;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.02em;
+  color: var(--accent-text);
+  background: var(--bg-elev);
+  border: 1px solid var(--accent-line);
+  border-radius: var(--radius-pill);
+  padding: 1px 7px;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(5px);
+  pointer-events: none;
+}
+[data-theme="light"] .nm-flash { background: #ffffff; }
+.nm-node.flash .nm-flash { animation: flashpop 1.7s ease; }
+@keyframes flashpop {
+  0% { opacity: 0; transform: translateY(5px); }
+  14% { opacity: 1; transform: translateY(0); }
+  74% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-3px); }
+}
+.nm-node.flash .nm-dot { animation: dotPing 1.7s ease; }
+@keyframes dotPing { 0% { box-shadow: 0 0 0 0 var(--accent-soft); } 22% { box-shadow: 0 0 0 6px var(--accent-soft); } 100% { box-shadow: 0 0 0 0 transparent; } }
+
+/* Ядро-герой: плотная непрозрачная карточка (провода уходят ЗА него, не просвечивают).
+   Глубина — нейтральной тенью + тонким акцентным контуром, без светящегося «орба». */
+.nm-node.nm-core {
+  min-width: 178px;
+  padding: 14px 18px;
+  z-index: 3;
+  border-color: var(--accent-line);
+  background: linear-gradient(180deg, rgba(224,122,65,0.13), rgba(224,122,65,0)), var(--bg-elev-2);
+  box-shadow: 0 16px 36px -18px rgba(0,0,0,0.7), 0 0 0 1px rgba(224,122,65,0.12);
+}
+[data-theme="light"] .nm-node.nm-core {
+  background: linear-gradient(180deg, rgba(224,122,65,0.15), rgba(224,122,65,0.03)), #ffffff;
+  box-shadow: 0 16px 34px -16px rgba(0,0,0,0.22), 0 0 0 1px rgba(224,122,65,0.14);
+}
+.nm-core .nm-name { font-size: 15px; }
+.nm-core .nm-krow { display: flex; align-items: center; gap: 8px; }
+.nm-core .nm-kicker {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+}
+.nm-core .nm-run { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-green); margin-left: auto; animation: nmrun 2.4s ease-in-out infinite; }
+@keyframes nmrun { 0%,100% { box-shadow: 0 0 0 0 rgba(76,183,130,.4); } 50% { box-shadow: 0 0 0 4px rgba(76,183,130,0); } }
+.nm-core .nm-meta { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-dim); margin-top: 4px; }
+.nm-core .nm-meta em { color: var(--accent-text); font-style: normal; }
+.nm-core::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border: 1px solid var(--accent-line);
+  border-radius: 14px;
   opacity: 0;
   pointer-events: none;
-  animation: pulseRing 3.6s ease-out infinite;
+  animation: nmpulse 3.4s ease-out infinite;
 }
-.integrations-viz .core-pulse:nth-of-type(2) { animation-delay: 1.2s; border-color: rgba(240,160,106,0.5); }
-.integrations-viz .core-pulse:nth-of-type(3) { animation-delay: 2.4s; border-color: rgba(224,144,96,0.5); }
-@keyframes pulseRing {
-  0% { opacity: 0.55; transform: translate(-50%, -50%) scale(1); }
-  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.7); }
-}
+@keyframes nmpulse { 0% { opacity: .5; transform: scale(0.97); } 100% { opacity: 0; transform: scale(1.13); } }
 
-.integrations-viz .core-orbit {
+/* Чипы протоколов — скрыты в покое, всплывают на hover-трассировке */
+.nm-tag {
   position: absolute;
-  inset: -40px;
-  pointer-events: none;
-  z-index: 1;
-}
-.integrations-viz .core-orbit span {
-  position: absolute;
-  top: 50%; left: 50%;
-  width: 8px;
-  height: 8px;
-  margin: -4px 0 0 -4px;
-  border-radius: 50%;
-}
-.integrations-viz .core-orbit span:nth-child(1) {
-  background: var(--accent);
-  box-shadow: 0 0 10px var(--accent), 0 0 20px var(--accent);
-  animation: orbit1 6s linear infinite;
-}
-.integrations-viz .core-orbit span:nth-child(2) {
-  background: var(--accent-pink);
-  box-shadow: 0 0 10px var(--accent-pink), 0 0 20px var(--accent-pink);
-  animation: orbit2 7.5s linear infinite;
-}
-.integrations-viz .core-orbit span:nth-child(3) {
-  background: var(--accent-green);
-  box-shadow: 0 0 10px var(--accent-green), 0 0 20px var(--accent-green);
-  animation: orbit3 9s linear infinite reverse;
-}
-@keyframes orbit1 {
-  from { transform: rotate(0deg) translateX(135px) rotate(0deg); }
-  to { transform: rotate(360deg) translateX(135px) rotate(-360deg); }
-}
-@keyframes orbit2 {
-  from { transform: rotate(120deg) translateX(155px) rotate(-120deg); }
-  to { transform: rotate(480deg) translateX(155px) rotate(-480deg); }
-}
-@keyframes orbit3 {
-  from { transform: rotate(240deg) translateX(115px) rotate(-240deg); }
-  to { transform: rotate(600deg) translateX(115px) rotate(-600deg); }
-}
-
-.integrations-viz .core {
-  padding: 22px 26px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-pink));
-  color: #fff;
-  border-radius: 14px;
-  font-weight: 500;
-  font-size: 14px;
-  text-align: center;
-  white-space: nowrap;
-  box-shadow: 0 0 60px rgba(224,122,65,0.4), 0 0 0 1px rgba(255,255,255,0.1) inset;
-  position: relative;
-  z-index: 2;
-  line-height: 1.3;
-}
-.integrations-viz .core .small {
-  font-size: 11px;
-  opacity: 0.85;
-  display: block;
-  margin-top: 2px;
+  transform: translate(-50%, -50%);
   font-family: 'JetBrains Mono', monospace;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  font-size: 9.5px;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  background: var(--bg-elev);
+  border: 1px solid var(--accent-line);
+  padding: 2px 7px;
+  border-radius: var(--radius-pill);
+  z-index: 1;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity .25s ease;
 }
-.integrations-viz svg.lines {
-  position: absolute;
-  inset: 0;
-  width: 100%; height: 100%;
-  pointer-events: none;
-  z-index: 0;
+[data-theme="light"] .nm-tag { background: #ffffff; }
+.nm-tag.show { opacity: 1; }
+
+/* Живой лог событий снизу */
+.nm-log {
+  margin-top: 16px;
+  padding-top: 13px;
+  border-top: 1px solid var(--line);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 18px;
 }
-@media (max-width: 720px) {
-  .integrations-viz {
-    grid-template-columns: 1fr;
-    text-align: center;
-    gap: 14px;
-    min-height: auto;
-    padding: 28px 20px;
-  }
-  .integrations-viz .col { align-items: center; }
-  .integrations-viz svg.lines { display: none; }
-  .integrations-viz .core-orbit { display: none; }
-  .integrations-viz .col:not(.right)::before,
-  .integrations-viz .col.right::before {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 9px;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--text-dim);
-    border: 1px solid var(--line);
-    border-radius: var(--radius-pill);
-    padding: 4px 14px;
-    background: var(--bg);
-  }
-  .integrations-viz .col:not(.right)::before { content: 'input'; }
-  .integrations-viz .col.right::before { content: 'output'; }
-  .integrations-viz .col:not(.right)::after,
-  .integrations-viz .core-shell::after {
-    content: '';
-    display: block;
-    width: 1px;
-    height: 24px;
-    background: linear-gradient(180deg, var(--accent), transparent);
-    margin: 6px auto;
-  }
-  .integrations-viz .pill {
-    width: 100%;
-    justify-content: center;
-    box-shadow: 0 0 20px -6px rgba(224,122,65,0.15);
-  }
-  .integrations-viz .core-shell { margin: 8px auto; }
+.nm-log .p { color: var(--accent-green-text); flex-shrink: 0; }
+.nm-log-text .ok { color: var(--accent-green-text); }
+.nm-log-text.swap { animation: logSwap .45s ease; }
+@keyframes logSwap { 0% { opacity: 0; transform: translateY(3px); } 100% { opacity: 1; transform: none; } }
+
+/* Узкие экраны: граф можно смахнуть по горизонтали, ничего не обрезается
+   (3D-наклон тут выключен через pointer:coarse — вертикального оверфлоу нет). */
+@media (max-width: 760px) {
+  .nm-stage-scroll { overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nm-flow, .nm-core .nm-run, .nm-core::before { animation: none; }
+  .nm-core .nm-run { box-shadow: none; }
+  .nm-node.flash .nm-flash, .nm-node.flash .nm-dot, .nm-log-text.swap, .nm-edge.epulse { animation: none !important; }
+  .nm-packet { display: none; }
+  .nm-stage { transform: none !important; }
 }
 
 
@@ -2740,7 +2817,7 @@ html:not(.js) .t-dots { display: none; }
 .section-head.center .kicker::before { display: none; }
 
 /* ═══════════════════════════════════════════════════════════
-   ENGINEERING POLISH — spec-sheet principles, mid-section integrations
+   ENGINEERING POLISH — spec-sheet principles (rules table)
 ═══════════════════════════════════════════════════════════ */
 
 /* ─── Rules table (engineering spec-sheet principles) ─── */
@@ -2840,189 +2917,6 @@ html:not(.js) .t-dots { display: none; }
   .rule-row { grid-template-columns: 1fr; gap: 14px; padding: 22px 22px; }
   .rule-row .rule-meta { flex-direction: row; gap: 14px; align-items: baseline; }
   .rule-row .rule-cat { padding-left: 0; }
-}
-
-/* ─── Big integrations section ─── */
-.integrations-row {
-  display: grid;
-  grid-template-columns: 1fr 1.1fr;
-  gap: 56px;
-  align-items: center;
-}
-@media (max-width: 960px) {
-  .integrations-row { grid-template-columns: 1fr; gap: 36px; }
-}
-.integrations-row .int-copy {
-  font-size: 16px;
-  line-height: 1.6;
-  color: var(--text-muted);
-  max-width: 46ch;
-  margin-bottom: 24px;
-}
-.integrations-row .int-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.integrations-row .int-list li {
-  padding: 8px 0;
-  font-size: 15px;
-  color: var(--text-muted);
-  display: flex;
-  align-items: flex-start;
-  gap: 11px;
-}
-.integrations-row .int-list li svg {
-  flex-shrink: 0;
-  margin-top: 5px;
-}
-.integrations-section {
-  position: relative;
-}
-.integrations-section .viz-wrap {
-  background: var(--bg-elev);
-  border: 1px solid var(--line);
-  border-radius: 20px;
-  padding: 56px 48px;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 30px 80px -20px rgba(0,0,0,0.4);
-}
-@media (max-width: 720px) {
-  .integrations-section .viz-wrap { padding: 32px 22px; }
-}
-.integrations-section .viz-wrap::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 70% 50% at 50% 50%, rgba(224,122,65,0.10), transparent 70%);
-  pointer-events: none;
-}
-.integrations-section .integrations-viz {
-  border: 0;
-  background: transparent;
-  box-shadow: none;
-  min-height: 340px;
-  padding: 0;
-  position: relative;
-  z-index: 1;
-}
-.integrations-section .viz-caption {
-  margin-top: 32px;
-  padding-top: 24px;
-  border-top: 1px solid var(--line);
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
-  position: relative;
-  z-index: 1;
-}
-@media (max-width: 720px) {
-  .integrations-section .viz-caption { grid-template-columns: 1fr; gap: 18px; }
-}
-.integrations-section .viz-caption .cell .label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 11px;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin-bottom: 8px;
-}
-.integrations-section .viz-caption .cell .text {
-  font-size: 13.5px;
-  color: var(--text-muted);
-  line-height: 1.5;
-}
-.integrations-section .viz-caption .cell .text strong {
-  color: var(--text);
-  font-weight: 500;
-}
-
-/* ─── WOW: animated integrations ─── */
-.integrations-viz {
-  perspective: 1200px;
-}
-.integrations-viz svg.lines path {
-  stroke-dasharray: 4 6;
-  animation: dashflow 4s linear infinite;
-}
-.integrations-viz svg.lines path.p2 { animation-duration: 5s; }
-.integrations-viz svg.lines path.p3 { animation-duration: 6s; }
-.integrations-viz svg.lines path.p4 { animation-duration: 4.5s; animation-direction: reverse; }
-.integrations-viz svg.lines path.p5 { animation-duration: 5.5s; animation-direction: reverse; }
-.integrations-viz svg.lines path.p6 { animation-duration: 6.5s; animation-direction: reverse; }
-@keyframes dashflow {
-  to { stroke-dashoffset: -100; }
-}
-
-.integrations-viz svg.lines .packet {
-  fill: var(--accent);
-}
-.integrations-viz svg.lines .packet.pink { fill: var(--accent-pink); }
-.integrations-viz svg.lines .packet.green { fill: var(--accent-green); }
-
-.integrations-viz .core {
-  animation: coreFloat 6s ease-in-out infinite;
-  transform-style: preserve-3d;
-  position: relative;
-  z-index: 3;
-}
-.integrations-viz .core::after {
-  content: '';
-  position: absolute;
-  inset: -12px;
-  border-radius: 22px;
-  background: radial-gradient(circle, rgba(224,122,65,0.4), transparent 70%);
-  filter: blur(20px);
-  z-index: -1;
-  animation: coreGlow 4s ease-in-out infinite;
-}
-@keyframes coreFloat {
-  0%, 100% { transform: translateY(0) rotateY(0deg); }
-  50% { transform: translateY(-3px) rotateY(2deg); }
-}
-@keyframes coreGlow {
-  0%, 100% { opacity: 0.5; transform: scale(1); }
-  50% { opacity: 0.85; transform: scale(1.1); }
-}
-@keyframes pulse {
-  0%, 100% { box-shadow: 0 0 0 3px rgba(76,183,130,0.16); }
-  50% { box-shadow: 0 0 0 6px rgba(76,183,130,0.05); }
-}
-
-.integrations-viz .pill {
-  transition: transform .3s ease, border-color .3s, box-shadow .3s;
-  position: relative;
-  z-index: 2;
-}
-.integrations-viz .pill:hover {
-  transform: translateY(-2px);
-  border-color: var(--line-emph);
-  box-shadow: 0 8px 24px -8px rgba(224,122,65,0.4);
-}
-.integrations-viz .pill .bd {
-  animation: dotPulse 2.2s ease-in-out infinite;
-  box-shadow: 0 0 8px currentColor;
-  color: var(--accent);
-}
-.integrations-viz .pill .bd.green { color: var(--accent-green); }
-.integrations-viz .pill .bd.purple { color: var(--accent-pink); }
-.integrations-viz .pill:nth-child(2) .bd { animation-delay: .4s; }
-.integrations-viz .pill:nth-child(3) .bd { animation-delay: .8s; }
-@keyframes dotPulse {
-  0%, 100% { opacity: 0.6; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.3); }
-}
-
-
-@media (prefers-reduced-motion: reduce) {
-  .integrations-viz svg.lines path,
-  .integrations-viz .core,
-  .integrations-viz .core::after,
-  .integrations-viz .core .small::after,
-  .integrations-viz .pill .bd {
-    animation: none !important;
-  }
 }
 
 /* ─── Engineering contact panel ─── */
@@ -3712,24 +3606,6 @@ html:not(.js) .t-dots { display: none; }
   .pm-obs-name { font-size: 7.5px; }
   .pm-obs-detail { font-size: 6.5px; }
 }
-
-
-/* Пауза анимаций integrations-viz вне экрана — экономия CPU/батареи (#67) */
-.integrations-viz.viz-paused,
-.integrations-viz.viz-paused * { animation-play-state: paused !important; }
-
-/* reduced-motion: гасим все циклы integrations, включая core-pulse/core-orbit (#41) */
-@media (prefers-reduced-motion: reduce) {
-  .integrations-viz .core,
-  .integrations-viz .core::after,
-  .integrations-viz .core-pulse,
-  .integrations-viz .core-orbit span,
-  .integrations-viz .pill .bd,
-  .integrations-viz svg.lines path { animation: none !important; }
-  .integrations-viz .core-orbit { display: none; }
-}
-
-
 
 
 /* ── Блок «Кто я» (#16) — инженерная whois-карточка ─── */

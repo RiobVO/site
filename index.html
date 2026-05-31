@@ -525,10 +525,10 @@
   <section class="spread integrations-section">
     <div class="section-head reveal">
       <span class="kicker"><span data-lang="ru">Интеграции</span><span data-lang="en">Integrations</span></span>
-      <h2 class="headline"><span data-lang="ru">1С, Bitrix24, банки, маркетплейсы — <span class="accent-gradient">пусть говорят друг с другом.</span></span><span data-lang="en">1C, Bitrix24, banks, marketplaces — <span class="accent-gradient">let them talk to each other.</span></span></h2>
+      <h2 class="headline"><span data-lang="ru">Пусть системы <span class="accent-gradient">говорят друг с другом.</span></span><span data-lang="en">Let your systems <span class="accent-gradient">talk to each other.</span></span></h2>
     </div>
 
-    <div class="integrations-row">
+    <div class="int-grid">
       <div class="reveal">
         <p class="int-copy">
           <span data-lang="ru">Если данные приходится переносить вручную из системы в систему — это работа для сервера, не для человека. Делаем надёжные интеграции, которые переживают пиковые нагрузки, перезапуски и плохую связь.</span><span data-lang="en">If data has to be moved manually between systems, that is a job for a server, not a person. We build reliable integrations that survive peak loads, restarts, and poor connectivity.</span>
@@ -553,62 +553,100 @@
         </ul>
       </div>
 
-      <div class="reveal d1">
-        <div class="integrations-viz">
-          <svg aria-hidden="true" focusable="false" class="lines" viewBox="0 0 400 340" preserveAspectRatio="none">
-            <defs>
-              <linearGradient id="iline" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="rgba(224,122,65,0.05)"/>
-                <stop offset="50%" stop-color="rgba(224,122,65,0.6)"/>
-                <stop offset="100%" stop-color="rgba(224,122,65,0.05)"/>
-              </linearGradient>
-            </defs>
-            <path id="path1" class="p1" d="M 50 60 Q 200 60 200 170" fill="none" stroke="url(#iline)" stroke-width="1.5"/>
-            <path id="path2" class="p2" d="M 50 170 Q 130 170 200 170" fill="none" stroke="url(#iline)" stroke-width="1.5"/>
-            <path id="path3" class="p3" d="M 50 280 Q 200 280 200 170" fill="none" stroke="url(#iline)" stroke-width="1.5"/>
-            <path id="path4" class="p4" d="M 200 170 Q 200 60 350 60" fill="none" stroke="url(#iline)" stroke-width="1.5"/>
-            <path id="path5" class="p5" d="M 200 170 Q 270 170 350 170" fill="none" stroke="url(#iline)" stroke-width="1.5"/>
-            <path id="path6" class="p6" d="M 200 170 Q 200 280 350 280" fill="none" stroke="url(#iline)" stroke-width="1.5"/>
+      <div class="netmap reveal d1">
+        <div class="nm-bar">
+          <span class="live">data flow</span>
+          <span class="right">retry-safe · 78&nbsp;ms p50</span>
+        </div>
 
-            <circle class="packet" r="3">
-              <animateMotion dur="3.8s" repeatCount="indefinite"><mpath href="#path1"/></animateMotion>
-            </circle>
-            <circle class="packet green" r="3">
-              <animateMotion dur="3.2s" repeatCount="indefinite" begin="0.6s"><mpath href="#path2"/></animateMotion>
-            </circle>
-            <circle class="packet pink" r="3">
-              <animateMotion dur="4.2s" repeatCount="indefinite" begin="1.2s"><mpath href="#path3"/></animateMotion>
-            </circle>
-            <circle class="packet" r="3">
-              <animateMotion dur="3.6s" repeatCount="indefinite" begin="0.3s"><mpath href="#path4"/></animateMotion>
-            </circle>
-            <circle class="packet green" r="3">
-              <animateMotion dur="3s" repeatCount="indefinite" begin="0.9s"><mpath href="#path5"/></animateMotion>
-            </circle>
-            <circle class="packet pink" r="3">
-              <animateMotion dur="4s" repeatCount="indefinite" begin="1.5s"><mpath href="#path6"/></animateMotion>
-            </circle>
-          </svg>
-          <div class="col">
-            <span class="pill"><span class="bd"></span><span data-lang="ru">1С Бухгалтерия</span><span data-lang="en">1C Accounting</span></span>
-            <span class="pill"><span class="bd green"></span>Bitrix24 CRM</span>
-            <span class="pill"><span class="bd purple"></span>Bank API</span>
-          </div>
-          <div class="core-shell">
-            <span class="core-pulse"></span>
-            <span class="core-pulse"></span>
-            <span class="core-pulse"></span>
-            <span class="core-orbit"><span></span><span></span><span></span></span>
-            <div class="core">
-              Your system
-              <span class="small">CORE</span>
+        <div class="nm-stage-scroll">
+          <div class="nm-stage">
+            <svg class="nm-edges" viewBox="0 0 1000 560" preserveAspectRatio="xMidYMid meet" aria-hidden="true" focusable="false">
+              <defs>
+                <linearGradient id="nm-grad" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%"   stop-color="rgba(224,122,65,0.10)"/>
+                  <stop offset="50%"  stop-color="rgba(224,122,65,0.85)"/>
+                  <stop offset="100%" stop-color="rgba(224,122,65,0.10)"/>
+                </linearGradient>
+              </defs>
+              <path class="nm-edge" data-key="e1" pathLength="1" d="M150,100 C330,100 340,280 500,280"/>
+              <path class="nm-edge" data-key="e2" pathLength="1" d="M150,220 C330,220 360,280 500,280"/>
+              <path class="nm-edge" data-key="e3" pathLength="1" d="M150,340 C330,340 360,280 500,280"/>
+              <path class="nm-edge" data-key="e4" pathLength="1" d="M150,460 C330,460 340,280 500,280"/>
+              <path class="nm-edge" data-key="o1" pathLength="1" d="M500,280 C660,280 690,150 850,150"/>
+              <path class="nm-edge" data-key="o2" pathLength="1" d="M500,280 C660,280 690,280 850,280"/>
+              <path class="nm-edge" data-key="o3" pathLength="1" d="M500,280 C660,280 690,410 850,410"/>
+              <path id="nm-e1" class="nm-flow"    data-key="e1" d="M150,100 C330,100 340,280 500,280"/>
+              <path id="nm-e2" class="nm-flow s2" data-key="e2" d="M150,220 C330,220 360,280 500,280"/>
+              <path id="nm-e3" class="nm-flow s3" data-key="e3" d="M150,340 C330,340 360,280 500,280"/>
+              <path id="nm-e4" class="nm-flow s4" data-key="e4" d="M150,460 C330,460 340,280 500,280"/>
+              <path id="nm-o1" class="nm-flow s2" data-key="o1" d="M500,280 C660,280 690,150 850,150"/>
+              <path id="nm-o2" class="nm-flow"    data-key="o2" d="M500,280 C660,280 690,280 850,280"/>
+              <path id="nm-o3" class="nm-flow s3" data-key="o3" d="M500,280 C660,280 690,410 850,410"/>
+              <circle class="nm-packet" r="2.8"><animateMotion dur="3.6s" repeatCount="indefinite"><mpath href="#nm-e1"/></animateMotion></circle>
+              <circle class="nm-packet" r="2.8"><animateMotion dur="4.4s" begin="0.5s" repeatCount="indefinite"><mpath href="#nm-e2"/></animateMotion></circle>
+              <circle class="nm-packet" r="2.8"><animateMotion dur="4.0s" begin="1.0s" repeatCount="indefinite"><mpath href="#nm-e3"/></animateMotion></circle>
+              <circle class="nm-packet" r="2.8"><animateMotion dur="4.8s" begin="0.3s" repeatCount="indefinite"><mpath href="#nm-e4"/></animateMotion></circle>
+              <circle class="nm-packet" r="2.8"><animateMotion dur="3.7s" begin="0.8s" repeatCount="indefinite"><mpath href="#nm-o1"/></animateMotion></circle>
+              <circle class="nm-packet" r="2.8"><animateMotion dur="3.3s" begin="0.2s" repeatCount="indefinite"><mpath href="#nm-o2"/></animateMotion></circle>
+              <circle class="nm-packet" r="2.8"><animateMotion dur="4.1s" begin="1.2s" repeatCount="indefinite"><mpath href="#nm-o3"/></animateMotion></circle>
+            </svg>
+
+            <span class="nm-tag" data-key="e1" style="left:31%;top:30%;">1C ODBC</span>
+            <span class="nm-tag" data-key="e2" style="left:34%;top:44%;">webhook</span>
+            <span class="nm-tag" data-key="e3" style="left:34%;top:56%;">REST</span>
+            <span class="nm-tag" data-key="e4" style="left:31%;top:69%;">feed</span>
+            <span class="nm-tag" data-key="o1" style="left:69%;top:37%;">bot API</span>
+            <span class="nm-tag" data-key="o2" style="left:69%;top:50%;">SMTP</span>
+            <span class="nm-tag" data-key="o3" style="left:69%;top:63%;">export</span>
+
+            <div class="nm-node nm-src" data-edges="e1" data-node="e1" style="left:15%;top:17.9%;">
+              <span class="nm-flash"></span>
+              <div class="nm-top"><span class="nm-dot in"></span><span class="nm-name"><span data-lang="ru">1С Бухгалтерия</span><span data-lang="en">1C Accounting</span></span></div>
+              <span class="nm-sub">two-way sync</span>
+            </div>
+            <div class="nm-node nm-src" data-edges="e2" data-node="e2" style="left:15%;top:39.3%;">
+              <span class="nm-flash"></span>
+              <div class="nm-top"><span class="nm-dot in"></span><span class="nm-name">Bitrix24 CRM</span></div>
+              <span class="nm-sub">sales pipeline</span>
+            </div>
+            <div class="nm-node nm-src" data-edges="e3" data-node="e3" style="left:15%;top:60.7%;">
+              <span class="nm-flash"></span>
+              <div class="nm-top"><span class="nm-dot in"></span><span class="nm-name">Bank API</span></div>
+              <span class="nm-sub">OAuth2 · payments</span>
+            </div>
+            <div class="nm-node nm-src" data-edges="e4" data-node="e4" style="left:15%;top:82.1%;">
+              <span class="nm-flash"></span>
+              <div class="nm-top"><span class="nm-dot in"></span><span class="nm-name"><span data-lang="ru">Маркетплейсы</span><span data-lang="en">Marketplaces</span></span></div>
+              <span class="nm-sub">orders feed</span>
+            </div>
+
+            <div class="nm-node nm-core" data-edges="e1 e2 e3 e4 o1 o2 o3" style="left:50%;top:50%;">
+              <div class="nm-krow"><span class="nm-kicker">core</span><span class="nm-run"></span></div>
+              <div class="nm-top"><span class="nm-name"><span data-lang="ru">Ваша система</span><span data-lang="en">Your system</span></span></div>
+              <span class="nm-meta">queue · outbox · <em>retry</em></span>
+            </div>
+
+            <div class="nm-node nm-out" data-edges="o1" data-node="o1" style="left:85%;top:26.8%;">
+              <span class="nm-flash"></span>
+              <div class="nm-top"><span class="nm-dot out"></span><span class="nm-name">Telegram</span></div>
+              <span class="nm-sub">alerts · forms</span>
+            </div>
+            <div class="nm-node nm-out" data-edges="o2" data-node="o2" style="left:85%;top:50%;">
+              <span class="nm-flash"></span>
+              <div class="nm-top"><span class="nm-dot out"></span><span class="nm-name">Email</span></div>
+              <span class="nm-sub"><span data-lang="ru">отчёты 08:00</span><span data-lang="en">reports 08:00</span></span>
+            </div>
+            <div class="nm-node nm-out" data-edges="o3" data-node="o3" style="left:85%;top:73.2%;">
+              <span class="nm-flash"></span>
+              <div class="nm-top"><span class="nm-dot out"></span><span class="nm-name">Dashboard</span></div>
+              <span class="nm-sub">.xlsx export</span>
             </div>
           </div>
-          <div class="col right">
-            <span class="pill">Telegram <span class="bd"></span></span>
-            <span class="pill">Email <span class="bd green"></span></span>
-            <span class="pill"><span data-lang="ru">Маркетплейсы</span><span data-lang="en">Marketplaces</span> <span class="bd purple"></span></span>
-          </div>
+        </div>
+
+        <div class="nm-log">
+          <span class="p">›</span><span class="nm-log-text"><span data-lang="ru">система запущена</span><span data-lang="en">system started</span> · <span class="ok">ok</span></span>
         </div>
       </div>
     </div>
