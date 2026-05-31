@@ -71,8 +71,14 @@ function applyLang(lang) {
   if (label) label.textContent = lang.toUpperCase();
 
   // Сообщаем скринридеру, на какой язык переключит кнопка (контент меняется целиком).
+  // Видимый код (RU/EN) ВХОДИТ в aria-label — иначе WCAG 2.5.3 «Label in Name» (axe).
   const cycle = document.querySelector('[data-lang-cycle]');
-  if (cycle) cycle.setAttribute('aria-label', lang === 'ru' ? 'Switch to English' : 'Переключить на русский');
+  if (cycle) {
+    const code = lang.toUpperCase();
+    cycle.setAttribute('aria-label', lang === 'ru'
+      ? code + ', switch to English'
+      : code + ', переключить на русский');
+  }
 }
 
 function bindChrome() {
