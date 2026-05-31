@@ -114,9 +114,12 @@ Real product (public repo: https://github.com/RiobVO/credit-assistant) — SME l
 - **PDF mock (Рис. 3)** replicates the real product layout (user-provided screenshot): blue brand (#265dbd), CA badge, Кредитный меморандум header, gauge with red→amber→green arcs and needle at 79, large "К пересмотру" orange recommendation, Ключевые наблюдения section with two columns (Сильные стороны green border + Зоны риска red border). EN caption explains: "Real product ships in RU + UZ — no English version was commissioned by the bank".
 - **TOC sections** (after Phase B+ rebuild): § 01 О чём проект · § 02 Как устроено · § 03 Что было сложно · § 04 Цифры · § 05 Что я вынес. NO § Verification methodology.
 
-## AUDIT.md — work log
+## Аудит сайта — завершён (77/77)
 
-`AUDIT.md` (repo root, **gitignored + NOT deployed**) is the 77-item site audit. Items are checked off `[x]` with a one-line note as done. **Status: 77/77 closed.** #16 done: «Кто я» terminal whois-card (portrait `img/me.jpg` + plain RU/EN bio + `$ whoami` signature + github/telegram/email command-links + scroll typing) on index.html only (removed from services.html by client). #28 resolved by client: 8.5/10 audit stays unattributed — client banks want anonymity (NDA), so the source/type is NOT disclosed; wording «внешний/независимый аудит · 8.5/10» kept as-is on credit-assistant.html + index.html. N/A: #8, #9, #45, #49 (all referenced the deleted audit.html).
+Первичный аудит сайта закрыт полностью (**77/77**). Рабочий лог `AUDIT.md` (был gitignored + не деплоился) **ретайрим** — больше не ведём; дальше работаем по «Roadmap → 10/10» ниже. Ключевое из аудита, что важно помнить:
+- **#16** «Кто я» terminal whois-card (portrait `img/me.jpg` + plain RU/EN bio + `$ whoami` + github/telegram/email command-links + scroll typing) — только на index.html (убрана с services по решению клиента).
+- **#28** «8.5/10» — без атрибуции: банки клиента хотят анонимности (NDA), источник/тип НЕ раскрывать; «внешний/независимый аудит · 8.5/10» оставить как есть, не реоткрывать.
+- N/A: #8, #9, #45, #49 (ссылались на удалённую audit.html).
 
 ## Key facts (post-audit state)
 
@@ -125,6 +128,26 @@ Real product (public repo: https://github.com/RiobVO/credit-assistant) — SME l
 - **`_headers`** (repo root) ships CSP/HSTS/X-Content-Type-Options/Referrer-Policy/frame-ancestors + long-cache for fonts. Verified only on deploy (`curl -I`).
 - **Gitignored:** `AUDIT.md`, `.claude/` (never tracked). Public repo history was rewritten to purge NDA tokens — **never put NDA data in any tracked file** (CLAUDE.md is public).
 - **Home additions this audit:** email fallback button, 6-step process (added "Договор · 50% предоплата"). NOTE: mid-page CTA and pre-contact price anchor were added during the audit but later REMOVED by client decision (price page already exists; mid-CTA duplicated hero/contact) — do NOT re-add; their CSS (`.mid-cta`/`.price-anchor`) was deleted.
+
+## Roadmap → 10/10 (3 фазы)
+
+Путь от «почти готово» к 10/10 (по внешнему ревью). Идём по фазам, локально → коммит после OK владельца.
+
+**Фаза 1 — Блок «Приходите, если…» (боли клиента).** [solo, без ассетов — делаем первым]
+- Что: короткий чек-лист болей на главной (после hero / перед `#contact`), чтобы посетитель узнал свою ситуацию и написал.
+- Пункты: Excel разваливается на объёме · 1С/CRM/Telegram не связаны · отчёты собираются руками · страшно трогать чужой backend · нужен аудит перед доработкой.
+- Как решаем: новый блок в `index.html`, стиль чек-листа (JetBrains Mono, оранжевые галочки как `.int-list`), БЕЗ новой коробки, bilingual `data-lang` RU/EN, CSS → `components.css`, без JS-зависимостей, i18n-баланс держать.
+- Зачем: продаём решение боли, а не себя → выше конверсия.
+
+**Фаза 2 — Реальный замаскированный скрин (визуальный пруф).** [БЛОКЕР: нужен файл от владельца]
+- Что: настоящий скриншот продукта (PDF-меморандум / бот / админка / отчёт) с замазанными NDA-данными — «это реально существовало», сильнее любого текста.
+- Как решаем: переиспользуемый слот-компонент `proof-shot` (рамка, caption, `loading="lazy"`, alt, dark/light, reduced-motion), готовый принять картинку. Ставим на кейс credit-assistant (заменяет/дополняет CSS-реплику `.pdf-mock`, ~800×1000) и/или на главную.
+- БЛОКЕР: НЕ генерировать фейк (финтех: фейк = смерть доверия, см. Testimonials). Нужен реальный файл; bank-режим под NDA → публичны client/accountant-режим, маскировать данные.
+
+**Фаза 3 — Один главный CTA «Обсудить проект».** [сначала аудит CTA, потом точечно]
+- Что: единый главный путь по всему сайту; аудит/услуги/кейсы — вторичные (меньше «дверей» = меньше паралича выбора).
+- Как решаем: сначала аудит всех CTA (nav-pill, hero, `#contact`, `.case-cta`, services). Унифицировать главную кнопку → «Обсудить проект» / «Discuss your project», вторичные понизить визуально. НЕ добавлять новые кнопки — mid-CTA и price-anchor уже удалялись клиентом, не возвращать (см. Key facts).
+- Зачем: один очевидный следующий шаг для посетителя.
 
 ## TODO
 
@@ -141,7 +164,7 @@ Real product (public repo: https://github.com/RiobVO/credit-assistant) — SME l
   - **Принцип на будущее:** движение только осмысленное; декоративную вечную анимацию и glow-ореолы владелец не любит («перебор»/«просвечивает»).
 - [ ] **Custom domain** — sed-swap `site.versage1998.workers.dev` everywhere once a real domain is bought.
 - [ ] `docs/compliance/security-architecture.md:251,349` in credit-assistant repo — clean leftover `[норматив]` before making that case public.
-- [ ] (Optional) Real masked PDF preview screenshot (800×1000) to replace the `.pdf-mock` CSS block.
+- [ ] Реальный замаскированный скрин (PDF/бот/админка) → **Roadmap Фаза 2** (нужен файл от владельца; слот делаю я).
 
 ### Done — audit essentially complete (75/77)
 - **Security:** NDA leak closed both vectors — `.assetsignore` (deploy) + git history rewritten & force-pushed (public repo, NDA purged); `_headers` (CSP/HSTS); self-hosted fonts → zero third-party requests.
