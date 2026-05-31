@@ -17,19 +17,19 @@ python -m http.server 8000
 
 - **index.html** — Home: hero terminal with typing animation, featured Credit Assistant with pipeline diagram, CLI project browser (workstation), **testimonials carousel** (5 real reviews), principles, process timeline, integrations, contact
 - **services.html** — Pricing: three tiers (Consultation, Development, Audit). `§ 02` has `id="02"`, `§ 03 · Аудит` has `id="03"` (deep-link targets). Audit is sold here as a tier — NO separate landing page anymore.
-- **cv.html** — Resume with print stylesheet
 - **404.html** — Error page
 - **case/*.html** — 6 case studies: credit-assistant, container-bot, serviceflow, support-bot, manicure-bot, pekarna-bot. Each ends with a `.case-cta` block (Telegram + contextual link: bots → `services.html#02`, code-quality cases → `services.html#03`).
 
-**⚠️ audit.html DELETED** (client decision): the dedicated audit landing was removed — the audit service lives only as `§ 03` tier on services.html. All "Запросить аудит"/"Аудит кода" CTAs point to `services.html#03`. Do NOT recreate audit.html. The "Аудит" nav item was also removed (nav is Работы · Услуги · Принципы; CV only on cv.html).
+**⚠️ audit.html DELETED** (client decision): the dedicated audit landing was removed — the audit service lives only as `§ 03` tier on services.html. All "Запросить аудит"/"Аудит кода" CTAs point to `services.html#03`. Do NOT recreate audit.html. The "Аудит" nav item was also removed (nav is Работы · Услуги · Принципы).
+
+**⚠️ cv.html DELETED** (client decision): the resume page was removed — no CV page, no "Резюме" button (the «Кто я» block now links only to GitHub), no CV nav item. `styles/print.css` (CV-only print stylesheet) was deleted as orphaned, and the `cv.html` entry removed from `sitemap.xml`. Do NOT recreate cv.html or print.css.
 
 ## Architecture
 
-Three CSS files, one JS file, shared across all pages:
+Two CSS files, one JS file, shared across all pages:
 
 - **styles/base.css** — CSS custom properties (design tokens), typography, buttons, nav, layout, reveal animations, code-card styles. All colors defined as `--accent`, `--bg`, `--text-*`, `--line-*` variables in `:root` and `[data-theme="light"]`. **`--accent-text`** = text-safe accent: `#E07A41` on dark, darkened `#B85020` on light (4.78:1 WCAG AA) — used in `.kicker::before`, `.accent-gradient`, link colors. Decorative `--accent` stays bright on both themes.
 - **styles/components.css** — Page-specific components: hero terminal, workstation CLI browser, pipeline diagram, tier cards, workflow, FAQ, case study layouts (spec card, metrics, pullquote, case-nav), **testimonials carousel** (`.testimonials`/`.t-track`/`.proof-quote`), **`.case-cta`** (end-of-case CTA block), CTA, footer, process timeline, integrations.
-- **styles/print.css** — CV print/PDF optimization (A4, no color).
 - **scripts/chrome.js** — Theme toggle (`elyor.theme` in localStorage), language cycle RU↔EN (`elyor.lang`), IntersectionObserver for `.reveal` elements, FAQ smooth accordion, cursor-following glow on `.tier` and `.work-card`, hero terminal typing animation, case study code-card typing animation (`initCaseTyping`), **testimonials carousel** (`initTestimonials`). **First line sets `document.documentElement.classList.add('js')`** for the progressive-enhancement gate.
 
 ## Progressive enhancement (no-JS)
@@ -114,7 +114,7 @@ Real product (public repo: https://github.com/RiobVO/credit-assistant) — SME l
 
 ## AUDIT.md — work log
 
-`AUDIT.md` (repo root, **gitignored + NOT deployed**) is the 77-item site audit. Items are checked off `[x]` with a one-line note as done. **Status: 75/77 closed.** Only **#16** (about-me block — needs photo/bio) and **#28** (8.5/10 audit attribution — needs decision) remain; both require user input. N/A: #8, #9, #45, #49 (all referenced the deleted audit.html).
+`AUDIT.md` (repo root, **gitignored + NOT deployed**) is the 77-item site audit. Items are checked off `[x]` with a one-line note as done. **Status: 77/77 closed.** #16 done: «Кто я» terminal whois-card (portrait `img/me.jpg` + plain RU/EN bio + `$ whoami` signature + github/telegram/email command-links + scroll typing) on index.html only (removed from services.html by client). #28 resolved by client: 8.5/10 audit stays unattributed — client banks want anonymity (NDA), so the source/type is NOT disclosed; wording «внешний/независимый аудит · 8.5/10» kept as-is on credit-assistant.html + index.html. N/A: #8, #9, #45, #49 (all referenced the deleted audit.html).
 
 ## Key facts (post-audit state)
 
@@ -122,13 +122,13 @@ Real product (public repo: https://github.com/RiobVO/credit-assistant) — SME l
 - **Fonts self-hosted:** `styles/fonts/*.woff2` (JetBrains Mono 400/500/600, all unicode-ranges) + `@font-face` in `base.css`. NO Google Fonts CDN — the site loads **zero third-party resources**. Do NOT re-add `googleapis`/`gstatic` links.
 - **`_headers`** (repo root) ships CSP/HSTS/X-Content-Type-Options/Referrer-Policy/frame-ancestors + long-cache for fonts. Verified only on deploy (`curl -I`).
 - **Gitignored:** `AUDIT.md`, `.claude/` (never tracked). Public repo history was rewritten to purge NDA tokens — **never put NDA data in any tracked file** (CLAUDE.md is public).
-- **Home additions this audit:** mid-page CTA (after principles, links to `#process`), pre-contact price anchor, email fallback button, 6-step process (added "Договор · 50% предоплата"). Visible — eyeball before/after deploy.
+- **Home additions this audit:** email fallback button, 6-step process (added "Договор · 50% предоплата"). NOTE: mid-page CTA and pre-contact price anchor were added during the audit but later REMOVED by client decision (price page already exists; mid-CTA duplicated hero/contact) — do NOT re-add; their CSS (`.mid-cta`/`.price-anchor`) was deleted.
 
 ## TODO
 
 - [ ] **Deploy to Cloudflare** — `npx wrangler deploy`. Verify: `curl -I .../CLAUDE.md` → 404, `.../AUDIT.md` → 404, `.../.git/config` → 404; `.../sitemap.xml` + `.../robots.txt` + `.../_headers` → 200; CSP/HSTS present in response headers.
-- [ ] **#16 about-me block** — needs photo (or stylised portrait) + 1–2 lines bio (backend, fintech/logistics, Tashkent, N yrs). Then build on index/services.
-- [ ] **#28 «8.5/10» attribution** — needs decision: name auditor / soften to "checklist score, N items" / drop the metric tile.
+- [x] **#16 about-me block** — done: «Кто я» terminal whois-card on index.html only (removed from services); portrait `img/me.jpg` (client photo as-is, no surname), bio via humanizer, command-links github/telegram/email (Резюме button + cv.html removed by client). Stylised-duotone variant rejected — original photo kept.
+- [x] **#28 «8.5/10» attribution** — resolved: kept unattributed. Client banks want anonymity (NDA) — do NOT name or hint the auditor/bank. Leave «внешний/независимый аудит · 8.5/10» as-is. Do NOT reopen.
 - [ ] **Custom domain** — sed-swap `site.versage1998.workers.dev` everywhere once a real domain is bought.
 - [ ] `docs/compliance/security-architecture.md:251,349` in credit-assistant repo — clean leftover `[норматив]` before making that case public.
 - [ ] (Optional) Real masked PDF preview screenshot (800×1000) to replace the `.pdf-mock` CSS block.
@@ -137,4 +137,4 @@ Real product (public repo: https://github.com/RiobVO/credit-assistant) — SME l
 - **Security:** NDA leak closed both vectors — `.assetsignore` (deploy) + git history rewritten & force-pushed (public repo, NDA purged); `_headers` (CSP/HSTS); self-hosted fonts → zero third-party requests.
 - **SEO/social:** absolute og + og:url + canonical + og:locale + twitter:description; JSON-LD (Person/ProfessionalService/CreativeWork); robots.txt + sitemap.xml; unified nav across all pages.
 - **A11y/perf:** skip-links + `id=main`, `:focus-visible`, keyboard nav (tree/principles/Escape, scoped arrows), ARIA, 40/44px touch targets, rAF-throttle + touch-skip on pointer effects, off-screen + reduced-motion animation pause, one-shot timeline observer (no blur/scroll thrash).
-- **Content:** plain-language home/featured/terminal, business-outcome case metrics, risk-reversal guarantee + FAQ, NDA reframed as trust signal, unified case headings (О чём проект / Как устроено), price anchor, mid-page CTA, email fallback, HTML-entity email, six-step process.
+- **Content:** plain-language home/featured/terminal, business-outcome case metrics, risk-reversal guarantee + FAQ, NDA reframed as trust signal, unified case headings (О чём проект / Как устроено), email fallback, HTML-entity email, six-step process (price anchor + mid-CTA were added then removed by client).

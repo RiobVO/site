@@ -2367,28 +2367,56 @@ html:not(.js) .t-dots { display: none; }
 
 /* Конверсионный блок в конце кейса — мост «убедился → заказал». */
 .case-cta {
-  margin: 72px 0 8px;
-  padding: 40px 32px;
-  border: 1px solid var(--line-strong);
+  position: relative;
+  margin: 64px 0 8px;
+  padding: 26px 34px;
+  border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   background: var(--bg-elev);
-  text-align: center;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "title cta"
+    "sub   cta";
+  align-items: center;
+  column-gap: 36px;
+  row-gap: 4px;
+  overflow: hidden;
+  transition: border-color .3s ease;
+}
+.case-cta:hover { border-color: var(--line-emph); }
+/* тонкая акцентная кромка слева */
+.case-cta::before {
+  content: '';
+  position: absolute; top: 0; bottom: 0; left: 0; width: 3px;
+  background: var(--accent); opacity: .85;
 }
 .case-cta h2 {
-  font-size: clamp(20px, 3vw, 26px);
+  grid-area: title;
+  font-size: clamp(18px, 2.3vw, 22px);
   font-weight: 600;
+  letter-spacing: -0.01em;
   line-height: 1.25;
-  margin-bottom: 10px;
 }
 .case-cta p {
+  grid-area: sub;
   color: var(--text-muted);
-  margin-bottom: 24px;
+  font-size: 0.95rem;
 }
 .case-cta .ctas {
+  grid-area: cta;
   display: flex;
-  gap: 12px;
-  justify-content: center;
+  gap: 10px;
   flex-wrap: wrap;
+}
+@media (max-width: 640px) {
+  .case-cta {
+    grid-template-columns: 1fr;
+    grid-template-areas: "title" "sub" "cta";
+    row-gap: 14px;
+    padding: 24px 24px;
+    align-items: start;
+  }
 }
 
 .case-nav {
@@ -3686,11 +3714,173 @@ html:not(.js) .t-dots { display: none; }
 }
 
 
-/* Mid-page CTA strip + ценовой якорь (#31/#44/#76) */
-.mid-cta { text-align: center; padding: 8px 0 28px; }
-.mid-cta p { color: var(--text-dim); margin: 0 0 18px; font-size: 1.05rem; }
-.mid-cta-row, .price-anchor .pa-row { display: flex; gap: 14px; justify-content: center; align-items: center; flex-wrap: wrap; }
-.price-anchor { padding: 24px 0 4px; }
-.price-anchor .pa-item { color: var(--text); font-size: 0.95rem; }
-.price-anchor .pa-num { color: var(--accent-text); font-weight: 600; }
-.price-anchor .pa-link { color: var(--accent-text); font-weight: 600; white-space: nowrap; }
+
+
+/* ── Блок «Кто я» (#16) — инженерная whois-карточка ─── */
+.about-panel {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(220px, 300px) 1fr;
+  gap: 44px;
+  align-items: center;
+  padding: 40px;
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+/* верхняя акцентная кромка */
+.about-panel::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent);
+  opacity: .85;
+}
+/* брендовый watermark [><] */
+.about-panel::after {
+  content: '[><]';
+  position: absolute; right: 22px; bottom: 16px;
+  font-size: 13px; letter-spacing: .1em;
+  color: var(--accent);
+  opacity: .12;
+  pointer-events: none;
+}
+
+/* портрет */
+.about-portrait {
+  margin: 0;
+  position: relative;
+  aspect-ratio: 3 / 4;                 /* совпадает с файлом — кадр без обрезки */
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--line-emph);
+  background: var(--bg);
+  box-shadow: var(--shadow-card);
+  transition: box-shadow .45s ease, transform .45s ease;
+}
+.about-portrait img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  display: block;
+  transition: transform .6s cubic-bezier(.22,.61,.36,1);
+}
+/* уголок-скобка в духе [><] */
+.about-portrait::after {
+  content: '';
+  position: absolute; left: 10px; top: 10px;
+  width: 18px; height: 18px;
+  border-left: 2px solid var(--accent);
+  border-top: 2px solid var(--accent);
+  opacity: .7;
+}
+.about-panel:hover .about-portrait {
+  box-shadow: 0 24px 60px -22px rgba(224,122,65,.4);
+  transform: translateY(-3px);
+}
+.about-portrait:hover img { transform: scale(1.045); }
+
+/* текстовая часть */
+.about-body { min-width: 0; }
+.about-name {
+  font-size: clamp(26px, 3.2vw, 36px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  margin: 0;
+}
+/* терминальная сигнатура */
+.about-sig {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text-dim);
+  margin: 10px 0 0;
+}
+.about-sig .atp { color: var(--accent-text); font-weight: 600; }
+.about-sig .ato {
+  color: var(--text);
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align: bottom;
+}
+/* typing-эффект на сигнатуре при появлении (JS-гейт, no-JS видит сразу) */
+html.js .about-panel:not(.in-view) .about-sig .ato { max-width: 0; }
+.about-panel.in-view .about-sig .ato { animation: aboutType 1s steps(26) both; }
+@keyframes aboutType { from { max-width: 0; } to { max-width: 26ch; } }
+@media (prefers-reduced-motion: reduce) {
+  html.js .about-panel:not(.in-view) .about-sig .ato { max-width: 100%; }
+  .about-panel.in-view .about-sig .ato { animation: none; }
+}
+.about-bio {
+  color: var(--text);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin: 18px 0 0;
+  max-width: 56ch;
+}
+/* чипы-факты */
+.about-facts {
+  list-style: none;
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin: 20px 0 24px; padding: 0;
+}
+.about-fact {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--text-muted);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  padding: 6px 13px;
+  background: var(--bg);
+  transition: border-color .25s ease, color .25s ease;
+}
+.about-fact::before { content: '· '; color: var(--accent-text); font-weight: 600; }
+.about-panel:hover .about-fact { border-color: var(--line-emph); }
+
+/* контакты как терминальные команды */
+.about-links {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 22px;
+  align-items: flex-start;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+}
+.about-cmd {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 7px 10px;
+  margin-left: -10px;
+  border-radius: 8px;
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: background .2s ease, color .2s ease;
+}
+.about-cmd .atp { color: var(--accent-text); font-weight: 600; }
+.about-cmd .cmd-key { color: var(--text); min-width: 8.5ch; }
+.about-cmd .cmd-arrow { color: var(--text-faint); }
+.about-cmd .cmd-val { color: var(--text-dim); }
+.about-cmd .ext { color: var(--text-faint); transition: transform .2s ease, color .2s ease; }
+.about-cmd:hover { background: rgba(255,255,255,0.05); color: var(--text); }
+.about-cmd:hover .cmd-val { color: var(--accent-text); }
+.about-cmd:hover .ext { color: var(--accent-text); transform: translate(2px, -2px); }
+.about-cmd:focus-visible { outline: 2px solid var(--accent-text); outline-offset: 3px; }
+[data-theme="light"] .about-cmd:hover { background: rgba(0,0,0,0.04); }
+@media (max-width: 760px) { .about-cmd { padding: 11px 12px; margin-left: -12px; } }
+
+@media (max-width: 760px) {
+  .about-panel {
+    grid-template-columns: 1fr;
+    gap: 26px;
+    padding: 28px 22px;
+    justify-items: start;
+  }
+  .about-portrait { max-width: 230px; }
+  .about-name { font-size: 26px; }
+}
