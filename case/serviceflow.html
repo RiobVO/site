@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ServiceFlow · Elyor</title>
 <meta name="description" content="Helpdesk reference backend: Repository + UoW, domain FSM, idempotency, outbox, ETag/If-Match, OpenTelemetry.">
-<meta property="og:title" content="ServiceFlow Platform — кейс / Элёр">
+<meta property="og:title" content="ServiceFlow Platform - кейс / Элёр">
 <meta property="og:description" content="Helpdesk reference backend: Repository + UoW, domain FSM, idempotency, outbox, ETag/If-Match, OpenTelemetry.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://site.versage1998.workers.dev/case/serviceflow.html">
@@ -28,7 +28,7 @@
 {
   "@context": "https://schema.org",
   "@type": "CreativeWork",
-  "name": "ServiceFlow — кейс",
+  "name": "ServiceFlow - кейс",
   "url": "https://site.versage1998.workers.dev/case/serviceflow.html",
   "inLanguage": "ru",
   "image": "https://site.versage1998.workers.dev/og/serviceflow.png",
@@ -79,12 +79,12 @@
       <span>FastAPI + React</span>
     </div>
     <h1 class="reveal">
-      <span data-lang="ru">ServiceFlow Platform —<br><span class="accent-gradient">reference-бэкенд</span> для helpdesk-систем.</span>
-      <span data-lang="en">ServiceFlow Platform —<br><span class="accent-gradient">reference backend</span> for helpdesk systems.</span>
+      <span data-lang="ru">ServiceFlow Platform -<br><span class="accent-gradient">reference-бэкенд</span> для helpdesk-систем.</span>
+      <span data-lang="en">ServiceFlow Platform -<br><span class="accent-gradient">reference backend</span> for helpdesk systems.</span>
     </h1>
     <p class="lede reveal d1">
-      <span data-lang="ru">Не клиентский проект, а учебник. Repository + UoW, доменный FSM, idempotency, outbox, ETag/If-Match, OpenTelemetry — все паттерны, к которым я возвращаюсь из проекта в проект, собранные в один читабельный код.</span>
-      <span data-lang="en">Not a client project — a textbook. Repository + UoW, domain FSM, idempotency, outbox, ETag/If-Match, OpenTelemetry — every pattern I keep returning to across projects, collected into one readable codebase.</span>
+      <span data-lang="ru">Не клиентский проект, а учебник. Repository + UoW, доменный FSM, idempotency, outbox, ETag/If-Match, OpenTelemetry - все паттерны, к которым я возвращаюсь из проекта в проект, собранные в один читабельный код.</span>
+      <span data-lang="en">Not a client project - a textbook. Repository + UoW, domain FSM, idempotency, outbox, ETag/If-Match, OpenTelemetry - every pattern I keep returning to across projects, collected into one readable codebase.</span>
     </p>
   </section>
 
@@ -132,8 +132,8 @@
           <dt><span data-lang="ru">Лицензия</span><span data-lang="en">License</span></dt><dd>MIT</dd>
         </dl>
         <p class="note">
-          <span data-lang="ru">Исходники в открытом доступе. Так я пишу и в коммерческих проектах — только там код под NDA. Здесь те же паттерны видно без тутора и маркетинга.</span>
-          <span data-lang="en">Source code is public. This is how I write in commercial projects too — there the code is just under NDA. Here you can see the same patterns without tutorials or marketing.</span>
+          <span data-lang="ru">Исходники в открытом доступе. Так я пишу и в коммерческих проектах - только там код под NDA. Здесь те же паттерны видно без тутора и маркетинга.</span>
+          <span data-lang="en">Source code is public. This is how I write in commercial projects too - there the code is just under NDA. Here you can see the same patterns without tutorials or marketing.</span>
         </p>
       </aside>
     </div>
@@ -146,24 +146,24 @@
 
       <h2 id="why"><span class="num">§ 01</span><span data-lang="ru">О чём проект</span><span data-lang="en">What this is</span></h2>
       <p>
-        <span data-lang="ru">За несколько коммерческих проектов я заметил, что объясняю одни и те же вещи: «почему Repository, а не Active Record», «зачем outbox, если есть транзакция», «как сделать идемпотентный POST». Объяснять на продакшен-коде нельзя — NDA. На примерах из книги — тоже плохо, они слишком стерильны.</span>
-        <span data-lang="en">After several commercial projects, I noticed I keep explaining the same things: "why Repository and not Active Record," "why outbox when there's a transaction," "how to make an idempotent POST." Explaining with production code is off-limits — NDA. Book examples don't work either — too sterile.</span>
+        <span data-lang="ru">За несколько коммерческих проектов я заметил, что объясняю одни и те же вещи: «почему Repository, а не Active Record», «зачем outbox, если есть транзакция», «как сделать идемпотентный POST». Объяснять на продакшен-коде нельзя - NDA. На примерах из книги - тоже плохо, они слишком стерильны.</span>
+        <span data-lang="en">After several commercial projects, I noticed I keep explaining the same things: "why Repository and not Active Record," "why outbox when there's a transaction," "how to make an idempotent POST." Explaining with production code is off-limits - NDA. Book examples don't work either - too sterile.</span>
       </p>
       <p>
-        <span data-lang="ru">ServiceFlow — это helpdesk-бэкенд, написанный достаточно подробно, чтобы на нём можно было показать всё, что я считаю важным. Достаточно простой, чтобы домен не закрывал паттерны.</span>
+        <span data-lang="ru">ServiceFlow - это helpdesk-бэкенд, написанный достаточно подробно, чтобы на нём можно было показать всё, что я считаю важным. Достаточно простой, чтобы домен не закрывал паттерны.</span>
         <span data-lang="en">ServiceFlow is a helpdesk backend written in enough detail to demonstrate everything I consider important. Simple enough that the domain doesn't obscure the patterns.</span>
       </p>
 
       <h2 id="what"><span class="num">§ 02</span><span data-lang="ru">Как устроено</span><span data-lang="en">How it's built</span></h2>
       <ul>
-        <li><span data-lang="ru"><strong>Repository + UoW</strong> — чистый домен, тестируемый без БД.</span><span data-lang="en"><strong>Repository + UoW</strong> — clean domain, testable without a database.</span></li>
-        <li><span data-lang="ru"><strong>Доменный FSM</strong> — переходы статусов тикета как явная машина, не набор if'ов.</span><span data-lang="en"><strong>Domain FSM</strong> — ticket status transitions as an explicit state machine, not a bunch of ifs.</span></li>
-        <li><span data-lang="ru"><strong>Idempotency</strong> — заголовок <code>Idempotency-Key</code>, повтор запроса возвращает тот же ответ без побочных эффектов.</span><span data-lang="en"><strong>Idempotency</strong> — <code>Idempotency-Key</code> header, retrying a request returns the same response with no side effects.</span></li>
-        <li><span data-lang="ru"><strong>Outbox pattern</strong> — события в ту же транзакцию, отправка асинхронно.</span><span data-lang="en"><strong>Outbox pattern</strong> — events in the same transaction, delivery is asynchronous.</span></li>
-        <li><span data-lang="ru"><strong>ETag / If-Match</strong> — оптимистичный concurrency control на HTTP-уровне.</span><span data-lang="en"><strong>ETag / If-Match</strong> — optimistic concurrency control at the HTTP level.</span></li>
-        <li><span data-lang="ru"><strong>RFC 7807 ошибки</strong> — единый формат problem-details.</span><span data-lang="en"><strong>RFC 7807 errors</strong> — unified problem-details format.</span></li>
-        <li><span data-lang="ru"><strong>OpenTelemetry</strong> — трейсы, метрики, логи с первого коммита.</span><span data-lang="en"><strong>OpenTelemetry</strong> — traces, metrics, logs from the first commit.</span></li>
-        <li><span data-lang="ru"><strong>API keys на argon2id</strong> — проверка занимает 100 мс намеренно.</span><span data-lang="en"><strong>API keys on argon2id</strong> — verification takes 100 ms intentionally.</span></li>
+        <li><span data-lang="ru"><strong>Repository + UoW</strong> - чистый домен, тестируемый без БД.</span><span data-lang="en"><strong>Repository + UoW</strong> - clean domain, testable without a database.</span></li>
+        <li><span data-lang="ru"><strong>Доменный FSM</strong> - переходы статусов тикета как явная машина, не набор if'ов.</span><span data-lang="en"><strong>Domain FSM</strong> - ticket status transitions as an explicit state machine, not a bunch of ifs.</span></li>
+        <li><span data-lang="ru"><strong>Idempotency</strong> - заголовок <code>Idempotency-Key</code>, повтор запроса возвращает тот же ответ без побочных эффектов.</span><span data-lang="en"><strong>Idempotency</strong> - <code>Idempotency-Key</code> header, retrying a request returns the same response with no side effects.</span></li>
+        <li><span data-lang="ru"><strong>Outbox pattern</strong> - события в ту же транзакцию, отправка асинхронно.</span><span data-lang="en"><strong>Outbox pattern</strong> - events in the same transaction, delivery is asynchronous.</span></li>
+        <li><span data-lang="ru"><strong>ETag / If-Match</strong> - оптимистичный concurrency control на HTTP-уровне.</span><span data-lang="en"><strong>ETag / If-Match</strong> - optimistic concurrency control at the HTTP level.</span></li>
+        <li><span data-lang="ru"><strong>RFC 7807 ошибки</strong> - единый формат problem-details.</span><span data-lang="en"><strong>RFC 7807 errors</strong> - unified problem-details format.</span></li>
+        <li><span data-lang="ru"><strong>OpenTelemetry</strong> - трейсы, метрики, логи с первого коммита.</span><span data-lang="en"><strong>OpenTelemetry</strong> - traces, metrics, logs from the first commit.</span></li>
+        <li><span data-lang="ru"><strong>API keys на argon2id</strong> - проверка занимает 100 мс намеренно.</span><span data-lang="en"><strong>API keys on argon2id</strong> - verification takes 100 ms intentionally.</span></li>
       </ul>
 
       <h2 id="layout"><span class="num">§ 03</span><span data-lang="ru">Структура</span><span data-lang="en">Structure</span></h2>
@@ -185,13 +185,13 @@
 └── <span class="fl">api/</span>            <span class="fm"># FastAPI routers, pydantic IO models</span>
     ├── <span class="fc">v1/</span>
     └── <span class="ft">errors.py</span>   <span class="fm"># RFC 7807</span></pre>
-        <div class="caption"><span data-lang="ru">Рис. 1 · Структура. Стрелки зависимостей идут вверх — домен ничего не знает.</span><span data-lang="en">Fig. 1 · Structure. Dependency arrows point upward — the domain knows nothing.</span></div>
+        <div class="caption"><span data-lang="ru">Рис. 1 · Структура. Стрелки зависимостей идут вверх - домен ничего не знает.</span><span data-lang="en">Fig. 1 · Structure. Dependency arrows point upward - the domain knows nothing.</span></div>
       </div>
 
       <h2 id="links"><span class="num">§ 04</span><span data-lang="ru">Где посмотреть</span><span data-lang="en">Where to look</span></h2>
       <p>
-        <span data-lang="ru">Репозиторий открытый. README ведёт за руку: 10 минут — и всё крутится локально. ADR-папка объясняет каждое нетривиальное решение — почему UoW поверх SQLAlchemy 2.x, почему outbox, а не CDC, почему ARQ, а не Celery для этого размера.</span>
-        <span data-lang="en">The repository is public. The README walks you through setup: 10 minutes and everything runs locally. The ADR folder explains every non-trivial decision — why UoW on top of SQLAlchemy 2.x, why outbox and not CDC, why ARQ and not Celery for this scale.</span>
+        <span data-lang="ru">Репозиторий открытый. README ведёт за руку: 10 минут - и всё крутится локально. ADR-папка объясняет каждое нетривиальное решение - почему UoW поверх SQLAlchemy 2.x, почему outbox, а не CDC, почему ARQ, а не Celery для этого размера.</span>
+        <span data-lang="en">The repository is public. The README walks you through setup: 10 minutes and everything runs locally. The ADR folder explains every non-trivial decision - why UoW on top of SQLAlchemy 2.x, why outbox and not CDC, why ARQ and not Celery for this scale.</span>
       </p>
       <ul>
         <li><a href="https://github.com/RiobVO/ServiceFlow" class="inline-link">github.com/RiobVO/ServiceFlow</a></li>
@@ -200,7 +200,7 @@
 
       <div class="pullquote">
         <span data-lang="ru">Не «делайте как я», а «вот примеры; разбирайтесь, что подходит вам».</span>
-        <span data-lang="en">Not "do as I do," but "here are examples — figure out what works for you."</span>
+        <span data-lang="en">Not "do as I do," but "here are examples - figure out what works for you."</span>
       </div>
 
     </article>
@@ -221,7 +221,7 @@
 
   <section class="case-cta reveal">
     <h2><span data-lang="ru">Нужно похожее решение для вашего бизнеса?</span><span data-lang="en">Need a similar solution for your business?</span></h2>
-    <p><span data-lang="ru">Опишите задачу — отвечу в течение дня, оценку дам бесплатно.</span><span data-lang="en">Describe your task — I'll reply within a day, the estimate is free.</span></p>
+    <p><span data-lang="ru">Опишите задачу - отвечу в течение дня, оценку дам бесплатно.</span><span data-lang="en">Describe your task - I'll reply within a day, the estimate is free.</span></p>
     <div class="ctas">
       <a href="https://t.me/plssog" class="btn primary"><span data-lang="ru">Написать в Telegram</span><span data-lang="en">Message on Telegram</span><span class="arrow">↗</span></a>
       <a href="../services.html#03" class="btn secondary"><span data-lang="ru">Аудит кода</span><span data-lang="en">Code audit</span><span class="arrow">→</span></a>
