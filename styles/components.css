@@ -505,7 +505,7 @@ html:not(.js) .term-line { opacity: 1; }
 .ws-noscript { padding: 24px; }
 .ws-noscript p { color: var(--text-muted); font-size: 0.8rem; margin-bottom: 12px; }
 .ws-noscript ul { list-style: none; display: grid; gap: 10px; }
-.ws-noscript a { color: var(--accent); }
+.ws-noscript a { color: var(--accent-text); }
 
 /* Title bar */
 .ws-titlebar {
@@ -792,7 +792,7 @@ html:not(.js) .term-line { opacity: 1; }
   gap: 8px;
   font-size: 13px;
   font-weight: 500;
-  color: var(--accent);
+  color: var(--accent-text);
   text-decoration: none;
   padding: 10px 20px;
   border: 1px solid var(--accent-line);
