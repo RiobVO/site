@@ -109,7 +109,7 @@
 .term-dot.y { background: #febc2e; }
 .term-dot.g { background: #28c840; }
 .term-title {
-  color: #6b7280;
+  color: #8a8f98;
   font-size: 0.72rem;
   margin-left: auto;
   margin-right: auto;
@@ -169,7 +169,7 @@ html:not(.js) .term-line { opacity: 1; }
 }
 .t-output {
   padding-left: 1.6em;
-  color: #6b7280;
+  color: #8a8f98;
 }
 .t-ok {
   color: #4ade80;
@@ -374,8 +374,8 @@ html:not(.js) .term-line { opacity: 1; }
   color: inherit;
   font-style: normal;
 }
-.pipeline .pipe-footer .cell:nth-child(2) .v { color: var(--accent-green); }
-.pipeline .pipe-footer .cell:last-child .v { color: var(--accent-green); }
+.pipeline .pipe-footer .cell:nth-child(2) .v { color: var(--accent-green-text); }
+.pipeline .pipe-footer .cell:last-child .v { color: var(--accent-green-text); }
 .pipeline .pipe-footer .cell .l {
   font-family: 'JetBrains Mono', monospace;
   font-size: 10px;
@@ -695,7 +695,7 @@ html:not(.js) .term-line { opacity: 1; }
 }
 .ws-badge.live {
   background: rgba(74,222,128,0.12);
-  color: var(--green, #4ade80);
+  color: var(--accent-green-text);
 }
 .ws-badge.ref {
   background: rgba(136,136,136,0.12);
@@ -943,7 +943,7 @@ html:not(.js) .term-line { opacity: 1; }
   margin-bottom: 8px;
 }
 .principle-cell .icon svg { width: 14px; height: 14px; }
-.principle-cell h4 {
+.principle-cell h3 {
   font-size: 17px;
   font-weight: 500;
   letter-spacing: -0.01em;
@@ -1002,7 +1002,7 @@ html:not(.js) .term-line { opacity: 1; }
   box-shadow: 0 10px 24px -6px rgba(224,122,65,0.6);
 }
 .principle-cell .icon { transition: all .3s cubic-bezier(0.2,0.8,0.2,1); }
-.principle-cell h4, .principle-cell p, .principle-cell .pc-demo, .principle-cell .pc-cta { position: relative; z-index: 1; }
+.principle-cell h3, .principle-cell p, .principle-cell .pc-demo, .principle-cell .pc-cta { position: relative; z-index: 1; }
 
 .principle-cell .pc-demo {
   max-height: 0;
@@ -1157,7 +1157,7 @@ html:not(.js) .term-line { opacity: 1; }
   color: var(--text-dim);
   margin-bottom: 12px;
 }
-.process-timeline .pt-content h4 {
+.process-timeline .pt-content h3 {
   font-family: 'JetBrains Mono', monospace;
   font-style: normal;
   font-weight: 500;
@@ -1188,7 +1188,7 @@ html:not(.js) .term-line { opacity: 1; }
   background: transparent;
 }
 .process-timeline .pt-status.done {
-  color: var(--accent-green);
+  color: var(--accent-green-text);
   border-color: rgba(76,183,130,0.4);
   background: rgba(76,183,130,0.05);
 }
@@ -1613,7 +1613,7 @@ html:not(.js) .term-line { opacity: 1; }
   color: var(--accent-text);
   letter-spacing: 0.04em;
 }
-.workflow .step .content h4 {
+.workflow .step .content h3 {
   font-size: 18px;
   font-weight: 500;
   letter-spacing: -0.01em;
@@ -1795,7 +1795,7 @@ html:not(.js) .term-line { opacity: 1; }
   margin-bottom: 20px;
   flex-wrap: wrap;
 }
-.case-meta-row .dot { color: var(--accent-green); }
+.case-meta-row .dot { color: var(--accent-green-text); }
 .case-meta-row .sep { color: var(--line-emph); }
 
 .case-spec {
@@ -2047,10 +2047,12 @@ html:not(.js) .term-line { opacity: 1; }
   border-bottom-color: rgba(0,0,0,0.06);
 }
 .case-body .figure .fig-title {
-  color: #6b7280;
+  color: #8a8f98;
   font-size: 0.72rem;
   letter-spacing: 0.02em;
 }
+/* Светлая тема: плашка фигуры светлеет (#eceae6) — подпись делаем тёмной (AA). */
+[data-theme="light"] .case-body .figure .fig-title { color: #555555; }
 .case-body .figure pre {
   margin: 0;
   padding: 28px;
@@ -2205,10 +2207,10 @@ html:not(.js) .term-line { opacity: 1; }
 .case-body .metric .v em {
   font-style: normal;
 }
-.case-body .metric:nth-child(1) .v em { color: var(--accent-green); }
+.case-body .metric:nth-child(1) .v em { color: var(--accent-green-text); }
 .case-body .metric:nth-child(2) .v em { color: var(--accent-text); }
 .case-body .metric:nth-child(3) .v em { color: #e09060; }
-.case-body .metric:nth-child(4) .v em { color: var(--accent-green); }
+.case-body .metric:nth-child(4) .v em { color: var(--accent-green-text); }
 .case-body .metric .l {
   font-family: 'JetBrains Mono', monospace;
   font-size: 10px;

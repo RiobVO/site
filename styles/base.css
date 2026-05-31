@@ -177,6 +177,7 @@
   --accent-pink:  #f0a06a;
   --accent-cyan:  #E07A41;
   --accent-green: #4ade80;
+  --accent-green-text: #4ade80;  /* зелёный для ТЕКСТА: = green на тёмной */
 
   /* Shadows */
   --shadow-card:   0 1px 0 rgba(255,255,255,0.04) inset, 0 12px 40px -16px rgba(0,0,0,0.5);
@@ -200,13 +201,14 @@
   --line-emph:    rgba(0,0,0,0.20);
   --text:         #1a1a1a;
   --text-muted:   #555555;
-  --text-dim:     #777777;
-  --text-faint:   #aaaaaa;
+  --text-dim:     #666666;   /* AA: 5.04:1 на #f0f0f0, 5.50:1 на #fafafa */
+  --text-faint:   #6c6c6c;   /* AA: 4.61:1 на #f0f0f0, 5.03:1 на #fafafa */
   --accent-soft:  rgba(224,122,65,0.10);
   --accent-line:  rgba(224,122,65,0.30);
   --shadow-card:  0 1px 0 rgba(255,255,255,0.8) inset, 0 8px 30px -12px rgba(0,0,0,0.08);
   /* Затемнённый оранжевый для текста: 5.00:1 на #fafafa, 5.22:1 на #ffffff, 4.58:1 на #f0f0f0 (открытый FAQ / hover-карточки) — проходит WCAG AA на всех elevated-поверхностях. */
   --accent-text:  #B44D1E;
+  --accent-green-text: #177c43;  /* зелёный для ТЕКСТА на светлой: 5.03:1 на #fafafa */
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -639,7 +641,7 @@ hr.line,
   border-radius: var(--radius-pill);
   font-size: 10px;
   letter-spacing: 0.04em;
-  color: var(--accent-green);
+  color: var(--accent-green-text);
   background: rgba(52,211,153,0.06);
 }
 .code-card .body {
@@ -659,9 +661,9 @@ hr.line,
 }
 .code-card .prompt { color: var(--accent-text); user-select: none; margin-right: 8px; }
 .code-card .comment { color: var(--text-faint); font-style: italic; }
-.code-card .ok { color: var(--accent-green); }
+.code-card .ok { color: var(--accent-green-text); }
 .typing-cursor {
-  color: var(--accent-green);
+  color: var(--accent-green-text);
   font-weight: 400;
   animation: cursor-blink 0.7s step-end infinite;
 }
