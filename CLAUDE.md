@@ -15,6 +15,8 @@ python -m http.server 8000
 
 ## Pages
 
+> Live pages: **index.html · services.html · 404.html · case/\*.html** (6 cases). There is **NO resume page** (cv.html removed) and **NO audit landing** (audit.html removed) — both deleted by client decision, do NOT recreate either (details in the ⚠️ notes below).
+
 - **index.html** — Home: hero terminal with typing animation, featured Credit Assistant with pipeline diagram, CLI project browser (workstation), **testimonials carousel** (5 real reviews), principles, process timeline, integrations, contact
 - **services.html** — Pricing: three tiers (Consultation, Development, Audit). `§ 02` has `id="02"`, `§ 03 · Аудит` has `id="03"` (deep-link targets). Audit is sold here as a tier — NO separate landing page anymore.
 - **404.html** — Error page
@@ -22,7 +24,7 @@ python -m http.server 8000
 
 **⚠️ audit.html DELETED** (client decision): the dedicated audit landing was removed — the audit service lives only as `§ 03` tier on services.html. All "Запросить аудит"/"Аудит кода" CTAs point to `services.html#03`. Do NOT recreate audit.html. The "Аудит" nav item was also removed (nav is Работы · Услуги · Принципы).
 
-**⚠️ cv.html DELETED** (client decision): the resume page was removed — no CV page, no "Резюме" button (the «Кто я» block now links only to GitHub), no CV nav item. `styles/print.css` (CV-only print stylesheet) was deleted as orphaned, and the `cv.html` entry removed from `sitemap.xml`. Do NOT recreate cv.html or print.css.
+**⚠️ cv.html DELETED** (client decision): the resume page was removed — no CV page, no "Резюме" button (the «Кто я» block links via terminal command-links to github/telegram/email), no CV nav item. `styles/print.css` (CV-only print stylesheet) was deleted as orphaned, and the `cv.html` entry removed from `sitemap.xml`. Do NOT recreate cv.html or print.css.
 
 ## Architecture
 
@@ -126,7 +128,7 @@ Real product (public repo: https://github.com/RiobVO/credit-assistant) — SME l
 
 ## TODO
 
-- [ ] **Deploy to Cloudflare** — `npx wrangler deploy`. Verify: `curl -I .../CLAUDE.md` → 404, `.../AUDIT.md` → 404, `.../.git/config` → 404; `.../sitemap.xml` + `.../robots.txt` + `.../_headers` → 200; CSP/HSTS present in response headers.
+- **Deploy is AUTOMATIC** — Cloudflare git integration: a push to `master` rebuilds and redeploys the site automatically. NO manual `npx wrangler deploy`. After each push verify on the live URL: `curl -I .../CLAUDE.md` → 404, `.../AUDIT.md` → 404, `.../.git/config` → 404, `.../cv.html` → 404; `.../sitemap.xml` + `.../robots.txt` → 200; CSP/HSTS present in response headers. (Relies on `.assetsignore` being honored by the git build — the CLAUDE.md→404 check confirms it.)
 - [x] **#16 about-me block** — done: «Кто я» terminal whois-card on index.html only (removed from services); portrait `img/me.jpg` (client photo as-is, no surname), bio via humanizer, command-links github/telegram/email (Резюме button + cv.html removed by client). Stylised-duotone variant rejected — original photo kept.
 - [x] **#28 «8.5/10» attribution** — resolved: kept unattributed. Client banks want anonymity (NDA) — do NOT name or hint the auditor/bank. Leave «внешний/независимый аудит · 8.5/10» as-is. Do NOT reopen.
 - [ ] **Custom domain** — sed-swap `site.versage1998.workers.dev` everywhere once a real domain is bought.
