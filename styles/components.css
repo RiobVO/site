@@ -3785,3 +3785,79 @@ html.js .about-panel:not(.in-view) .about-sig .ato { max-width: 0; }
   .about-portrait { max-width: 230px; }
   .about-name { font-size: 26px; }
 }
+
+/* ─────────  Форма захвата (services, контакт)  ───────── */
+.cform {
+  background: var(--bg-elev); border: 1px solid var(--line); border-top: 1px solid var(--accent-line);
+  border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-card);
+  text-align: left; max-width: 680px; margin: 28px auto 0;
+}
+.cform-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 16px 26px; border-bottom: 1px solid var(--line); font-size: 12px; letter-spacing: .5px;
+}
+.cform-head .ttl { display: inline-flex; align-items: center; gap: 9px; color: var(--text-dim); text-transform: uppercase; }
+.cform-head .ttl .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent-green); }
+.cform-head .reply { color: var(--text-faint); white-space: nowrap; }
+@media (max-width: 560px) { .cform-head { flex-direction: column; align-items: flex-start; gap: 6px; } }
+.cform-body { padding: 26px; display: grid; gap: 20px; }
+.cf2-field { display: flex; flex-direction: column; gap: 9px; }
+.cf2-field > label { font-size: 12.5px; color: var(--text-dim); display: flex; align-items: center; gap: 7px; }
+.cf2-field > label .atp { color: var(--accent-text); font-weight: 600; }
+.cf2-field textarea, .cf2-field input {
+  background: var(--bg-input); border: 1px solid var(--line-strong); border-radius: 11px;
+  color: var(--text); font-family: inherit; font-size: 14.5px; padding: 14px 16px; width: 100%;
+  transition: border-color .15s, box-shadow .15s;
+}
+.cf2-field textarea { resize: vertical; min-height: 104px; line-height: 1.6; }
+.cf2-field textarea:focus, .cf2-field input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.cf2-field ::placeholder { color: var(--text-faint); }
+.cf2-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 560px) { .cf2-row { grid-template-columns: 1fr; } }
+.bchips { display: flex; gap: 8px; flex-wrap: wrap; }
+.bchip {
+  background: var(--bg-input); border: 1px solid var(--line-strong); color: var(--text-dim);
+  font-family: inherit; font-size: 13px; padding: 9px 14px; border-radius: 9px; cursor: pointer;
+  transition: border-color .15s, color .15s, background .15s;
+}
+.bchip:hover { border-color: var(--line-emph); color: var(--text); }
+.bchip.active { border-color: var(--accent); color: var(--accent-text); background: var(--accent-soft); }
+.cform-foot { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; padding: 4px 26px 22px; }
+.cf2-send {
+  display: inline-flex; align-items: center; gap: 9px; background: var(--accent); color: #1a1a1a;
+  border: 0; border-radius: 10px; font-family: inherit; font-size: 14.5px; font-weight: 600;
+  padding: 13px 26px; cursor: pointer; transition: filter .15s;
+}
+.cf2-send:hover { filter: brightness(1.06); }
+.cf2-send .arrow { transition: transform .15s; }
+.cf2-send:hover .arrow { transform: translate(2px, -2px); }
+.cf2-hint { font-size: 12px; color: var(--text-faint); }
+.cf2-alt { padding: 0 26px 22px; font-size: 13px; color: var(--text-faint); }
+.cf2-alt a { color: var(--accent-text); text-decoration: none; }
+.cf2-alt a:hover { text-decoration: underline; }
+
+/* ─────────  Строка-перевод в кейсах (biz-translate)  ───────── */
+.biz-translate {
+  display: flex; gap: 13px; align-items: flex-start; margin: 18px 0;
+  padding: 14px 18px; background: var(--accent-soft);
+  border-left: 2px solid var(--accent); border-radius: 0 10px 10px 0;
+}
+.biz-translate .bt-ico { color: var(--accent); flex: none; margin-top: 1px; font-weight: 700; }
+.biz-translate p { font-size: 14px; line-height: 1.65; color: var(--text); margin: 0; }
+.biz-translate strong { color: var(--accent-text); font-weight: 600; }
+
+/* ─────────  404 «возможно, вы искали»  ───────── */
+.nf-suggest { margin: 34px auto 0; max-width: 520px; text-align: left; }
+.nf-suggest .nf-h { font-size: 12px; color: var(--text-faint); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; }
+.nf-links { display: grid; gap: 8px; }
+.nf-link {
+  display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+  border: 1px solid var(--line); border-radius: 10px; text-decoration: none;
+  color: var(--text); background: var(--bg-elev); transition: border-color .15s, transform .15s;
+}
+.nf-link:hover { border-color: var(--accent-line); transform: translateX(3px); }
+.nf-link .nf-tag { font-size: 12px; color: var(--accent-text); flex: none; }
+.nf-link .nf-name { font-size: 14px; }
+.nf-link .nf-sub { font-size: 12px; color: var(--text-faint); margin-left: auto; }
+.nf-link .nf-arr { color: var(--text-faint); }
+@media (max-width: 480px) { .nf-link .nf-sub { display: none; } }

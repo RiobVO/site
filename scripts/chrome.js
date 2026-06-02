@@ -794,6 +794,45 @@ function initNetmap() {
   }
 }
 
+/**
+ * Форма захвата (контакт на services): бюджет выбирается чипами (значение
+ * пишется в скрытое поле), при отправке поля собираются в письмо и открывается
+ * почтовый клиент. Без бэкенда — деградирует в mailto; прямые контакты в форме
+ * остаются рабочими и без JS.
+ */
+function initContactForm() {
+  const forms = document.querySelectorAll('.cform');
+  forms.forEach((form) => {
+    // бюджет-чипы: одиночный выбор → скрытое поле
+    const chips = form.querySelectorAll('.bchip');
+    const budgetInput = /** @type {HTMLInputElement | null} */ (form.querySelector('input[name="budget"]'));
+    chips.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        chips.forEach((c) => c.classList.toggle('active', c === chip));
+        if (budgetInput) budgetInput.value = chip.getAttribute('data-budget') || '';
+      });
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const get = (sel) => {
+        const el = /** @type {HTMLInputElement | HTMLTextAreaElement | null} */ (form.querySelector(sel));
+        return el ? el.value.trim() : '';
+      };
+      const task = get('[name="task"]');
+      const contact = get('[name="contact"]');
+      const budget = get('[name="budget"]');
+      if (!task || !contact) return; // required-поля, браузер уже подсветит
+      const lines = ['Задача:', task, '', 'Контакт: ' + contact];
+      if (budget) lines.push('Бюджет: ' + budget);
+      const addr = 'eleru340' + '@' + 'gmail.com'; // склейка — как HTML-entity обфускация на сайте
+      window.location.href = 'mailto:' + addr +
+        '?subject=' + encodeURIComponent('Заявка с сайта') +
+        '&body=' + encodeURIComponent(lines.join('\n'));
+    });
+  });
+}
+
 function initAll() {
   bindChrome();
   initMobileNav();
@@ -807,6 +846,7 @@ function initAll() {
   initWorkflowRun();
   initFaqReveal();
   initNetmap();
+  initContactForm();
 }
 
 if (document.readyState === 'loading') {
