@@ -21,6 +21,15 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
+    if (url.pathname === '/api/debug') {
+      return json({
+        hasToken: !!env.TELEGRAM_BOT_TOKEN,
+        tokenLen: env.TELEGRAM_BOT_TOKEN ? env.TELEGRAM_BOT_TOKEN.length : 0,
+        hasChat: !!env.TELEGRAM_CHAT_ID,
+        chatLen: env.TELEGRAM_CHAT_ID ? env.TELEGRAM_CHAT_ID.length : 0,
+      });
+    }
+
     if (url.pathname === '/api/contact') {
       if (request.method !== 'POST') {
         return json({ ok: false, error: 'method_not_allowed' }, 405);
