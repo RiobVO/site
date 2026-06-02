@@ -123,7 +123,7 @@ Real product (public repo: https://github.com/RiobVO/credit-assistant) — SME l
 
 ## Key facts (post-audit state)
 
-- **Deploy domain:** `site.versage1998.workers.dev` (Cloudflare Workers Assets). It is **baked into** og:url / canonical / sitemap.xml / robots.txt / JSON-LD `url`. On a custom domain → one find-replace across `*.html` + `sitemap.xml` + `robots.txt` + `_headers`.
+- **Deploy domain:** `vire.dev` (Cloudflare Workers Assets). It is **baked into** og:url / canonical / sitemap.xml / robots.txt / JSON-LD `url`. On a custom domain → one find-replace across `*.html` + `sitemap.xml` + `robots.txt` + `_headers`.
 - **Fonts self-hosted:** `styles/fonts/*.woff2` (JetBrains Mono 400/500/600, all unicode-ranges) + `@font-face` in `base.css`. NO Google Fonts CDN — the site loads **zero third-party resources**. Do NOT re-add `googleapis`/`gstatic` links.
 - **`_headers`** (repo root) ships CSP/HSTS/X-Content-Type-Options/Referrer-Policy/frame-ancestors + long-cache for fonts. Verified only on deploy (`curl -I`).
 - **Gitignored:** `AUDIT.md`, `.claude/` (never tracked). Public repo history was rewritten to purge NDA tokens — **never put NDA data in any tracked file** (CLAUDE.md is public).
@@ -149,7 +149,7 @@ Real product (public repo: https://github.com/RiobVO/credit-assistant) — SME l
   - **Живое — только осмысленное:** hover-трассировка (провод узла горит, чип-протокол, остальные гаснут); draw-in на старте (`.armed/.run`); поток-импульсы; лог снизу + вспышка-результат у узла + синхронная вспышка его провода (`.epulse`); 3D-параллакс на мышь. Лог/вспышки иллюстративны. **Баг-фикс:** параллакс замирает на время `.tracing` (иначе сцена ездит под курсором → дребезг чипов). Всё за `reduced-motion`/`pointer:coarse`; вне экрана — пауза (#67). Узкие экраны: `overflow-x:auto` (граф смахивается, не обрезается).
   - **ОТВЕРГНУТАЯ альтернатива:** «живой лог обмена» (tail-f консоль транзакций вместо графа) — владелец сказал граф «намного круче», лог не зашёл. НЕ предлагать замену концепции графа — дорабатывать граф.
   - **Принцип на будущее:** движение только осмысленное; декоративную вечную анимацию и glow-ореолы владелец не любит («перебор»/«просвечивает»).
-- [ ] **Custom domain** — sed-swap `site.versage1998.workers.dev` everywhere once a real domain is bought.
+- [ ] **Custom domain** — sed-swap `vire.dev` everywhere once a real domain is bought.
 - [ ] `docs/compliance/security-architecture.md:251,349` in credit-assistant repo — clean leftover `[норматив]` before making that case public.
 - [ ] Реальный замаскированный скрин (PDF/бот/админка) → **Roadmap Фаза 2** (нужен файл от владельца; слот делаю я).
 
