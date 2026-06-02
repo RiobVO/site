@@ -795,10 +795,11 @@ function initNetmap() {
 }
 
 /**
- * Форма захвата (контакт на services): бюджет выбирается чипами (значение
- * пишется в скрытое поле), при отправке поля собираются в письмо и открывается
- * почтовый клиент. Без бэкенда — деградирует в mailto; прямые контакты в форме
- * остаются рабочими и без JS.
+ * Форма захвата (контакт на services). Бюджет выбирается чипами (значение
+ * пишется в скрытое поле). Отправка асинхронная на /api/contact (Worker →
+ * Telegram). Если эндпоинт не настроен (нет секретов, 503) или недоступен —
+ * мягкий откат на mailto, так что форма работает на любой стадии настройки.
+ * honeypot-поле `company` отсекает ботов уже на сервере.
  */
 function initContactForm() {
   const forms = document.querySelectorAll('.cform');
@@ -813,22 +814,64 @@ function initContactForm() {
       });
     });
 
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const get = (sel) => {
-        const el = /** @type {HTMLInputElement | HTMLTextAreaElement | null} */ (form.querySelector(sel));
-        return el ? el.value.trim() : '';
-      };
-      const task = get('[name="task"]');
-      const contact = get('[name="contact"]');
-      const budget = get('[name="budget"]');
-      if (!task || !contact) return; // required-поля, браузер уже подсветит
+    const btn = /** @type {HTMLButtonElement | null} */ (form.querySelector('.cf2-send'));
+    const statusEl = form.querySelector('.cf2-status');
+    const en = localStorage.getItem(STORAGE_LANG) === 'en';
+    const T = en
+      ? { sending: 'Sending…', sent: '✓ Sent. I’ll reply within a day.' }
+      : { sending: 'Отправляю…', sent: '✓ Заявка отправлена. Отвечу в течение дня.' };
+
+    const val = (sel) => {
+      const el = /** @type {HTMLInputElement | HTMLTextAreaElement | null} */ (form.querySelector(sel));
+      return el ? el.value.trim() : '';
+    };
+    const setStatus = (text, kind) => {
+      if (statusEl) { statusEl.textContent = text; statusEl.className = 'cf2-status' + (kind ? ' ' + kind : ''); }
+    };
+    const mailtoFallback = (task, contact, budget) => {
       const lines = ['Задача:', task, '', 'Контакт: ' + contact];
       if (budget) lines.push('Бюджет: ' + budget);
       const addr = 'eleru340' + '@' + 'gmail.com'; // склейка — как HTML-entity обфускация на сайте
       window.location.href = 'mailto:' + addr +
         '?subject=' + encodeURIComponent('Заявка с сайта') +
         '&body=' + encodeURIComponent(lines.join('\n'));
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const task = val('[name="task"]');
+      const contact = val('[name="contact"]');
+      const budget = val('[name="budget"]');
+      const company = val('[name="company"]'); // honeypot — люди его не видят
+      if (!task || !contact) return; // required-поля, браузер подсветит сам
+
+      if (btn) btn.disabled = true;
+      setStatus(T.sending, '');
+
+      try {
+        const resp = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ task, contact, budget, company }),
+        });
+        const data = await resp.json().catch(() => ({}));
+        if (resp.ok && data && data.ok) {
+          if (btn) btn.style.display = 'none';
+          setStatus(T.sent, 'ok');
+          form.reset();
+          chips.forEach((c) => c.classList.remove('active'));
+          return;
+        }
+        // эндпоинт ещё не настроен (503) или ошибка → откат на письмо
+        if (btn) btn.disabled = false;
+        setStatus('', '');
+        mailtoFallback(task, contact, budget);
+      } catch (_err) {
+        // сеть/Worker недоступны → откат на письмо
+        if (btn) btn.disabled = false;
+        setStatus('', '');
+        mailtoFallback(task, contact, budget);
+      }
     });
   });
 }

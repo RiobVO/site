@@ -3835,6 +3835,10 @@ html.js .about-panel:not(.in-view) .about-sig .ato { max-width: 0; }
 .cf2-alt { padding: 0 26px 22px; font-size: 13px; color: var(--text-faint); }
 .cf2-alt a { color: var(--accent-text); text-decoration: none; }
 .cf2-alt a:hover { text-decoration: underline; }
+.cf2-status { font-size: 13px; color: var(--text-faint); }
+.cf2-status.ok { color: var(--accent-green-text); font-weight: 500; }
+/* honeypot — ловушка для ботов, скрыта от людей и скринридеров */
+.cf2-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
 /* ─────────  Строка-перевод в кейсах (biz-translate)  ───────── */
 .biz-translate {

@@ -7,5 +7,6 @@
 *.md
 wrangler.jsonc
 node_modules/
+src/
 photo_*.jpg
 _preview_*.png
