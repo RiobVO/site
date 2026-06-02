@@ -123,7 +123,7 @@ Real product (public repo: https://github.com/RiobVO/credit-assistant) — SME l
 
 ## Key facts (post-audit state)
 
-- **Deploy domain:** `vire.dev` (Cloudflare Workers Assets). It is **baked into** og:url / canonical / sitemap.xml / robots.txt / JSON-LD `url`. On a custom domain → one find-replace across `*.html` + `sitemap.xml` + `robots.txt` + `_headers`.
+- **Deploy domain:** `vire.dev` — собственный домен (Cloudflare Registrar, ~$12/год, авто-продление), подключён как **Custom Domain** к Worker `site`. Baked into og:url / canonical / sitemap.xml / robots.txt / JSON-LD `url` — **find-replace со старого `site.versage1998.workers.dev` УЖЕ выполнен** (2026-06-03), в коде старого домена нет. Старый `*.workers.dev` адрес владелец отключает тумблерами Worker URL / Preview URLs в дашборде. Деплой теперь **Worker + Assets**, не чистая статика (см. «Контактная форма» ниже).
 - **Fonts self-hosted:** `styles/fonts/*.woff2` (JetBrains Mono 400/500/600, all unicode-ranges) + `@font-face` in `base.css`. NO Google Fonts CDN — the site loads **zero third-party resources**. Do NOT re-add `googleapis`/`gstatic` links.
 - **`_headers`** (repo root) ships CSP/HSTS/X-Content-Type-Options/Referrer-Policy/frame-ancestors + long-cache for fonts. Verified only on deploy (`curl -I`).
 - **Gitignored:** `AUDIT.md`, `.claude/` (never tracked). Public repo history was rewritten to purge NDA tokens — **never put NDA data in any tracked file** (CLAUDE.md is public).
@@ -149,7 +149,7 @@ Real product (public repo: https://github.com/RiobVO/credit-assistant) — SME l
   - **Живое — только осмысленное:** hover-трассировка (провод узла горит, чип-протокол, остальные гаснут); draw-in на старте (`.armed/.run`); поток-импульсы; лог снизу + вспышка-результат у узла + синхронная вспышка его провода (`.epulse`); 3D-параллакс на мышь. Лог/вспышки иллюстративны. **Баг-фикс:** параллакс замирает на время `.tracing` (иначе сцена ездит под курсором → дребезг чипов). Всё за `reduced-motion`/`pointer:coarse`; вне экрана — пауза (#67). Узкие экраны: `overflow-x:auto` (граф смахивается, не обрезается).
   - **ОТВЕРГНУТАЯ альтернатива:** «живой лог обмена» (tail-f консоль транзакций вместо графа) — владелец сказал граф «намного круче», лог не зашёл. НЕ предлагать замену концепции графа — дорабатывать граф.
   - **Принцип на будущее:** движение только осмысленное; декоративную вечную анимацию и glow-ореолы владелец не любит («перебор»/«просвечивает»).
-- [ ] **Custom domain** — sed-swap `vire.dev` everywhere once a real domain is bought.
+- [x] **Custom domain `vire.dev`** — DONE (2026-06-03): куплен на Cloudflare Registrar, подключён как Custom Domain, find-replace выполнен везде. Осталось владельцу — отключить тумблеры старого `*.workers.dev`.
 - [ ] `docs/compliance/security-architecture.md:251,349` in credit-assistant repo — clean leftover `[норматив]` before making that case public.
 - [ ] Реальный замаскированный скрин (PDF/бот/админка) → **Roadmap Фаза 2** (нужен файл от владельца; слот делаю я).
 
@@ -158,3 +158,33 @@ Real product (public repo: https://github.com/RiobVO/credit-assistant) — SME l
 - **SEO/social:** absolute og + og:url + canonical + og:locale + twitter:description; JSON-LD (Person/ProfessionalService/CreativeWork); robots.txt + sitemap.xml; unified nav across all pages.
 - **A11y/perf:** skip-links + `id=main`, `:focus-visible`, keyboard nav (tree/principles/Escape, scoped arrows), ARIA, 40/44px touch targets, rAF-throttle + touch-skip on pointer effects, off-screen + reduced-motion animation pause, one-shot timeline observer (no blur/scroll thrash).
 - **Content:** plain-language home/featured/terminal, business-outcome case metrics, risk-reversal guarantee + FAQ, NDA reframed as trust signal, unified case headings (О чём проект / Как устроено), email fallback, HTML-entity email, six-step process (price anchor + mid-CTA were added then removed by client).
+
+## Контактная форма заявок → Telegram (серверная, добавлена 2026-06-03)
+
+Форма на **services.html** (`.cform` — карточка с шапкой-статусом; бюджет выбирается чипами `.bchip`; `$`-лейблы) отправляет заявку через Cloudflare Worker владельцу в Telegram. **На index.html формы НЕТ** (была — убрана по решению владельца, контакт там = кнопки Telegram/email/аудит).
+
+- **Worker:** `src/index.js` — `main` в `wrangler.jsonc` + `assets.binding: "ASSETS"` (раньше сайт был чистой статикой). `POST /api/contact`: валидация, honeypot-поле `company` (скрыто `.cf2-hp`, отсекает ботов), пересылка в Telegram Bot API `sendMessage`; всё прочее → `env.ASSETS.fetch`. `src/` спрятан в `.assetsignore` (не раздаётся).
+- **Секреты** (Cloudflare → Workers & Pages → site → Settings → Variables and Secrets, тип **Secret**/encrypted, НИКОГДА не в репо): `TELEGRAM_BOT_TOKEN` (от @BotFather), `TELEGRAM_CHAT_ID` (личный Telegram-id ВЛАДЕЛЬЦА от @userinfobot — id получателя, НЕ бота).
+- **Фронт:** `initContactForm` в `chrome.js` — `fetch` на `/api/contact`; чипы бюджета пишут в hidden `input[name=budget]`; при `503 not_configured` / сетевой ошибке мягкий откат на `mailto`. Без JS — прямые контакты в форме (`.cf2-alt`).
+- **⚠️ GOTCHA (стоило часа возни):** git-push (`npx wrangler deploy` через Workers Builds) иногда **сбрасывает `TELEGRAM_CHAT_ID`** (token при этом переживает). Признак: форма «переводит на почту», `/api/contact` → `503 not_configured`. Фикс: в dashboard Edit `TELEGRAM_CHAT_ID` → ввести число → Deploy, **ПОСЛЕ последнего деплоя кода**. Проверка БЕЗ спама в ТГ невозможна — POST реально шлёт; быстрый тест: `curl -X POST https://vire.dev/api/contact -H 'content-type: application/json' -d '{"task":"t","contact":"c"}'` → `{"ok":true}` = работает, `not_configured` = chat_id слетел. Диагностику наличия секретов делали временным `/api/debug` (возвращал hasToken/hasChat/длины — удалён, в проде быть НЕ должен).
+- Бесплатно: Workers free ~100k req/день; раздача статики не считается.
+
+## Сессия 2026-06-03 — что сделано (резюме, чтобы не разбираться заново)
+1. **4 функциональных добавления (вариант A, одобрены владельцем):**
+   - Форма захвата на services (см. выше).
+   - `.biz-translate` — строка «Что это даёт бизнесу: …» после технического блока в `case/container-bot.html` (§03 биллинг) и `case/pekarna-bot.html` (§03 B2B). Перевод техники на язык денег; код-карточки остаются (терминальная эстетика — это фишка).
+   - `.nf-suggest` — блок «Возможно, вы искали» с 3 кейсами на `404.html` (чтобы холодный лид не упирался в тупик).
+   - SEO: `og:title`/`twitter:title` подтянуты к сильному `<title>` на index; якорь `id="01"` на тариф консультации в services.
+2. **Серверная форма → Telegram** (раздел выше).
+3. **Свой домен `vire.dev`** — куплен, подключён, прошит везде.
+- **ОТВЕРГНУТО владельцем в этой сессии (НЕ предлагать снова):**
+  - **Полоска доверия под hero** (`.trust-strip`, «6 систем · продан в банке · 8.5/10 · код открыт») — убрана: дублировала факты, которые и так ниже на главной (featured-метрики, «Кто я»); дробила чистый первый экран.
+  - **«Креативные» версии формы** (терминал-композер с `$ describe`, мигающий курсор) и **«luxe-полировка»** (grain/noise overlay, двойные hairlines, tabular-nums, count-up статус-бар) — реакция владельца «банально/дёшево». Вывод: **сайт уже на визуальном потолке; визуальная полировка ради «дороговизны» ему противопоказана, ценность только в смысловых добавлениях, не в декоре.** (см. память `feedback-design-preferences`).
+  - **Дубль кнопки «Запросить аудит»** — убран: осталась 1× в `#contact`; в hero вторичная кнопка → «Смотреть работы» (`#featured`).
+  - **Готовый текст-заготовка** в поле формы — отвергнут, вернули placeholder.
+
+## Следующие шаги — приоритет ТРАФИК, не фичи (владелец сам назвал: «меня никто не знает»)
+Сайт-инструмент готов (≈10/10). Узкое место — **нулевая известность**, а не функционал. Дальше работаем НЕ над сайтом, а над привлечением людей:
+1. **Custom domain `vire.dev` — DONE.** Осталось владельцу: отключить тумблеры старого `*.workers.dev`.
+2. **Первые клиенты** — главный разговор. Откуда придут первые 3-5 заявок для backend-инженера в Ташкенте: тёплый круг (знакомые бизнесы, которым нужна автоматизация), профильные Telegram-чаты IT/предпринимателей Узбекистана, фриланс-площадки, прямой аутрич. Поиск/SEO раскачивается месяцами — на старте трафик идёт ОТ владельца (ссылка в подписи/чатах/визитке), поэтому `.dev` ок (не нужен «случайно вбить .com»).
+3. **Опционально, когда пойдёт трафик:** privacy-friendly аналитика (Cloudflare Web Analytics — без кук; лозунг «no cookies» в футере остаётся честным) — чтобы видеть воронку. **Автоответ в форме НЕ нужен** при нуле/малом потоке — личный ответ за минуты конвертирует лучше робота (решение владельца).
