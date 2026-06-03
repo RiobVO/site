@@ -6,12 +6,35 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Static multi-page portfolio site for Elyor (solo backend engineer, Tashkent). No build step, no frameworks — open HTML in browser.
 
+### Бренд / имя (2026-06-04)
+
+**`Vire`** — бренд-вывеска (= домен `vire.dev`). Используется в: логотипе nav+footer (`<span>Vire</span>`),
+суффиксе `<title>` (`· Vire`), `og:title`/`twitter:title`-подписях, тексте OG-картинки (`index.html` SVG),
+`ProfessionalService.name` в JSON-LD. Капитализация — `Vire` (НЕ `vire`/`VIRE`).
+
+**`Элёр`/`Elyor`** — личное имя автора, остаётся там, где речь лично о человеке: блок «Кто я»
+(`about-name`, `img alt`), JSON-LD `@type:Person` / `author.name` / `provider.name` во всех страницах.
+Принцип: вывеска студии = Vire, авторство работ = Элёр. НЕ подменять `Person`-разметку брендом
+(соврёт Google про авторство). Фамилию публично не указывать (только «Элёр»).
+
+### URL-схема — clean URLs (2026-06-04)
+
+Cloudflare Assets раздаёт страницы БЕЗ `.html` (`/services`, `/case/credit-assistant`); запрос
+`*.html` → 307 → clean URL. Поэтому в коде ВСЕ ссылки/`canonical`/`og:url`/`sitemap` — без `.html`.
+Межстраничные ссылки **абсолютные от корня**: `/`, `/#work`, `/#principles`, `/services`,
+`/services#02`, `/services#03`, `/case/<slug>`. НЕ добавлять `.html` обратно (вернёт лишний 307
+и рассинхрон canonical). Главная и так была чистой (`https://vire.dev/`).
+
 ## Run locally
 
 ```bash
-python -m http.server 8000
-# open http://localhost:8000
+npx wrangler dev        # повторяет прод: clean URL (/services без .html) + форма /api/contact
+# open http://localhost:8787
 ```
+
+`python -m http.server 8000` тоже работает, НО не эмулирует clean-URL рерайт Cloudflare —
+ссылки вида `/services` отдадут 404 (файла без расширения нет). Для просмотра навигации
+целиком нужен `wrangler dev`; либо открывать конкретные `*.html` напрямую.
 
 ## Pages
 
@@ -138,7 +161,7 @@ Real product (public repo: https://github.com/RiobVO/credit-assistant) — SME l
 
 ## TODO
 
-- **Deploy is AUTOMATIC** — Cloudflare git integration: a push to `master` rebuilds and redeploys the site automatically. NO manual `npx wrangler deploy`. After each push verify on the live URL: `curl -I .../CLAUDE.md` → 404, `.../AUDIT.md` → 404, `.../.git/config` → 404, `.../cv.html` → 404; `.../sitemap.xml` + `.../robots.txt` → 200; CSP/HSTS present in response headers. (Relies on `.assetsignore` being honored by the git build — the CLAUDE.md→404 check confirms it.)
+- **Deploy is AUTOMATIC** — Cloudflare git integration: a push to `master` rebuilds and redeploys the site automatically. NO manual `npx wrangler deploy`. After each push verify on the live URL: `curl -I .../CLAUDE.md` → 404, `.../AUDIT.md` → 404, `.../.git/config` → 404, `.../cv.html` → 404; `.../sitemap.xml` + `.../robots.txt` → 200; CSP/HSTS present in response headers. (Relies on `.assetsignore` being honored by the git build — the CLAUDE.md→404 check confirms it.) Clean URLs: `curl -I .../services` → 200, `.../services.html` → 307→`/services`, `.../case/credit-assistant` → 200.
 - [x] **#16 about-me block** — done: «Кто я» terminal whois-card on index.html only (removed from services); portrait `img/me.jpg` (client photo as-is, no surname), bio via humanizer, command-links github/telegram/email (Резюме button + cv.html removed by client). Stylised-duotone variant rejected — original photo kept.
 - [x] **#28 «8.5/10» attribution** — resolved: kept unattributed. Client banks want anonymity (NDA) — do NOT name or hint the auditor/bank. Leave «внешний/независимый аудит · 8.5/10» as-is. Do NOT reopen.
 - [x] **Интеграции — нод-граф «карта системы»** — done: радиальный `integrations-viz` заменён нод-графом на `index.html` (CSS `.netmap`/`.nm-*` в `components.css`, JS `initNetmap` в `chrome.js`). `_test-nodegraph.html` удалён. Финальные решения:
