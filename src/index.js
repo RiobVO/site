@@ -28,6 +28,11 @@ export default {
       return handleContact(request, env);
     }
 
+    // /services переименован в /pricing — 301 для старых ссылок и поисковиков
+    if (url.pathname === '/services' || url.pathname === '/services.html') {
+      return Response.redirect(url.origin + '/pricing', 301);
+    }
+
     // всё остальное — статические ассеты
     return env.ASSETS.fetch(request);
   },
