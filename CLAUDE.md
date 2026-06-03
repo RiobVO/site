@@ -49,7 +49,7 @@ npx wrangler dev        # повторяет прод: clean URL (/services бе
 > Live pages: **index.html · services.html · 404.html · case/\*.html** (6 cases). There is **NO resume page** (cv.html removed) and **NO audit landing** (audit.html removed) — both deleted by client decision, do NOT recreate either (details in the ⚠️ notes below).
 
 - **index.html** — Home: hero terminal with typing animation, featured Credit Assistant with pipeline diagram, CLI project browser (workstation), **testimonials carousel** (5 real reviews), principles, process timeline, integrations, contact
-- **services.html** — Pricing: three tiers (Consultation, Development, Audit). `§ 02` has `id="02"`, `§ 03 · Аудит` has `id="03"` (deep-link targets). Audit is sold here as a tier — NO separate landing page anymore.
+- **services.html** — Pricing: three tiers (Consultation, Development, Audit). `§ 02` has `id="02"`, `§ 03 · Аудит` has `id="03"` (deep-link targets). Audit is sold here as a tier — NO separate landing page anymore. **§ 02 has TWO payment doors (2026-06-04):** fixed-price «от $2K / проект» (defined scope — bots/integrations) + «$4K/мес» retainer (large, evolving products) — deliberately covers BOTH small and large clients (matches the budget chips starting at $1–3K). Do NOT collapse back to retainer-only (it orphaned small-project leads). One-liner is «продукт целиком», NOT «весь бэкенд» (positioning). All three tier CTAs point to `#contact` form.
 - **404.html** — Error page
 - **case/*.html** — 6 case studies: credit-assistant, container-bot, serviceflow, support-bot, manicure-bot, pekarna-bot. Each ends with a `.case-cta` block (Telegram + contextual link: bots → `services.html#02`, code-quality cases → `services.html#03`).
 
