@@ -1480,7 +1480,7 @@ html:not(.js) .term-line { opacity: 1; }
 }
 .tier.featured::before {
   all: unset;
-  content: 'Recommended';
+  content: 'end-to-end';
   position: absolute;
   top: 14px;
   right: 20px;
