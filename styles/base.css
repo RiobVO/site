@@ -166,7 +166,7 @@
   --text:         #e5e5e5;
   --text-muted:   #888888;
   --text-dim:     #8a8a8a;
-  --text-faint:   #707070;
+  --text-faint:   #8c8c8c;   /* AA: 5.18:1 на --bg, 4.73:1 на --bg-elev, 4.56:1 на input (был #707070 = 3.5:1, провал) */
 
   /* Accents — Boris orange */
   --accent:       #E07A41;

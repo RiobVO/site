@@ -1224,7 +1224,10 @@ html:not(.js) .term-line { opacity: 1; }
 
 /* Mobile — collapse to single column */
 @media (max-width: 760px) {
-  .process-timeline::before {
+  /* Шина И линия-прогресс уходят к левому рельсу (где точки). Без второго
+     селектора .pt-progress оставалась на left:50% и резала текст по центру. */
+  .process-timeline::before,
+  .process-timeline .pt-progress {
     left: 20px;
   }
   .process-timeline .pt-step,
@@ -1504,7 +1507,7 @@ html:not(.js) .term-line { opacity: 1; }
   letter-spacing: 0.06em;
   margin-bottom: 8px;
 }
-.tier h3 {
+.tier h2 {
   font-size: 24px;
   font-weight: 500;
   letter-spacing: -0.015em;

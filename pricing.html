@@ -80,14 +80,14 @@
   <section class="spread tier-section">
     <div class="section-head reveal">
       <span class="kicker"><span data-lang="ru">Прайс</span><span data-lang="en">Pricing</span></span>
-      <h2 class="headline"><span data-lang="ru">Три формата, <span class="accent-gradient">одна точка входа.</span></span><span data-lang="en">Three formats, <span class="accent-gradient">one entry point.</span></span></h2>
+      <h1 class="headline"><span data-lang="ru">Три формата, <span class="accent-gradient">одна точка входа.</span></span><span data-lang="en">Three formats, <span class="accent-gradient">one entry point.</span></span></h1>
     </div>
     <div class="tier-grid">
 
       <!-- TIER 01 — Консультация -->
       <article class="tier reveal d1" id="01">
         <div class="tier-name"><span data-lang="ru">§ 01 · Консультация</span><span data-lang="en">§ 01 · Consultation</span></div>
-        <h3><span data-lang="ru">Архитектура и план до первой строки кода</span><span data-lang="en">Architecture and plan before any code</span></h3>
+        <h2><span data-lang="ru">Архитектура и план до первой строки кода</span><span data-lang="en">Architecture and plan before any code</span></h2>
         <p class="one-liner">
           <span data-lang="ru">Прежде чем писать код — понимаем задачу. Архитектура, стек, план. Чтобы потом не переделывать.</span><span data-lang="en">Before writing code — we understand the task. Architecture, stack, plan. So you don't have to redo it later.</span>
         </p>
@@ -123,7 +123,7 @@
       <!-- TIER 02 — Разработка (featured) -->
       <article class="tier featured reveal d2" id="02">
         <div class="tier-name"><span data-lang="ru">§ 02 · Разработка</span><span data-lang="en">§ 02 · Development</span></div>
-        <h3><span data-lang="ru">От задачи до продакшена</span><span data-lang="en">From task to production</span></h3>
+        <h2><span data-lang="ru">От задачи до продакшена</span><span data-lang="en">From task to production</span></h2>
         <p class="one-liner">
           <span data-lang="ru">Продукт целиком: код, тесты, деплой, мониторинг, документация. Еженедельные демо, полная прозрачность.</span><span data-lang="en">The whole product: code, tests, deploy, monitoring, documentation. Weekly demos, full transparency.</span>
         </p>
@@ -160,7 +160,7 @@
       <!-- TIER 03 — Аудит -->
       <article class="tier reveal d3" id="03">
         <div class="tier-name"><span data-lang="ru">§ 03 · Аудит</span><span data-lang="en">§ 03 · Audit</span></div>
-        <h3><span data-lang="ru">Что сломано и что чинить первым</span><span data-lang="en">What's broken and what to fix first</span></h3>
+        <h2><span data-lang="ru">Что сломано и что чинить первым</span><span data-lang="en">What's broken and what to fix first</span></h2>
         <p class="one-liner">
           <span data-lang="ru">5–10 рабочих дней. Отчёт с приоритетами и оценкой в днях: что чинить, во сколько обойдётся, в каком порядке.</span><span data-lang="en">5–10 business days. A report with priorities and effort in days: what to fix, what it costs, in what order.</span>
         </p>
@@ -369,21 +369,21 @@
         <div class="cform-body">
           <div class="cf2-hp" aria-hidden="true"><label>Company<input type="text" name="company" tabindex="-1" autocomplete="off"></label></div>
           <div class="cf2-field">
-            <label><span class="atp">$</span> <span data-lang="ru">что строите и где болит</span><span data-lang="en">what you're building &amp; where it hurts</span></label>
-            <textarea name="task" required placeholder="Telegram-бот для заявок → Bitrix24 · 1С ↔ CRM · скоринг…"></textarea>
+            <label for="cf-task"><span class="atp">$</span> <span data-lang="ru">что строите и где болит</span><span data-lang="en">what you're building &amp; where it hurts</span></label>
+            <textarea id="cf-task" name="task" required placeholder="Telegram-бот для заявок → Bitrix24 · 1С ↔ CRM · скоринг…"></textarea>
           </div>
           <div class="cf2-row">
             <div class="cf2-field">
-              <label><span class="atp">$</span> <span data-lang="ru">как ответить</span><span data-lang="en">how to reach you</span></label>
-              <input name="contact" type="text" required placeholder="@telegram / email">
+              <label for="cf-contact"><span class="atp">$</span> <span data-lang="ru">как ответить</span><span data-lang="en">how to reach you</span></label>
+              <input id="cf-contact" name="contact" type="text" required placeholder="@telegram / email">
             </div>
             <div class="cf2-field">
-              <label><span class="atp">$</span> <span data-lang="ru">бюджет — ориентир</span><span data-lang="en">budget — ballpark</span></label>
-              <div class="bchips">
-                <button type="button" class="bchip" data-budget="$1–3K">$1–3K</button>
-                <button type="button" class="bchip" data-budget="$3–8K">$3–8K</button>
-                <button type="button" class="bchip" data-budget="$8K+">$8K+</button>
-                <button type="button" class="bchip" data-budget="не знаю"><span data-lang="ru">не знаю</span><span data-lang="en">not sure</span></button>
+              <label id="cf-budget-label"><span class="atp">$</span> <span data-lang="ru">бюджет — ориентир</span><span data-lang="en">budget — ballpark</span></label>
+              <div class="bchips" role="group" aria-labelledby="cf-budget-label">
+                <button type="button" class="bchip" data-budget="$1–3K" aria-pressed="false">$1–3K</button>
+                <button type="button" class="bchip" data-budget="$3–8K" aria-pressed="false">$3–8K</button>
+                <button type="button" class="bchip" data-budget="$8K+" aria-pressed="false">$8K+</button>
+                <button type="button" class="bchip" data-budget="не знаю" aria-pressed="false"><span data-lang="ru">не знаю</span><span data-lang="en">not sure</span></button>
               </div>
               <input type="hidden" name="budget" value="">
             </div>

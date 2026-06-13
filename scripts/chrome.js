@@ -809,7 +809,11 @@ function initContactForm() {
     const budgetInput = /** @type {HTMLInputElement | null} */ (form.querySelector('input[name="budget"]'));
     chips.forEach((chip) => {
       chip.addEventListener('click', () => {
-        chips.forEach((c) => c.classList.toggle('active', c === chip));
+        chips.forEach((c) => {
+          const on = c === chip;
+          c.classList.toggle('active', on);
+          c.setAttribute('aria-pressed', String(on)); // состояние для скринридера
+        });
         if (budgetInput) budgetInput.value = chip.getAttribute('data-budget') || '';
       });
     });
@@ -859,7 +863,7 @@ function initContactForm() {
           if (btn) btn.style.display = 'none';
           setStatus(T.sent, 'ok');
           form.reset();
-          chips.forEach((c) => c.classList.remove('active'));
+          chips.forEach((c) => { c.classList.remove('active'); c.setAttribute('aria-pressed', 'false'); });
           return;
         }
         // эндпоинт ещё не настроен (503) или ошибка → откат на письмо
