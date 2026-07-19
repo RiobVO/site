@@ -79,6 +79,20 @@ function applyLang(lang) {
       ? code + ', switch to English'
       : code + ', переключить на русский');
   }
+
+  // Двуязычные aria-label для элементов, чей видимый текст не меняется.
+  document.querySelectorAll('[data-aria-ru][data-aria-en]').forEach((el) => {
+    const value = el.getAttribute('data-aria-' + lang);
+    if (value) el.setAttribute('aria-label', value);
+  });
+
+  // Подпись управления каруселью зависит и от языка, и от её состояния.
+  document.querySelectorAll('[data-carousel-toggle]').forEach((el) => {
+    const paused = el.getAttribute('aria-pressed') === 'true';
+    el.setAttribute('aria-label', lang === 'ru'
+      ? (paused ? 'Запустить автопрокрутку отзывов' : 'Остановить автопрокрутку отзывов')
+      : (paused ? 'Start testimonial autoplay' : 'Pause testimonial autoplay'));
+  });
 }
 
 function bindChrome() {
@@ -533,11 +547,41 @@ function initMobileNav() {
   });
 }
 
+/** Подсвечивает раздел навигации, который уже достиг рабочей зоны viewport. */
+function initSectionNav() {
+  if (!document.querySelector('.shell[data-screen-label="home"]')) return;
+  const featured = document.getElementById('featured');
+  const principles = document.getElementById('principles');
+  if (!featured || !principles) return;
+
+  const links = document.querySelectorAll(
+    '.nav-pill a[href="/#work"], .nav-pill a[href="/#principles"], ' +
+    '.nav-mobile-menu a[href="/#work"], .nav-mobile-menu a[href="/#principles"]'
+  );
+  let raf = 0;
+
+  function sync() {
+    raf = 0;
+    const marker = window.innerHeight * 0.35;
+    let active = '';
+    if (featured.getBoundingClientRect().top <= marker) active = '/#work';
+    if (principles.getBoundingClientRect().top <= marker) active = '/#principles';
+    links.forEach((link) => link.classList.toggle('current', link.getAttribute('href') === active));
+  }
+
+  function schedule() {
+    if (!raf) raf = requestAnimationFrame(sync);
+  }
+
+  window.addEventListener('scroll', schedule, { passive: true });
+  window.addEventListener('resize', schedule);
+  sync();
+}
+
 /**
  * Карусель отзывов поверх нативного scroll-snap: листание свайпом/трекпадом
- * работает без JS. JS добавляет точки-индикаторы (по «страницам» — сколько
- * карточек влезает в ряд) и автопрокрутку с паузой на наведение.
- * reduced-motion → без автопрокрутки. Точки синхронизируются со скроллом.
+ * работает без JS. JS добавляет крупные точки-индикаторы, явную паузу и
+ * автопрокрутку, которая останавливается при любом взаимодействии.
  */
 function initTestimonials() {
   document.querySelectorAll('[data-carousel]').forEach((root) => {
@@ -550,6 +594,15 @@ function initTestimonials() {
     const reduce = window.matchMedia
       && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+    const pageDots = document.createElement('div');
+    pageDots.className = 't-page-dots';
+    const toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 't-toggle';
+    toggle.setAttribute('data-carousel-toggle', '');
+    if (reduce) toggle.hidden = true;
+    dotsWrap.replaceChildren(pageDots, toggle);
+
     // Собственный индекс активной «страницы» — единственный источник правды.
     // Автоход НЕ считывает scrollLeft (он промежуточный во время анимации),
     // а ведёт page сам. Направление dir даёт ping-pong вместо рывка-петли.
@@ -558,6 +611,20 @@ function initTestimonials() {
     let dots = [];
     let programmatic = false;   // флаг: скролл инициирован нами, не пользователем
     let settleTimer = 0;
+    let manualPaused = reduce;
+    /** @type {Set<string>} */
+    const blockers = new Set();
+
+    function paintToggle() {
+      toggle.setAttribute('aria-pressed', String(manualPaused));
+      toggle.innerHTML = manualPaused
+        ? '<svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>'
+        : '<svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>';
+      const lang = document.body.getAttribute('data-active-lang') || 'ru';
+      toggle.setAttribute('aria-label', lang === 'ru'
+        ? (manualPaused ? 'Запустить автопрокрутку отзывов' : 'Остановить автопрокрутку отзывов')
+        : (manualPaused ? 'Start testimonial autoplay' : 'Pause testimonial autoplay'));
+    }
 
     // Сколько карточек видно одновременно → число «страниц» для точек.
     function pageCount() {
@@ -568,20 +635,28 @@ function initTestimonials() {
     function buildDots() {
       const n = pageCount();
       if (page > n - 1) page = n - 1;
-      dotsWrap.innerHTML = '';
+      pageDots.innerHTML = '';
       dots = Array.from({ length: n }, (_, i) => {
         const b = document.createElement('button');
         b.type = 'button';
-        b.setAttribute('aria-label', 'Отзыв ' + (i + 1));
+        b.setAttribute('data-aria-ru', 'Отзыв ' + (i + 1));
+        b.setAttribute('data-aria-en', 'Testimonial ' + (i + 1));
+        const lang = document.body.getAttribute('data-active-lang') || 'ru';
+        b.setAttribute('aria-label', lang === 'ru' ? 'Отзыв ' + (i + 1) : 'Testimonial ' + (i + 1));
         b.addEventListener('click', () => { goTo(i); restart(); });
-        dotsWrap.appendChild(b);
+        pageDots.appendChild(b);
         return b;
       });
       paintDots();
     }
 
     function paintDots() {
-      dots.forEach((d, i) => d.classList.toggle('active', i === page));
+      dots.forEach((d, i) => {
+        const active = i === page;
+        d.classList.toggle('active', active);
+        if (active) d.setAttribute('aria-current', 'true');
+        else d.removeAttribute('aria-current');
+      });
     }
 
     function goTo(i) {
@@ -619,12 +694,44 @@ function initTestimonials() {
       if (page + dir > dots.length - 1 || page + dir < 0) dir = -dir;  // ping-pong
       goTo(page + dir);
     }
-    function start() { if (!reduce) { stop(); timer = setInterval(tick, 5000); } }
+    function start() {
+      if (!reduce && !manualPaused && blockers.size === 0 && !document.hidden) {
+        stop();
+        timer = setInterval(tick, 5000);
+      }
+    }
     function stop() { clearInterval(timer); }
     function restart() { stop(); start(); }
 
-    root.addEventListener('mouseenter', stop);
-    root.addEventListener('mouseleave', start);
+    /** @param {string} key @param {boolean} blocked */
+    function setBlocked(key, blocked) {
+      if (blocked) blockers.add(key);
+      else blockers.delete(key);
+      if (blockers.size) stop();
+      else start();
+    }
+
+    root.addEventListener('mouseenter', () => setBlocked('hover', true));
+    root.addEventListener('mouseleave', () => setBlocked('hover', false));
+    root.addEventListener('focusin', () => setBlocked('focus', true));
+    root.addEventListener('focusout', () => {
+      requestAnimationFrame(() => setBlocked('focus', root.contains(document.activeElement)));
+    });
+    track.addEventListener('pointerdown', () => setBlocked('pointer', true), { passive: true });
+    window.addEventListener('pointerup', () => setBlocked('pointer', false), { passive: true });
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) stop();
+      else start();
+    });
+    toggle.addEventListener('click', () => {
+      manualPaused = !manualPaused;
+      paintToggle();
+      if (manualPaused) stop();
+      else {
+        blockers.delete('focus');
+        start();
+      }
+    });
     let rt = 0;
     window.addEventListener('resize', () => {
       clearTimeout(rt);
@@ -632,6 +739,7 @@ function initTestimonials() {
     });
 
     buildDots();
+    paintToggle();
     start();
   });
 }
@@ -648,12 +756,20 @@ function initNetmap() {
   const nm = document.querySelector('.netmap');
   if (!nm) return;
   const stage = /** @type {HTMLElement | null} */ (nm.querySelector('.nm-stage'));
+  const stageScroll = /** @type {HTMLElement | null} */ (nm.querySelector('.nm-stage-scroll'));
   const logText = /** @type {HTMLElement | null} */ (nm.querySelector('.nm-log-text'));
   if (!stage || !logText) return;
 
   const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
   const svg = /** @type {any} */ (nm.querySelector('.nm-edges'));
+
+  // На телефоне начинаем с ядра схемы; боковые системы доступны нативным свайпом.
+  if (stageScroll && window.innerWidth <= 760) {
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      stageScroll.scrollLeft = Math.max(0, (stageScroll.scrollWidth - stageScroll.clientWidth) / 2);
+    }));
+  }
 
   // Прорисовка структуры на старте: провода втягиваются, затем проявляются потоки.
   if (!reduce) {
@@ -691,7 +807,7 @@ function initNetmap() {
     { ru: '1С → синхронизация 1 240 строк',       en: '1C → syncing 1,240 rows',         node: 'e1', badge: '↑ 1 240' },
     { ru: 'Bitrix24 → лид #4821 в воронку',        en: 'Bitrix24 → lead #4821 to pipeline', node: 'e2', badge: '+ lead' },
     { ru: 'Bank API → платёж проведён',            en: 'Bank API → payment cleared',      node: 'e3', badge: '✓ ok' },
-    { ru: 'retry → Bank API (2/3) · восстановлено', en: 'retry → Bank API (2/3) · recovered', node: 'e3', badge: '↻ retry' },
+    { ru: 'повтор → Bank API (2/3) · восстановлено', en: 'retry → Bank API (2/3) · recovered', node: 'e3', badge: '↻ retry' },
     { ru: 'Маркетплейс → 37 новых заказов',        en: 'Marketplace → 37 new orders',     node: 'e4', badge: '+ 37' },
     { ru: 'Telegram → уведомление доставлено',     en: 'Telegram → alert delivered',      node: 'o1', badge: '✓ 42 ms' },
     { ru: 'Email → отчёт 08:00 отправлен',         en: 'Email → 08:00 report sent',       node: 'o2', badge: '✓ sent' },
@@ -883,6 +999,7 @@ function initContactForm() {
 function initAll() {
   bindChrome();
   initMobileNav();
+  initSectionNav();
   initTestimonials();
   initScrollReveal();
   initFaqAnimation();
