@@ -319,7 +319,7 @@
   <section class="spread" id="work">
     <div class="section-head reveal">
       <span class="kicker"><span data-lang="ru">Проекты</span><span data-lang="en">Projects</span></span>
-      <h2 class="headline"><span data-lang="ru">Ещё пять проектов. <span class="accent-gradient">Четыре запущены.</span></span><span data-lang="en">Five more projects. <span class="accent-gradient">Four are live.</span></span></h2>
+      <h2 class="headline"><span data-lang="ru">Ещё шесть проектов. <span class="accent-gradient">Четыре запущены.</span></span><span data-lang="en">Six more projects. <span class="accent-gradient">Four are live.</span></span></h2>
     </div>
 
     <div class="workstation reveal d1">
@@ -336,6 +336,7 @@
         <div class="ws-noscript">
           <p><span data-lang="ru">Проекты — откройте кейс:</span><span data-lang="en">Projects — open a case:</span></p>
           <ul>
+            <li><a href="/case/bando">bando.study — <span data-lang="ru">платформа подготовки к IELTS</span><span data-lang="en">IELTS prep platform</span></a></li>
             <li><a href="/case/container-bot">container-bot — <span data-lang="ru">логистика, учёт контейнеров</span><span data-lang="en">logistics, container tracking</span></a></li>
             <li><a href="/case/serviceflow">serviceflow — <span data-lang="ru">открытая референс-архитектура</span><span data-lang="en">open reference architecture</span></a></li>
             <li><a href="/case/support-bot">support-bot — <span data-lang="ru">внутренняя поддержка, 4500 сотрудников</span><span data-lang="en">internal support, 4,500 employees</span></a></li>
@@ -816,6 +817,17 @@
   // CLI project browser
   var WS_PROJECTS = [
     {
+      id: 'bando', name: 'bando.study', status: 'prelaunch',
+      domain: 'EdTech · IELTS prep platform',
+      desc_ru: 'Платформа подготовки к IELTS: тренажёры Reading и Listening в формате экзамена, мгновенная воспроизводимая проверка без нейросетей.',
+      desc_en: 'IELTS prep platform: real-exam Reading & Listening trainers, instant reproducible scoring without neural nets.',
+      result_ru: 'Платформа готова и развёрнута на Vercel, домен bando.study. Публичный запуск заказчик готовит.',
+      result_en: 'Built and deployed on Vercel at bando.study. The client is preparing the public launch.',
+      metrics: [{val:'5.5wk',label:'Build time'},{val:'1412',label:'Tests'},{val:'37',label:'DB tables'},{val:'3',label:'Payments'}],
+      stack: ['Next.js 15','React 19','Supabase','Drizzle'],
+      case: '/case/bando'
+    },
+    {
       id: 'container-bot', name: 'container-bot', status: 'live', year: '2024 – 2025',
       domain: 'Logistics · Container tracking',
       desc_ru: 'Заменил Excel на трёх терминалах. ISO 6346 валидация, биллинг на лету, xlsx-отчёты в чат.',
@@ -824,7 +836,7 @@
       result_en: 'Zero lost rows, zero number typos. Billing went from manual to instant.',
       metrics: [{val:'78ms',label:'p50 latency'},{val:'3',label:'Terminals'},{val:'3k+',label:'Containers/y'},{val:'0',label:'Data loss'}],
       stack: ['aiogram','Postgres','openpyxl','Docker'],
-      case: 'case/container-bot.html'
+      case: '/case/container-bot'
     },
     {
       id: 'serviceflow', name: 'serviceflow', status: 'ref', year: '2024',
@@ -835,7 +847,7 @@
       result_en: 'A template you can fork and run in 10 minutes. Every decision is documented.',
       metrics: [{val:'Clean',label:'Architecture'},{val:'UoW',label:'Pattern'},{val:'FSM',label:'State mgmt'},{val:'RFC 7807',label:'Errors'}],
       stack: ['FastAPI','React','Postgres','Pydantic v2'],
-      case: 'case/serviceflow.html'
+      case: '/case/serviceflow'
     },
     {
       id: 'support-bot', name: 'support-bot', status: 'live', year: '2023 – 2024',
@@ -846,7 +858,7 @@
       result_en: 'HR department stopped drowning in repetitive emails. Routine went to the bot, people focused on people.',
       metrics: [{val:'4 500',label:'Employees'},{val:'−70%',label:'HR inbox'},{val:'Bitrix24',label:'CRM sync'},{val:'RU/UZ/EN',label:'Locales'}],
       stack: ['Python','aiogram','Bitrix24','Postgres'],
-      case: 'case/support-bot.html'
+      case: '/case/support-bot'
     },
     {
       id: 'manicure-bot', name: 'manicure-bot', status: 'live', year: '2025 – now',
@@ -857,7 +869,7 @@
       result_en: 'Zero double bookings. Clients never forget their visit — reminders do the job.',
       metrics: [{val:'Ed25519',label:'Licensing'},{val:'86+',label:'Tests'},{val:'6h',label:'Backup'},{val:'<200ms',label:'Response'}],
       stack: ['aiogram','SQLite WAL','Redis','Docker'],
-      case: 'case/manicure-bot.html'
+      case: '/case/manicure-bot'
     },
     {
       id: 'pekarna-bot', name: 'pekarna-bot', status: 'live', year: '2025',
@@ -868,7 +880,7 @@
       result_en: 'Morning report is ready before the director arrives. Order errors disappeared.',
       metrics: [{val:'08:00',label:'Auto-report'},{val:'Per-client',label:'Pricing'},{val:'B2B',label:'Model'},{val:'.xlsx',label:'Export'}],
       stack: ['aiogram','SQLAlchemy','APScheduler','openpyxl'],
-      case: 'case/pekarna-bot.html'
+      case: '/case/pekarna-bot'
     }
   ];
 
@@ -892,9 +904,10 @@
     var detailHtml = '';
     WS_PROJECTS.forEach(function(p, i) {
       var active = i === 0 ? ' active' : '';
-      var badge = p.status === 'live'
-        ? '<span class="ws-badge live"><span class="ws-badge-dot"></span>Live</span>'
-        : '<span class="ws-badge ref"><span class="ws-badge-dot"></span>Reference</span>';
+      var badge;
+      if (p.status === 'live') badge = '<span class="ws-badge live"><span class="ws-badge-dot"></span>Live</span>';
+      else if (p.status === 'prelaunch') badge = '<span class="ws-badge ref"><span class="ws-badge-dot"></span>Pre-launch</span>';
+      else badge = '<span class="ws-badge ref"><span class="ws-badge-dot"></span>Reference</span>';
       var metricsHtml = '';
       p.metrics.forEach(function(m) {
         metricsHtml += '<div class="ws-metric"><div class="ws-metric-val">' + m.val + '</div><div class="ws-metric-label">' + m.label + '</div></div>';
@@ -923,7 +936,7 @@
       statusBar.innerHTML =
         '<span class="ws-sb-item"><span class="ws-sb-dot"></span>' + p.stack[0] + '</span>' +
         '<span class="ws-sb-item">' + p.domain.split(' · ')[0] + '</span>' +
-        '<span class="ws-sb-right">' + liveCount + ' live · ' + (WS_PROJECTS.length - liveCount) + ' open ref</span>';
+        '<span class="ws-sb-right">' + liveCount + ' live · ' + WS_PROJECTS.length + ' projects</span>';
     }
     updateStatus(WS_PROJECTS[0].id);
 

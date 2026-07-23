@@ -2132,6 +2132,26 @@ html:not(.js) .principle-cell .pc-cta { display: none; }
   .case-body .figure { font-size: 10.5px; }
   .case-body .figure pre { padding: 18px 14px; }
 }
+/* ─── Case screenshot — рамка скриншота живого продукта: линия + радиус карточки, без теней/glow ─── */
+.case-body .case-shot {
+  margin: 36px 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--bg-elev);
+}
+.case-body .case-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.case-body .case-shot figcaption {
+  padding: 12px 20px;
+  border-top: 1px solid var(--line);
+  color: var(--text-faint);
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
 /* ─── Case metrics — console dashboard ─── */
 .case-body .metric-row {
   display: grid;

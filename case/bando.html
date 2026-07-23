@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>bando.study · Vire</title>
+<meta name="description" content="IELTS prep web platform: real-exam Reading & Listening trainers, deterministic instant scoring, exam mode. Next.js 15, React 19, Supabase.">
+<meta property="og:title" content="bando.study — кейс / Vire">
+<meta property="og:description" content="IELTS prep web platform: real-exam Reading & Listening trainers, deterministic instant scoring, exam mode. Next.js 15, React 19, Supabase.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://vire.dev/case/bando">
+<link rel="canonical" href="https://vire.dev/case/bando">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://vire.dev/og/bando.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:description" content="IELTS prep web platform: real-exam Reading & Listening trainers, deterministic instant scoring, exam mode. Next.js 15, React 19, Supabase.">
+<meta name="twitter:image" content="https://vire.dev/og/bando.png">
+<link rel="preload" href="../styles/fonts/jbm-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../styles/fonts/jbm-400-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../apple-touch-icon.svg">
+<link rel="stylesheet" href="../styles/base.css">
+<link rel="stylesheet" href="../styles/components.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "name": "bando.study — кейс",
+  "url": "https://vire.dev/case/bando",
+  "inLanguage": "ru",
+  "image": "https://vire.dev/og/bando.png",
+  "author": { "@type": "Person", "name": "Элёр", "url": "https://vire.dev/", "sameAs": ["https://github.com/RiobVO", "https://t.me/plssog"] }
+}
+</script>
+</head>
+<body data-theme="dark">
+<a href="#main" class="skip-link"><span data-lang="ru">К содержимому</span><span data-lang="en">Skip to content</span></a>
+
+<nav class="nav-pill" aria-label="Primary">
+  <a href="/" class="brand">
+    <span class="logo-mark"><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 128 128" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><polyline points="24,34 16,34 16,94 24,94"/><polyline points="42,42 59,64 42,86"/><polyline points="86,42 69,64 86,86"/><polyline points="104,34 112,34 112,94 104,94"/></svg></span>
+    <span>Vire</span>
+  </a>
+  <div class="links">
+    <a href="/#work" class="current"><span data-lang="ru">Работы</span><span data-lang="en">Works</span></a>
+    <a href="/#principles"><span data-lang="ru">Принципы</span><span data-lang="en">Principles</span></a>
+    <a href="/pricing"><span data-lang="ru">Цены</span><span data-lang="en">Pricing</span></a>
+  </div>
+  <div class="tools">
+    <button type="button" class="icon-btn" data-lang-cycle aria-label="RU, switch to English">
+      <span data-lang-label>RU</span>
+    </button>
+    <button type="button" class="icon-btn" data-theme-btn aria-label="Toggle theme"></button>
+  </div>
+  <a href="https://t.me/plssog" class="btn primary cta">
+    <span data-lang="ru">Связаться</span><span data-lang="en">Get in touch</span>
+    <span class="arrow">↗</span>
+  </a>
+</nav>
+
+<div class="shell" id="main" data-screen-label="case-bando">
+
+  <section class="page-head">
+    <div class="breadcrumb">
+      <a href="/"><span data-lang="ru">Главная</span><span data-lang="en">Home</span></a>
+      <span class="sep">/</span>
+      <a href="/#work"><span data-lang="ru">Работы</span><span data-lang="en">Works</span></a>
+      <span class="sep">/</span>
+      <span>bando.study</span>
+    </div>
+    <div class="case-meta-row">
+      <span>Pre-launch · EdTech</span>
+      <span class="sep">·</span>
+      <span><span data-lang="ru">Подготовка к IELTS</span><span data-lang="en">IELTS prep</span></span>
+      <span class="sep">·</span>
+      <span>Next.js · Supabase</span>
+    </div>
+    <h1 class="reveal">
+      <span data-lang="ru">bando.study —<br><span class="accent-gradient">платформа подготовки</span> к IELTS.</span>
+      <span data-lang="en">bando.study —<br>a <span class="accent-gradient">platform</span> for IELTS prep.</span>
+    </h1>
+    <p class="lede reveal d1">
+      <span data-lang="ru">Веб-платформа для подготовки к IELTS: тренажёры Reading и Listening в формате реального экзамена, мгновенная и воспроизводимая проверка ответов, режим экзамена с таймером. Платформа готова и развёрнута — публичный запуск заказчик готовит.</span>
+      <span data-lang="en">A web platform for IELTS prep: Reading and Listening trainers in the real exam format, instant and reproducible answer checking, an exam mode with a timer. The platform is built and deployed — the client is preparing the public launch.</span>
+    </p>
+  </section>
+
+  <section style="padding: 56px 0 24px;">
+    <div class="case-hero-row">
+      <div class="code-card reveal">
+        <div class="head">
+          <span class="path">~/bando/app/api/attempts/[id]/submit.ts</span>
+          <span class="tag">server</span>
+        </div>
+<pre class="body"><span class="kw">export async function</span> <span class="fn">POST</span>(req: Request, ctx: Ctx) {
+  <span class="kw">const</span> user = <span class="kw">await</span> requireUser(req)
+  <span class="kw">const</span> attempt = <span class="kw">await</span> loadAttempt(ctx.params.id, user.id)
+
+  <span class="kw">if</span> (attempt.submittedAt)              <span class="comment">// повтор сдачи — тот же результат</span>
+    <span class="kw">return</span> json(attempt.result)
+
+  <span class="kw">return</span> db.transaction(<span class="kw">async</span> (tx) => {
+    <span class="kw">await</span> tx.lock(attempt.id)            <span class="comment">// блокировка строки против гонок</span>
+    <span class="kw">const</span> key = <span class="kw">await</span> tx.answerKeys.of(attempt)     <span class="comment">// ключи только на сервере</span>
+    <span class="kw">const</span> result = score(attempt.answers, key)     <span class="comment">// проверка детерминирована, без AI</span>
+    <span class="kw">await</span> tx.finish(attempt, result)
+    <span class="ok" id="caseTyping">return json(result)</span></pre>
+      </div>
+
+      <aside class="case-spec reveal d1">
+        <div class="head">
+          <span><span data-lang="ru">Карточка проекта</span><span data-lang="en">Project card</span></span>
+          <span>pre-launch</span>
+        </div>
+        <dl>
+          <dt><span data-lang="ru">Заказчик</span><span data-lang="en">Client</span></dt><dd>bando.study (EdTech)</dd>
+          <dt><span data-lang="ru">Роль</span><span data-lang="en">Role</span></dt><dd>Solo</dd>
+          <dt><span data-lang="ru">Срок</span><span data-lang="en">Duration</span></dt><dd><span data-lang="ru">5,5 нед.</span><span data-lang="en">5.5 wk</span></dd>
+          <dt><span data-lang="ru">Стек</span><span data-lang="en">Stack</span></dt><dd>Next.js 15 · React 19</dd>
+          <dt><span data-lang="ru">БД</span><span data-lang="en">DB</span></dt><dd>Supabase · Postgres</dd>
+          <dt>ORM</dt><dd>Drizzle</dd>
+          <dt>Deploy</dt><dd>Vercel</dd>
+          <dt><span data-lang="ru">Статус</span><span data-lang="en">Status</span></dt><dd>Pre-launch</dd>
+        </dl>
+        <p class="note">
+          <span data-lang="ru">Права на учебный контент — у заказчика. Платформа, код и архитектура — моя разработка.</span>
+          <span data-lang="en">Rights to the learning content belong to the client. The platform, code and architecture are my work.</span>
+        </p>
+      </aside>
+    </div>
+  </section>
+
+
+  <div class="case-layout">
+
+    <article class="case-body">
+
+      <h2 id="brief"><span class="num">§ 01</span><span data-lang="ru">О чём проект</span><span data-lang="en">What this is</span></h2>
+      <p>
+        <span data-lang="ru">Заказчик готовит студентов к IELTS и накопил библиотеку готовых тестов в формате HTML. Нужна была платформа, где студент проходит Reading и Listening в том же виде, что и на реальном компьютерном экзамене, сразу видит результат с разбором, а прогресс копится в личном кабинете.</span>
+        <span data-lang="en">The client prepares students for IELTS and had accumulated a library of ready tests in HTML format. What was needed was a platform where a student takes Reading and Listening exactly as on the real computer-based exam, sees the result with a breakdown right away, and where progress accrues in a personal account.</span>
+      </p>
+      <p>
+        <span data-lang="ru">Задача была не «один экран с вопросами», а платформа целиком: импорт готового контента, движок прохождения, честный рейтинг, оплаты и админка. Права на учебный контент остаются у заказчика — я отвечал за платформу, код и архитектуру. Платформа развёрнута и открывается на <a href="https://bando.study" class="inline-link">bando.study</a>; публичный запуск заказчик готовит.</span>
+        <span data-lang="en">The task wasn't "one screen with questions" but a whole platform: content import, a test-taking engine, a fair leaderboard, payments and an admin panel. Rights to the learning content stay with the client — I was responsible for the platform, the code and the architecture. The platform is deployed and opens at <a href="https://bando.study" class="inline-link">bando.study</a>; the client is preparing the public launch.</span>
+      </p>
+
+      <figure class="case-shot reveal">
+        <picture>
+          <source srcset="/img/bando.avif" type="image/avif">
+          <source srcset="/img/bando.webp" type="image/webp">
+          <img src="/img/bando.jpg" width="1600" height="1000" loading="lazy" decoding="async" alt="Лендинг bando.study: заголовок «Stop guessing your band» и карточка Band Score 6.5 с разбором результата по типам вопросов IELTS — Matching Headings, True/False/Not Given, Multiple Choice.">
+        </picture>
+        <figcaption>
+          <span data-lang="ru">Рис. 1 · Публичный лендинг bando.study. Карточка Band Score показывает разбор по типам вопросов — то, ради чего платформа и делалась.</span>
+          <span data-lang="en">Fig. 1 · The public bando.study landing. The Band Score card shows the per-question-type breakdown — the whole point of the platform.</span>
+        </figcaption>
+      </figure>
+
+      <h2 id="built"><span class="num">§ 02</span><span data-lang="ru">Как устроено</span><span data-lang="en">How it's built</span></h2>
+      <p>
+        <span data-lang="ru">Платформа на Next.js: серверный рендеринг страниц, серверные API-роуты, данные в Supabase (Postgres). Логика прохождения теста живёт на сервере — браузер получает вопросы, но не ключи ответов до сдачи попытки.</span>
+        <span data-lang="en">The platform runs on Next.js: server-rendered pages, server API routes, data in Supabase (Postgres). The test-taking logic lives on the server — the browser gets the questions, but not the answer keys, until the attempt is submitted.</span>
+      </p>
+      <ul>
+        <li><span data-lang="ru"><strong>Два тренажёра — Reading и Listening</strong> — в формате реального экзамена: таймер, навигатор по вопросам, автосохранение ответов.</span><span data-lang="en"><strong>Two trainers — Reading and Listening</strong> — in the real exam format: timer, question navigator, answer autosave.</span></li>
+        <li><span data-lang="ru"><strong>Импорт готовых тестов заказчика</strong> — платформа принимает подготовленные HTML-тесты и превращает их в интерактивные попытки.</span><span data-lang="en"><strong>Import of the client's ready tests</strong> — the platform ingests prepared HTML tests and turns them into interactive attempts.</span></li>
+        <li><span data-lang="ru"><strong>Детерминированная проверка — по правилам, без нейросетей.</strong> Поэтому результат мгновенный и воспроизводимый: одинаковые ответы всегда дают одинаковый балл.</span><span data-lang="en"><strong>Deterministic checking — by rules, no neural nets.</strong> That's why the result is instant and reproducible: the same answers always give the same score.</span></li>
+        <li><span data-lang="ru"><strong>Разбор результата по типам вопросов</strong> — видно, где именно студент теряет баллы.</span><span data-lang="en"><strong>Result breakdown by question type</strong> — you can see exactly where the student loses points.</span></li>
+        <li><span data-lang="ru"><strong>Каталог с фильтрами, личный кабинет, лидерборд</strong>, бейджи, стрики за регулярность и реферальная программа.</span><span data-lang="en"><strong>Filtered catalog, personal account, leaderboard</strong>, badges, streaks for consistency, and a referral program.</span></li>
+        <li><span data-lang="ru"><strong>Writing и Speaking с автоматической оценкой</strong> на базе Gemini (для Speaking — с разбором аудио) реализованы и ждут запуска за фиче-флагом.</span><span data-lang="en"><strong>Writing and Speaking with automatic scoring</strong> powered by Gemini (with audio analysis for Speaking) are built and waiting behind a feature flag.</span></li>
+        <li><span data-lang="ru"><strong>Локальные оплаты — Payme, Click, Uzum.</strong> Интеграции написаны; включатся, когда заказчик подключит мерчант-ключи.</span><span data-lang="en"><strong>Local payments — Payme, Click, Uzum.</strong> The integrations are written; they switch on once the client connects the merchant keys.</span></li>
+      </ul>
+
+      <div class="figure">
+        <div class="fig-bar"><span class="fig-title">structure · project layout</span></div>
+<pre><span class="fc">bando/</span>
+├── <span class="fl">app/</span>
+│   ├── <span class="fc">(exam)/</span>       <span class="fm"># движок прохождения: таймер, навигатор</span>
+│   ├── <span class="fc">catalog/</span>      <span class="fm"># каталог тестов с фильтрами</span>
+│   └── <span class="fc">api/</span>          <span class="fm"># серверные роуты: сдача, скоринг, оплаты</span>
+├── <span class="fl">lib/</span>
+│   ├── <span class="fc">scoring/</span>      <span class="fm"># детерминированная проверка по типам вопросов</span>
+│   ├── <span class="fc">import/</span>       <span class="fm"># песочница для чужого HTML</span>
+│   └── <span class="fc">payments/</span>     <span class="fm"># Payme · Click · Uzum</span>
+├── <span class="fl">db/</span>            <span class="fm"># Drizzle: 37 таблиц, 58 миграций</span>
+└── <span class="fl">jobs/</span>          <span class="fm"># 8 фоновых крон-задач</span></pre>
+        <div class="caption"><span data-lang="ru">Рис. 2 · Структура. Проверка ответов и ключи живут на сервере, в <code>lib/scoring</code>.</span><span data-lang="en">Fig. 2 · Structure. Answer checking and keys live on the server, in <code>lib/scoring</code>.</span></div>
+      </div>
+
+      <h2 id="hard"><span class="num">§ 03</span><span data-lang="ru">Что было сложно</span><span data-lang="en">What was hard</span></h2>
+      <p>
+        <span data-lang="ru"><strong>(1) Импорт чужого HTML.</strong> Тесты приходят готовыми HTML-файлами со своими встроенными скриптами. Запускать чужой код на своём сервере опасно, поэтому он исполняется в изолированной песочнице с лимитами по времени и памяти — из скриптов достаётся только логика подсчёта баллов, ничего лишнего выполниться не может.</span>
+        <span data-lang="en"><strong>(1) Importing someone else's HTML.</strong> Tests arrive as ready HTML files with their own embedded scripts. Running foreign code on your own server is dangerous, so it executes in an isolated sandbox with time and memory limits — only the scoring logic is extracted from the scripts, nothing else can run.</span>
+      </p>
+      <p>
+        <span data-lang="ru"><strong>(2) Защита ответов.</strong> Ключи и разборы физически не отдаются в браузер, пока студент не сдал попытку — иначе правильные ответы можно было бы подсмотреть в коде страницы. Проверка идёт на сервере, браузер получает только сам балл.</span>
+        <span data-lang="en"><strong>(2) Protecting the answers.</strong> Keys and breakdowns are physically not sent to the browser until the student submits the attempt — otherwise the correct answers could be peeked at in the page source. Checking happens on the server; the browser receives only the score itself.</span>
+      </p>
+      <p>
+        <span data-lang="ru"><strong>(3) Одновременные сдачи и честный рейтинг.</strong> Когда несколько студентов сдают попытки в один момент, легко получить гонку и испорченный рейтинг. Здесь стоят блокировки на уровне базы данных, а конкурентность проверяется адверсариальными тестами — специально сталкивающими сдачи друг с другом.</span>
+        <span data-lang="en"><strong>(3) Concurrent submissions and a fair leaderboard.</strong> When several students submit at the same moment, it's easy to get a race and a corrupted ranking. Here there are database-level locks, and concurrency is verified with adversarial tests that deliberately collide submissions against each other.</span>
+      </p>
+      <p>
+        <span data-lang="ru"><strong>(4) Два движка прохождения.</strong> Первый — точная реплика интерфейса реального компьютерного IELTS: тест открывается в изолированном окне без доступа к сети, чтобы всё было как на экзамене. Второй — собственный режим практики с подробным разбором. Один и тот же тест проходится в обоих.</span>
+        <span data-lang="en"><strong>(4) Two test-taking engines.</strong> The first is an exact replica of the real computer-based IELTS interface: the test opens in an isolated window with no network access, so everything is like on the exam. The second is a custom practice mode with a detailed breakdown. The same test can be taken in both.</span>
+      </p>
+
+      <div class="pullquote">
+        <span data-lang="ru">Там, где правила проверки известны заранее, нейросеть не нужна — детерминированный движок надёжнее, мгновеннее и его не надо перепроверять.</span>
+        <span data-lang="en">Where the checking rules are known in advance, a neural net isn't needed — a deterministic engine is more reliable, more instant, and needs no re-checking.</span>
+      </div>
+
+      <h2 id="numbers"><span class="num">§ 04</span><span data-lang="ru">Цифры</span><span data-lang="en">Numbers</span></h2>
+
+      <div class="metric-row">
+        <div class="metric">
+          <span class="v">5,5<em>нед</em></span>
+          <span class="l">BUILD TIME</span>
+        </div>
+        <div class="metric">
+          <span class="v">~75<em>k</em></span>
+          <span class="l">LINES TS</span>
+        </div>
+        <div class="metric">
+          <span class="v"><em>1412</em></span>
+          <span class="l">TESTS</span>
+        </div>
+        <div class="metric">
+          <span class="v"><em>37</em></span>
+          <span class="l">DB TABLES</span>
+        </div>
+      </div>
+
+      <p>
+        <span data-lang="ru">За 5,5 недель от первого коммита до готовой платформы: 985 коммитов, ~75 000 строк TypeScript, 1412 автотестов и e2e-сценарии Playwright, 37 таблиц и 58 миграций, 46 страниц и 16 API-роутов, 8 фоновых крон-задач, 3 платёжные интеграции.</span>
+        <span data-lang="en">In 5.5 weeks from the first commit to a finished platform: 985 commits, ~75,000 lines of TypeScript, 1,412 automated tests plus Playwright e2e scenarios, 37 tables and 58 migrations, 46 pages and 16 API routes, 8 background cron jobs, 3 payment integrations.</span>
+      </p>
+
+      <h2 id="lessons"><span class="num">§ 05</span><span data-lang="ru">Что я вынес</span><span data-lang="en">Lessons learned</span></h2>
+      <p>
+        <span data-lang="ru"><strong>(а)</strong> Там, где правила известны заранее, детерминированная проверка надёжнее и дешевле нейросети: результат воспроизводим, мгновенен и его не надо перепроверять. AI я приберёг для Writing и Speaking, где без него действительно не обойтись.</span>
+        <span data-lang="en"><strong>(a)</strong> Where the rules are known in advance, deterministic checking is more reliable and cheaper than a neural net: the result is reproducible, instant, and needs no re-checking. I saved AI for Writing and Speaking, where there's genuinely no way around it.</span>
+      </p>
+      <p>
+        <span data-lang="ru"><strong>(б)</strong> Безопасность — это модель данных, а не заплатки поверх. Ключи ответов не уходят в браузер не потому, что «спрятаны», а потому что сервер их туда не отдаёт — так спроектировано.</span>
+        <span data-lang="en"><strong>(b)</strong> Security is a data model, not patches on top. The answer keys don't reach the browser not because they're "hidden," but because the server doesn't send them there by design.</span>
+      </p>
+      <p>
+        <span data-lang="ru"><strong>(в)</strong> «Платформа под ключ» — это импорт контента, экзамен, оплаты и админка, а не один экран с вопросами. Большая часть работы там, где пользователь её не видит.</span>
+        <span data-lang="en"><strong>(c)</strong> A "turnkey platform" is content import, the exam, payments and an admin panel — not one screen with questions. Most of the work is where the user never sees it.</span>
+      </p>
+
+    </article>
+
+    <aside>
+      <nav class="case-toc">
+        <div class="head"><span data-lang="ru">Содержание</span><span data-lang="en">Contents</span></div>
+        <ol>
+          <li><a href="#brief"><span data-lang="ru">О чём проект</span><span data-lang="en">What this is</span></a></li>
+          <li><a href="#built"><span data-lang="ru">Как устроено</span><span data-lang="en">How it's built</span></a></li>
+          <li><a href="#hard"><span data-lang="ru">Что было сложно</span><span data-lang="en">What was hard</span></a></li>
+          <li><a href="#numbers"><span data-lang="ru">Цифры</span><span data-lang="en">Numbers</span></a></li>
+          <li><a href="#lessons"><span data-lang="ru">Что я вынес</span><span data-lang="en">Lessons learned</span></a></li>
+        </ol>
+      </nav>
+    </aside>
+
+  </div>
+
+  <section class="case-cta reveal">
+    <h2><span data-lang="ru">Нужно похожее решение для вашего бизнеса?</span><span data-lang="en">Need a similar solution for your business?</span></h2>
+    <p><span data-lang="ru">Опишите задачу — отвечу в течение дня, оценку дам бесплатно.</span><span data-lang="en">Describe your task — I'll reply within a day, the estimate is free.</span></p>
+    <div class="ctas">
+      <a href="https://t.me/plssog" class="btn primary"><span data-lang="ru">Написать в Telegram</span><span data-lang="en">Message on Telegram</span><span class="arrow">↗</span></a>
+      <a href="/pricing#02" class="btn secondary"><span data-lang="ru">Разработка под ключ</span><span data-lang="en">Custom development</span><span class="arrow">→</span></a>
+    </div>
+  </section>
+
+  <nav class="case-nav">
+    <a href="/case/credit-assistant" class="prev">
+      <div class="label"><span data-lang="ru">← Предыдущий кейс</span><span data-lang="en">← Previous case</span></div>
+      <div class="title-line">Credit Assistant</div>
+    </a>
+    <a href="/case/container-bot" class="next">
+      <div class="label"><span data-lang="ru">Следующий кейс →</span><span data-lang="en">Next case →</span></div>
+      <div class="title-line">Container Terminal Bot</div>
+    </a>
+  </nav>
+
+  <footer class="site-footer">
+    <div class="row">
+      <a href="/" class="brand">
+        <span class="logo-mark"><svg aria-hidden="true" focusable="false" width="24" height="24" viewBox="0 0 128 128" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><polyline points="24,34 16,34 16,94 24,94"/><polyline points="42,42 59,64 42,86"/><polyline points="86,42 69,64 86,86"/><polyline points="104,34 112,34 112,94 104,94"/></svg></span>
+        <span>Vire</span>
+      </a>
+      <div class="links">
+        <a href="https://github.com/RiobVO">GitHub</a>
+        <a href="https://t.me/plssog">Telegram</a>
+        <a href="mailto:eleru340&#64;gmail&#46;com">Email</a>
+              </div>
+    </div>
+    <div class="colophon">© 2026</div>
+  </footer>
+
+</div>
+
+<script src="../scripts/chrome.js"></script>
+<script>
+document.querySelectorAll('.case-nav a').forEach(function(a) {
+  a.addEventListener('mousemove', function(e) {
+    var r = a.getBoundingClientRect();
+    a.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+    a.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+  });
+});
+
+var metrics = document.querySelectorAll('.metric-row .metric');
+if (metrics.length) {
+  new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        metrics.forEach(function(m) { m.classList.add('in-view'); });
+      }
+    });
+  }, { threshold: 0.3 }).observe(document.querySelector('.metric-row'));
+}
+</script>
+</body>
+</html>
