@@ -99,13 +99,13 @@
   <span class="kw">const</span> user = <span class="kw">await</span> requireUser(req)
   <span class="kw">const</span> attempt = <span class="kw">await</span> loadAttempt(ctx.params.id, user.id)
 
-  <span class="kw">if</span> (attempt.submittedAt)              <span class="comment">// повтор сдачи — тот же результат</span>
+  <span class="kw">if</span> (attempt.submittedAt)              <span class="comment"><span data-lang="ru">// повтор сдачи — тот же результат</span><span data-lang="en">// resubmit — same result</span></span>
     <span class="kw">return</span> json(attempt.result)
 
   <span class="kw">return</span> db.transaction(<span class="kw">async</span> (tx) => {
-    <span class="kw">await</span> tx.lock(attempt.id)            <span class="comment">// блокировка строки против гонок</span>
-    <span class="kw">const</span> key = <span class="kw">await</span> tx.answerKeys.of(attempt)     <span class="comment">// ключи только на сервере</span>
-    <span class="kw">const</span> result = score(attempt.answers, key)     <span class="comment">// проверка детерминирована, без AI</span>
+    <span class="kw">await</span> tx.lock(attempt.id)            <span class="comment"><span data-lang="ru">// блокировка строки против гонок</span><span data-lang="en">// row lock against races</span></span>
+    <span class="kw">const</span> key = <span class="kw">await</span> tx.answerKeys.of(attempt)     <span class="comment"><span data-lang="ru">// ключи только на сервере</span><span data-lang="en">// keys stay on the server</span></span>
+    <span class="kw">const</span> result = score(attempt.answers, key)     <span class="comment"><span data-lang="ru">// проверка детерминирована, без AI</span><span data-lang="en">// deterministic check, no AI</span></span>
     <span class="kw">await</span> tx.finish(attempt, result)
     <span class="ok" id="caseTyping">return json(result)</span></pre>
       </div>
@@ -203,15 +203,15 @@
         <div class="fig-bar"><span class="fig-title">structure · project layout</span></div>
 <pre><span class="fc">bando/</span>
 ├── <span class="fl">app/</span>
-│   ├── <span class="fc">(exam)/</span>       <span class="fm"># движок прохождения: таймер, навигатор</span>
-│   ├── <span class="fc">catalog/</span>      <span class="fm"># каталог тестов с фильтрами</span>
-│   └── <span class="fc">api/</span>          <span class="fm"># серверные роуты: сдача, скоринг, оплаты</span>
+│   ├── <span class="fc">(exam)/</span>       <span class="fm"><span data-lang="ru"># движок прохождения: таймер, навигатор</span><span data-lang="en"># test-taking engine: timer, navigator</span></span>
+│   ├── <span class="fc">catalog/</span>      <span class="fm"><span data-lang="ru"># каталог тестов с фильтрами</span><span data-lang="en"># test catalog with filters</span></span>
+│   └── <span class="fc">api/</span>          <span class="fm"><span data-lang="ru"># серверные роуты: сдача, скоринг, оплаты</span><span data-lang="en"># server routes: submit, scoring, payments</span></span>
 ├── <span class="fl">lib/</span>
-│   ├── <span class="fc">scoring/</span>      <span class="fm"># детерминированная проверка по типам вопросов</span>
-│   ├── <span class="fc">import/</span>       <span class="fm"># песочница для чужого HTML</span>
+│   ├── <span class="fc">scoring/</span>      <span class="fm"><span data-lang="ru"># детерминированная проверка по типам вопросов</span><span data-lang="en"># deterministic checking by question type</span></span>
+│   ├── <span class="fc">import/</span>       <span class="fm"><span data-lang="ru"># песочница для чужого HTML</span><span data-lang="en"># sandbox for foreign HTML</span></span>
 │   └── <span class="fc">payments/</span>     <span class="fm"># Payme · Click · Uzum</span>
-├── <span class="fl">db/</span>            <span class="fm"># Drizzle: 37 таблиц, 58 миграций</span>
-└── <span class="fl">jobs/</span>          <span class="fm"># 8 фоновых крон-задач</span></pre>
+├── <span class="fl">db/</span>            <span class="fm"><span data-lang="ru"># Drizzle: 37 таблиц, 58 миграций</span><span data-lang="en"># Drizzle: 37 tables, 58 migrations</span></span>
+└── <span class="fl">jobs/</span>          <span class="fm"><span data-lang="ru"># 8 фоновых крон-задач</span><span data-lang="en"># 8 background cron jobs</span></span></pre>
         <div class="caption"><span data-lang="ru">Рис. 4 · Структура. Проверка ответов и ключи живут на сервере, в <code>lib/scoring</code>.</span><span data-lang="en">Fig. 4 · Structure. Answer checking and keys live on the server, in <code>lib/scoring</code>.</span></div>
       </div>
 
@@ -242,7 +242,7 @@
 
       <div class="metric-row">
         <div class="metric">
-          <span class="v">5,5<em>нед</em></span>
+          <span class="v">5.5<em>wk</em></span>
           <span class="l">BUILD TIME</span>
         </div>
         <div class="metric">
@@ -261,7 +261,7 @@
 
       <p>
         <span data-lang="ru">За 5,5 недель от первого коммита до готовой платформы: 985 коммитов, ~75 000 строк TypeScript, 1814 автотестов и e2e-сценарии Playwright, 37 таблиц и 58 миграций, 46 страниц и 16 API-роутов, 8 фоновых крон-задач, 3 платёжные интеграции.</span>
-        <span data-lang="en">In 5.5 weeks from the first commit to a finished platform: 985 commits, ~75,000 lines of TypeScript, 1,412 automated tests plus Playwright e2e scenarios, 37 tables and 58 migrations, 46 pages and 16 API routes, 8 background cron jobs, 3 payment integrations.</span>
+        <span data-lang="en">In 5.5 weeks from the first commit to a finished platform: 985 commits, ~75,000 lines of TypeScript, 1,814 automated tests plus Playwright e2e scenarios, 37 tables and 58 migrations, 46 pages and 16 API routes, 8 background cron jobs, 3 payment integrations.</span>
       </p>
 
       <h2 id="lessons"><span class="num">§ 05</span><span data-lang="ru">Что я вынес</span><span data-lang="en">Lessons learned</span></h2>
