@@ -2354,6 +2354,12 @@ html:not(.js) .principle-cell .pc-cta { display: none; }
 }
 .proof-quote:hover::before { opacity: 1; }
 
+.proof-quote .t-stars {
+  color: var(--accent-text);
+  font-size: 13px;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
 .proof-quote blockquote {
   margin: 0;
   flex: 1;                          /* тянет подпись к низу — высота ровная */
