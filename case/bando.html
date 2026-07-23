@@ -175,6 +175,30 @@
         <li><span data-lang="ru"><strong>Локальные оплаты — Payme, Click, Uzum.</strong> Интеграции написаны; включатся, когда заказчик подключит мерчант-ключи.</span><span data-lang="en"><strong>Local payments — Payme, Click, Uzum.</strong> The integrations are written; they switch on once the client connects the merchant keys.</span></li>
       </ul>
 
+      <figure class="case-shot reveal">
+        <picture>
+          <source srcset="/img/bando-player.avif" type="image/avif">
+          <source srcset="/img/bando-player.webp" type="image/webp">
+          <img src="/img/bando-player.jpg" width="1600" height="1000" loading="lazy" decoding="async" alt="Плеер тренажёра Reading в bando: слева пассаж «What would happen if all the world's trees disappeared?» с жёлтыми выделениями и плавающим маркером, справа таблица вопросов Matching Information 14–19, сверху чип PRACTICE и темп ≈1.3 min/Q, таймер и кнопка Submit, внизу навигатор вопросов 14–29.">
+        </picture>
+        <figcaption>
+          <span data-lang="ru">Рис. 2 · Экзамен-плеер повторяет формат реального компьютерного IELTS: пассаж с выделениями, таблица вопросов, таймер и навигатор — как на настоящем экзамене.</span>
+          <span data-lang="en">Fig. 2 · The exam player mirrors the real computer-based IELTS format: a passage with highlights, a question table, a timer and a navigator — just like on the actual exam.</span>
+        </figcaption>
+      </figure>
+
+      <figure class="case-shot reveal">
+        <picture>
+          <source srcset="/img/bando-mistakes.avif" type="image/avif">
+          <source srcset="/img/bando-mistakes.webp" type="image/webp">
+          <img src="/img/bando-mistakes.jpg" width="1600" height="1000" loading="lazy" decoding="async" alt="Экран «Review your mistakes» в bando: интервальные повторения с фильтрами по типам вопросов (True/False/Not Given, Note Completion, Matching Information, Multiple Choice), очередью «Due now (50)» и карточками вопросов с кнопками «Practise this question» и «Mark learned».">
+        </picture>
+        <figcaption>
+          <span data-lang="ru">Рис. 3 · Разбор ошибок на интервальных повторениях: каждая ошибка попадает в очередь и всплывает снова, пока студент не начнёт отвечать на неё стабильно верно.</span>
+          <span data-lang="en">Fig. 3 · Mistake review on spaced repetition: every error goes into a queue and resurfaces until the student answers it consistently right.</span>
+        </figcaption>
+      </figure>
+
       <div class="figure">
         <div class="fig-bar"><span class="fig-title">structure · project layout</span></div>
 <pre><span class="fc">bando/</span>
@@ -188,7 +212,7 @@
 │   └── <span class="fc">payments/</span>     <span class="fm"># Payme · Click · Uzum</span>
 ├── <span class="fl">db/</span>            <span class="fm"># Drizzle: 37 таблиц, 58 миграций</span>
 └── <span class="fl">jobs/</span>          <span class="fm"># 8 фоновых крон-задач</span></pre>
-        <div class="caption"><span data-lang="ru">Рис. 2 · Структура. Проверка ответов и ключи живут на сервере, в <code>lib/scoring</code>.</span><span data-lang="en">Fig. 2 · Structure. Answer checking and keys live on the server, in <code>lib/scoring</code>.</span></div>
+        <div class="caption"><span data-lang="ru">Рис. 4 · Структура. Проверка ответов и ключи живут на сервере, в <code>lib/scoring</code>.</span><span data-lang="en">Fig. 4 · Structure. Answer checking and keys live on the server, in <code>lib/scoring</code>.</span></div>
       </div>
 
       <h2 id="hard"><span class="num">§ 03</span><span data-lang="ru">Что было сложно</span><span data-lang="en">What was hard</span></h2>
