@@ -821,8 +821,10 @@
       domain: 'EdTech · IELTS prep platform',
       desc_ru: 'Платформа подготовки к IELTS: тренажёры Reading и Listening в формате экзамена, мгновенная воспроизводимая проверка без нейросетей.',
       desc_en: 'IELTS prep platform: real-exam Reading & Listening trainers, instant reproducible scoring without neural nets.',
-      result_ru: 'Платформа готова и развёрнута на Vercel, домен bando.study. Публичный запуск заказчик готовит.',
-      result_en: 'Built and deployed on Vercel at bando.study. The client is preparing the public launch.',
+      minus_ru: 'Готовые IELTS-тесты в HTML, платформы нет',
+      minus_en: 'Ready IELTS tests in HTML, no platform',
+      plus_ru: 'Платформа развёрнута на bando.study',
+      plus_en: 'Platform live at bando.study',
       metrics: [{val:'5.5wk',label:'Build time'},{val:'1814',label:'Tests'},{val:'37',label:'DB tables'},{val:'3',label:'Payments'}],
       stack: ['Next.js 15','React 19','Supabase','Drizzle'],
       case: '/case/bando'
@@ -832,8 +834,10 @@
       domain: 'Logistics · Container tracking',
       desc_ru: 'Заменил Excel на трёх терминалах. ISO 6346 валидация, биллинг на лету, xlsx-отчёты в чат.',
       desc_en: 'Replaced Excel across three terminals. ISO 6346 validation, on-the-fly billing, xlsx reports to chat.',
-      result_ru: 'Ноль потерянных строк, ноль опечаток в номерах. Биллинг из ручного стал мгновенным.',
-      result_en: 'Zero lost rows, zero number typos. Billing went from manual to instant.',
+      minus_ru: 'Общий Excel: потеря строк, опечатки в номерах',
+      minus_en: 'Shared Excel: lost rows, mistyped numbers',
+      plus_ru: 'Ноль потерь и опечаток, биллинг мгновенный',
+      plus_en: 'Zero losses, instant billing',
       metrics: [{val:'78ms',label:'p50 latency'},{val:'3',label:'Terminals'},{val:'3k+',label:'Containers/y'},{val:'0',label:'Data loss'}],
       stack: ['aiogram','Postgres','openpyxl','Docker'],
       case: '/case/container-bot'
@@ -843,8 +847,10 @@
       domain: 'Open Source · Reference architecture',
       desc_ru: 'Clean Architecture: Repository + UoW, domain FSM, outbox, ETag/If-Match, RFC 7807. Открытый код с ADR.',
       desc_en: 'Clean Architecture: Repository + UoW, domain FSM, outbox, ETag/If-Match, RFC 7807. Open source with ADRs.',
-      result_ru: 'Шаблон, который можно форкнуть и запустить за 10 минут. Каждое решение задокументировано.',
-      result_en: 'A template you can fork and run in 10 minutes. Every decision is documented.',
+      minus_ru: 'Показать паттерны негде: прод под NDA, книги стерильны',
+      minus_en: 'Nowhere to show patterns: prod NDA, books sterile',
+      plus_ru: 'Открытый эталон: форк и запуск за 10 минут',
+      plus_en: 'Open reference: fork and run in 10 min',
       metrics: [{val:'Clean',label:'Architecture'},{val:'UoW',label:'Pattern'},{val:'FSM',label:'State mgmt'},{val:'RFC 7807',label:'Errors'}],
       stack: ['FastAPI','React','Postgres','Pydantic v2'],
       case: '/case/serviceflow'
@@ -854,8 +860,10 @@
       domain: 'Enterprise · Internal support · 4 500 emp',
       desc_ru: '4500 сотрудников → FSM-формы → маршрутизация → Bitrix24. Три локали. HR-почта −70%.',
       desc_en: '4,500 employees → FSM forms → routing → Bitrix24. Three locales. HR inbox −70%.',
-      result_ru: 'HR-отдел перестал тонуть в одинаковых письмах. Рутина ушла в бота, люди занялись людьми.',
-      result_en: 'HR department stopped drowning in repetitive emails. Routine went to the bot, people focused on people.',
+      minus_ru: 'Заявки письмами, угадай отдел, портал заброшен',
+      minus_en: 'Email requests, guess the dept, portal ignored',
+      plus_ru: 'Одна точка входа, HR-почта −70%',
+      plus_en: 'One entry point, HR inbox −70%',
       metrics: [{val:'4 500',label:'Employees'},{val:'−70%',label:'HR inbox'},{val:'Bitrix24',label:'CRM sync'},{val:'RU/UZ/EN',label:'Locales'}],
       stack: ['Python','aiogram','Bitrix24','Postgres'],
       case: '/case/support-bot'
@@ -865,8 +873,10 @@
       domain: 'Beauty · SaaS · Per-salon licensing',
       desc_ru: 'Per-salon VPS, Ed25519-лицензия, booking FSM, напоминания 24ч/2ч, бэкап каждые 6ч.',
       desc_en: 'Per-salon VPS, Ed25519 licensing, booking FSM, reminders at 24h/2h, backup every 6h.',
-      result_ru: 'Ноль двойных записей. Клиенты не забывают о визите — напоминания работают.',
-      result_en: 'Zero double bookings. Clients never forget their visit — reminders do the job.',
+      minus_ru: 'WhatsApp и звонки: двойные записи, no-show',
+      minus_en: 'WhatsApp & calls: double-bookings, no-shows',
+      plus_ru: 'Запись за 30 сек, ноль двойных, напоминания',
+      plus_en: 'Book in 30s, zero clashes, reminders',
       metrics: [{val:'Ed25519',label:'Licensing'},{val:'86+',label:'Tests'},{val:'6h',label:'Backup'},{val:'<200ms',label:'Response'}],
       stack: ['aiogram','SQLite WAL','Redis','Docker'],
       case: '/case/manicure-bot'
@@ -876,8 +886,10 @@
       domain: 'B2B · Bakery operations',
       desc_ru: 'Кафе и магазины заказывают через Telegram. Цены на клиента, автоотчёт в 08:00, xlsx-выгрузка.',
       desc_en: 'Cafes and shops order via Telegram. Per-client pricing, auto-report at 08:00, xlsx export.',
-      result_ru: 'Утренний отчёт готов до прихода директора. Ошибки в заказах исчезли.',
-      result_en: 'Morning report is ready before the director arrives. Order errors disappeared.',
+      minus_ru: 'Заказы в тетрадку и Excel: ошибки, потери',
+      minus_en: 'Orders in a notebook & Excel: errors, losses',
+      plus_ru: 'Отчёт готов к утру, ошибки исчезли',
+      plus_en: 'Report ready by morning, errors gone',
       metrics: [{val:'08:00',label:'Auto-report'},{val:'Per-client',label:'Pricing'},{val:'B2B',label:'Model'},{val:'.xlsx',label:'Export'}],
       stack: ['aiogram','SQLAlchemy','APScheduler','openpyxl'],
       case: '/case/pekarna-bot'
@@ -889,6 +901,16 @@
     var detail = document.getElementById('wsDetail');
     if (!tree || !detail) return;
 
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var uiLang = document.body.getAttribute('data-active-lang') === 'en' ? 'en' : 'ru';
+
+    // aria-подписи файлов: двуязычные data-aria-* (их подхватывает applyLang в chrome.js),
+    // плюс стартовый aria-label под текущий язык.
+    function fileAria(ru, en) {
+      var cur = uiLang === 'en' ? en : ru;
+      return ' data-aria-ru="' + ru + '" data-aria-en="' + en + '" aria-label="' + cur + '"';
+    }
+
     var treeHtml = '<div class="ws-tree-header">Explorer</div><div class="ws-tree-root">~/projects/</div><div class="ws-tree-list">';
     WS_PROJECTS.forEach(function(p, i) {
       var branch = i === WS_PROJECTS.length - 1 ? '└──' : '├──';
@@ -897,6 +919,20 @@
         '<span class="ws-branch">' + branch + '</span>' +
         '<span class="ws-dot ' + (p.status === 'live' ? 'live' : 'ref') + '"></span>' +
         '<span class="ws-name">' + p.name + '/</span></div>';
+
+      // Файлы проекта: раскрыты у активного (i===0). case.md — реальная ссылка,
+      // stack.json / metrics.log — [role=button] (конвенция дерева index.html).
+      var openCls = i === 0 ? ' open' : '';
+      treeHtml += '<div class="ws-files' + openCls + '" data-files="' + p.id + '">' +
+        '<a class="ws-file" href="' + p.case + '"' + fileAria('Открыть кейс ' + p.name, 'Open case ' + p.name) + '>' +
+          '<span class="ws-fbranch">├──</span><span class="ws-fname">case.md</span><span class="ws-fmeta">' + p.case + '</span></a>' +
+        '<div class="ws-file" role="button" tabindex="0" data-file="stack" data-owner="' + p.id + '"' +
+          fileAria('Подсветить стек проекта ' + p.name, 'Highlight ' + p.name + ' stack') + '>' +
+          '<span class="ws-fbranch">├──</span><span class="ws-fname">stack.json</span></div>' +
+        '<div class="ws-file" role="button" tabindex="0" data-file="metrics" data-owner="' + p.id + '"' +
+          fileAria('Подсветить метрики проекта ' + p.name, 'Highlight ' + p.name + ' metrics') + '>' +
+          '<span class="ws-fbranch">└──</span><span class="ws-fname">metrics.log</span></div>' +
+      '</div>';
     });
     treeHtml += '</div>';
     tree.innerHTML = treeHtml;
@@ -916,13 +952,19 @@
       p.stack.forEach(function(s) { stackHtml += '<span class="ws-pill">' + s + '</span>'; });
 
       detailHtml += '<div class="ws-view' + active + '" data-project="' + p.id + '">' +
+        // Команда-эхо (печатается посимвольно; высота зарезервирована в CSS)
+        '<div class="ws-echo" data-echo="$ open ' + p.name + '/"><span class="ws-echo-text"></span><span class="ws-echo-cursor" aria-hidden="true">▏</span></div>' +
         '<div class="ws-proj-header"><h3 class="ws-proj-name">' + p.name + '</h3>' +
         '<div class="ws-proj-meta-row">' + badge + '</div>' +
         '<div class="ws-proj-domain">' + p.domain + '</div></div>' +
         '<p class="ws-proj-desc"><span data-lang="ru">' + p.desc_ru + '</span><span data-lang="en">' + p.desc_en + '</span></p>' +
-        '<p class="ws-proj-result"><span data-lang="ru">' + p.result_ru + '</span><span data-lang="en">' + p.result_en + '</span></p>' +
-        '<div class="ws-metrics">' + metricsHtml + '</div>' +
-        '<div class="ws-stack">' + stackHtml + '</div>' +
+        // Результат как git-diff: «- боль» / «+ результат»
+        '<div class="ws-diff">' +
+          '<div class="ws-diff-line minus"><span data-lang="ru">- ' + p.minus_ru + '</span><span data-lang="en">- ' + p.minus_en + '</span></div>' +
+          '<div class="ws-diff-line plus"><span data-lang="ru">+ ' + p.plus_ru + '</span><span data-lang="en">+ ' + p.plus_en + '</span></div>' +
+        '</div>' +
+        '<div class="ws-metrics" tabindex="-1">' + metricsHtml + '</div>' +
+        '<div class="ws-stack" tabindex="-1">' + stackHtml + '</div>' +
         '<a href="' + p.case + '" class="ws-case-link"><span data-lang="ru">Читать кейс</span><span data-lang="en">Read full case</span> <span class="arrow">→</span></a>' +
         '</div>';
     });
@@ -940,15 +982,74 @@
     }
     updateStatus(WS_PROJECTS[0].id);
 
+    // Команда-эхо: печатаем «$ open <name>/» посимвольно (~400 мс) в активной панели.
+    // reduced-motion → строка появляется мгновенно, без курсора. Печать не блокирует
+    // каскад деталей (тот на CSS-transition, независим).
+    var echoTimer = 0;
+    function typeEcho(view) {
+      if (!view) return;
+      var echo = view.querySelector('.ws-echo');
+      var textEl = view.querySelector('.ws-echo-text');
+      if (!echo || !textEl) return;
+      var full = echo.getAttribute('data-echo') || '';
+      clearInterval(echoTimer);
+      echo.classList.remove('is-typing', 'is-done');
+      if (reduce) { textEl.textContent = full; return; }
+      textEl.textContent = '';
+      echo.classList.add('is-typing');
+      var i = 0;
+      var per = Math.max(12, Math.round(400 / Math.max(1, full.length)));
+      echoTimer = setInterval(function() {
+        i++;
+        textEl.textContent = full.slice(0, i);
+        if (i >= full.length) {
+          clearInterval(echoTimer);
+          echo.classList.remove('is-typing');
+          echo.classList.add('is-done');
+        }
+      }, per);
+    }
+
+    // Клик по stack.json / metrics.log — короткий outline-pulse на блоке + скролл/фокус.
+    function pulse(view, sel) {
+      if (!view) return;
+      var el = view.querySelector(sel);
+      if (!el) return;
+      el.classList.remove('ws-pulse');
+      void el.offsetWidth; // reflow — перезапуск анимации при повторном клике
+      el.classList.add('ws-pulse');
+      el.scrollIntoView({ block: 'nearest', behavior: reduce ? 'auto' : 'smooth' });
+      try { el.focus({ preventScroll: true }); } catch (e) { /* фокус на скролл-цель необязателен */ }
+      var clear = function() { el.classList.remove('ws-pulse'); el.removeEventListener('animationend', clear); };
+      el.addEventListener('animationend', clear);
+      setTimeout(clear, 700); // фолбэк: при reduced-motion animationend почти мгновенный
+    }
+
+    tree.querySelectorAll('.ws-file[data-file]').forEach(function(file) {
+      function act() {
+        var ownerId = file.getAttribute('data-owner');
+        var view = detail.querySelector('.ws-view[data-project="' + ownerId + '"]');
+        pulse(view, file.getAttribute('data-file') === 'stack' ? '.ws-stack' : '.ws-metrics');
+      }
+      file.addEventListener('click', act);
+      file.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); act(); }
+      });
+    });
+
     tree.querySelectorAll('.ws-tree-item').forEach(function(item) {
       function select() {
         var id = item.dataset.project;
         tree.querySelectorAll('.ws-tree-item').forEach(function(el) { el.classList.toggle('active', el.dataset.project === id); });
+        // Файлы старого проекта сворачиваются, нового — раскрываются.
+        tree.querySelectorAll('.ws-files').forEach(function(el) { el.classList.toggle('open', el.getAttribute('data-files') === id); });
+        var activeView = null;
         detail.querySelectorAll('.ws-view').forEach(function(el) {
-          if (el.dataset.project === id) requestAnimationFrame(function() { el.classList.add('active'); });
+          if (el.dataset.project === id) { activeView = el; requestAnimationFrame(function() { el.classList.add('active'); }); }
           else el.classList.remove('active');
         });
         updateStatus(id);
+        typeEcho(activeView); // печатаем эхо новой панели
       }
       item.addEventListener('click', select);
       item.addEventListener('keydown', function(e) {
@@ -970,14 +1071,26 @@
       nextItem.focus();
       e.preventDefault();
     });
+
+    // Первый автопоказ проекта — печатаем эхо один раз.
+    typeEcho(detail.querySelector('.ws-view.active'));
   }
   initWorkstation();
 
-  // Re-apply language to dynamically created data-lang spans
+  // Динамический контент воркстейшна вставлен после applyLang(readLang) в chrome.js —
+  // переприменяем язык, чтобы раскрасить свежие data-lang (дифф/описания) и aria файлов.
   const lang = document.body.getAttribute('data-active-lang') || 'ru';
-  document.querySelectorAll('#wsDetail [data-lang]').forEach(b => {
-    b.classList.toggle('active', b.getAttribute('data-lang') === lang);
-  });
+  if (typeof applyLang === 'function') {
+    applyLang(lang);
+  } else {
+    document.querySelectorAll('#wsDetail [data-lang]').forEach(b => {
+      b.classList.toggle('active', b.getAttribute('data-lang') === lang);
+    });
+    document.querySelectorAll('.ws-file[data-aria-ru][data-aria-en]').forEach(el => {
+      const v = el.getAttribute('data-aria-' + lang);
+      if (v) el.setAttribute('aria-label', v);
+    });
+  }
 
   // Interactive principles cards — клавиатура + троттл glow + отключение на тач и reduced-motion (#23/#69)
   const coarsePtr = window.matchMedia && (window.matchMedia('(pointer: coarse)').matches

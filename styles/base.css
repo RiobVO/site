@@ -178,6 +178,8 @@
   --accent-cyan:  #E07A41;
   --accent-green: #4ade80;
   --accent-green-text: #4ade80;  /* зелёный для ТЕКСТА: = green на тёмной */
+  /* Приглушённый красный для «- было» в ws-diff (workstation). НЕ ярко-красный (mac-dot #ff5f57), отдельный от бренд-оранжа. AA: 5.91:1 на --bg-elev (#222). */
+  --diff-minus:   #e0857a;
 
   /* Shadows */
   --shadow-card:   0 1px 0 rgba(255,255,255,0.04) inset, 0 12px 40px -16px rgba(0,0,0,0.5);
@@ -209,6 +211,7 @@
   /* Затемнённый оранжевый для текста: 5.00:1 на #fafafa, 5.22:1 на #ffffff, 4.58:1 на #f0f0f0 (открытый FAQ / hover-карточки) — проходит WCAG AA на всех elevated-поверхностях. */
   --accent-text:  #B44D1E;
   --accent-green-text: #177c43;  /* зелёный для ТЕКСТА на светлой: 5.03:1 на #fafafa */
+  --diff-minus:   #b3462e;  /* «- было» на светлой: 5.48:1 на #fff, 5.25:1 на #fafafa, 4.81:1 на #f0f0f0 */
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }

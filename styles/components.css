@@ -672,7 +672,6 @@ html:not(.js) .term-line { opacity: 1; }
 }
 .ws-view .ws-proj-name,
 .ws-view .ws-proj-desc,
-.ws-view .ws-proj-result,
 .ws-view .ws-stack,
 .ws-view .ws-case-link {
   opacity: 0;
@@ -681,7 +680,6 @@ html:not(.js) .term-line { opacity: 1; }
 }
 .ws-view.active .ws-proj-name   { opacity: 1; transform: translateY(0); transition-delay: 0s; }
 .ws-view.active .ws-proj-desc   { opacity: 1; transform: translateY(0); transition-delay: 0.06s; }
-.ws-view.active .ws-proj-result { opacity: 1; transform: translateY(0); transition-delay: 0.12s; }
 .ws-view.active .ws-stack       { opacity: 1; transform: translateY(0); transition-delay: 0.25s; }
 .ws-view.active .ws-case-link   { opacity: 1; transform: translateY(0); transition-delay: 0.3s; }
 
@@ -738,18 +736,19 @@ html:not(.js) .term-line { opacity: 1; }
   margin-bottom: 8px;
   max-width: 560px;
 }
-.ws-proj-result {
-  font-size: 12px;
-  line-height: 1.5;
-  color: var(--accent-text);
+/* Результат как git-diff: «- боль» / «+ результат». Без анимации —
+   блок вне каскадного списка .ws-view.active, проявляется вместе с панелью. */
+.ws-diff {
   margin-bottom: 16px;
   max-width: 560px;
-  opacity: 0.8;
+  font-size: 12px;
+  line-height: 1.55;
+  display: grid;
+  gap: 2px;
 }
-.ws-proj-result::before {
-  content: '→ ';
-  opacity: 0.6;
-}
+.ws-diff-line { white-space: pre-wrap; font-variant-ligatures: none; }
+.ws-diff-line.minus { color: var(--diff-minus); }
+.ws-diff-line.plus  { color: var(--accent-green-text); }
 
 /* Metrics grid */
 .ws-metrics {
@@ -892,6 +891,91 @@ html:not(.js) .term-line { opacity: 1; }
   background: var(--text-faint);
   border-radius: 4px;
 }
+
+/* ── Файлы проекта в дереве (раскрываются у активного) ── */
+.ws-files { display: none; margin: 0 0 2px; }
+.ws-files.open { display: block; }
+.ws-file {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+  padding: 4px 16px 4px 12px;
+  font: inherit;
+  font-size: 12.5px;
+  line-height: 1.3;
+  color: var(--text-dim);
+  text-align: left;
+  text-decoration: none;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.ws-file:hover { background: var(--accent-soft); color: var(--text); }
+.ws-fbranch {
+  width: 40px;
+  flex-shrink: 0;
+  padding-right: 8px;
+  text-align: right;
+  color: var(--text-faint);
+  user-select: none;
+}
+a.ws-file:hover .ws-fname { text-decoration: underline; }
+.ws-fmeta {
+  margin-left: 10px;
+  font-size: 10.5px;
+  color: var(--text-faint);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* Быстрое появление строк со стаггером ≤150 мс. Анимация (не transition)
+   надёжно проигрывается при display:none→block. reduced-motion гасит через
+   глобальный сброс animation-duration в base.css. */
+@keyframes wsFileIn { from { opacity: 0; transform: translateX(-5px); } to { opacity: 1; transform: none; } }
+.ws-files.open .ws-file              { animation: wsFileIn 0.18s ease both; }
+.ws-files.open .ws-file:nth-child(2) { animation-delay: 0.06s; }
+.ws-files.open .ws-file:nth-child(3) { animation-delay: 0.12s; }
+
+/* Подсветка целевого блока (клик по stack.json / metrics.log): короткий
+   outline-pulse, без glow/box-shadow. outline не влияет на layout. */
+@keyframes wsPulse {
+  0%   { outline-color: transparent; }
+  20%  { outline-color: var(--accent); }
+  100% { outline-color: transparent; }
+}
+.ws-pulse {
+  outline: 2px solid transparent;
+  outline-offset: 4px;
+  border-radius: 8px;
+  animation: wsPulse 600ms ease-out;
+}
+/* Программный фокус на скролл-цель не оставляет кольца — индикатор здесь сам
+   pulse; tabindex=-1 держит блоки вне tab-order. */
+.ws-metrics:focus, .ws-stack:focus { outline: none; }
+
+/* ── Команда-эхо над заголовком панели (печатается посимвольно) ── */
+/* Высота зарезервирована (min-height) — layout не прыгает. */
+.ws-echo {
+  min-height: 20px;
+  margin-bottom: 10px;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--accent-text);
+  white-space: nowrap;
+  overflow: hidden;
+}
+.ws-echo-cursor {
+  display: inline-block;
+  width: 7px;
+  margin-left: 1px;
+  color: var(--accent);
+  opacity: 0;
+}
+.ws-echo.is-typing .ws-echo-cursor,
+.ws-echo.is-done   .ws-echo-cursor { opacity: 1; }
+.ws-echo.is-typing .ws-echo-cursor { animation: wsCaret 1s step-end infinite; }
+@keyframes wsCaret { 50% { opacity: 0; } }
 
 /* Responsive */
 @media (max-width: 720px) {
