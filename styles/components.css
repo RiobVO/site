@@ -951,8 +951,9 @@ a.ws-file:hover .ws-fname { text-decoration: underline; }
   animation: wsPulse 600ms ease-out;
 }
 /* Программный фокус на скролл-цель не оставляет кольца — индикатор здесь сам
-   pulse; tabindex=-1 держит блоки вне tab-order. */
-.ws-metrics:focus, .ws-stack:focus { outline: none; }
+   pulse; tabindex=-1 держит блоки вне tab-order. :not(.ws-pulse) обязателен:
+   иначе :focus (0,2,0) перебивает .ws-pulse (0,1,0) и гасит рамку пульса. */
+.ws-metrics:focus:not(.ws-pulse), .ws-stack:focus:not(.ws-pulse) { outline: none; }
 
 /* ── Команда-эхо над заголовком панели (печатается посимвольно) ── */
 /* Высота зарезервирована (min-height) — layout не прыгает. */
